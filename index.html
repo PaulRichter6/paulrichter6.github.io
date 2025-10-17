@@ -7,7 +7,6 @@
 <meta name="description" content="Cinematic video and short-form content for brands, events, and private clients. Based in Munich." />
 
 <style>
-  /* vermeidet Layout-Shift, wenn Scrollbar erscheint/verschwindet */
   html{ scrollbar-gutter: stable both-edges; }
 
   :root{
@@ -35,8 +34,7 @@
     background: var(--surface-grad), var(--bg);
     font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial;
     -webkit-font-smoothing:antialiased;
-    scroll-behavior:smooth;
-    touch-action:manipulation;
+    scroll-behavior:smooth; touch-action:manipulation;
   }
   a{color:inherit; text-decoration:none}
   .wrap{max-width:1100px; margin:0 auto; padding:28px}
@@ -51,7 +49,7 @@
     border-radius:999px; border:1px solid var(--line);
     background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
     transition:transform .2s ease, border-color .2s ease; cursor:pointer;
-    color:var(--txt); /* Fix: im Dark Mode weiß */
+    color:var(--txt); /* Dark-Mode: weiß */
   }
   .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
   .pill.primary{color:#fff; border-color:transparent;
@@ -78,7 +76,7 @@
   .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
   .btn.ghost{background:transparent}
 
-  /* CONTENT */
+  /* CONTENT LAYOUT */
   .grid{display:grid; gap:24px; grid-template-columns: 1fr; margin-top:12px}
   @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
   .card{background:var(--elev); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
@@ -172,7 +170,7 @@
 
     <div class="divider"></div>
 
-    <!-- CONTENT -->
+    <!-- MAIN GRID (About + Links) -->
     <main class="grid">
       <!-- ABOUT -->
       <section class="card" id="about">
@@ -189,7 +187,7 @@
         </div>
       </section>
 
-      <!-- LINKS (als normale Karte; wird als Modal geklont) -->
+      <!-- PROJECTS & LINKS (normale Karte; wird als Modal geklont) -->
       <section class="card" id="links">
         <h2 class="section-title">Projects & Links</h2>
         <div class="links">
@@ -200,19 +198,42 @@
           </div>
         </div>
       </section>
-
-      <!-- CONTACT (normale Karte; wird als Modal geklont) -->
-      <section class="card" id="contact">
-        <h2 class="section-title">Contact</h2>
-        <p class="muted">Reply within 48h.</p>
-        <form action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
-          <input name="name" type="text" placeholder="Your name" required>
-          <input name="email" type="email" placeholder="your@email.com" required>
-          <textarea name="message" placeholder="What do you need?"></textarea>
-          <button class="btn primary" type="submit">Send message</button>
-        </form>
-      </section>
     </main>
+
+    <!-- SERVICES – wieder hinzugefügt -->
+    <section class="card" id="services" style="margin-top:24px;">
+      <h2 class="section-title">Services</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Production</h3>
+          <p>On-site filming for events, products, and interviews.</p>
+        </div>
+        <div class="feature">
+          <h3>Editing</h3>
+          <p>Clean cuts, pacing, subtitles, and sound polish.</p>
+        </div>
+        <div class="feature">
+          <h3>Short-form (Reels / TikTok & YouTube videos)</h3>
+          <p>Packages optimized for retention and platform rhythm.</p>
+        </div>
+        <div class="feature">
+          <h3>Content Ops</h3>
+          <p>Account management, scheduling, and templates.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (normale Karte; wird als Modal geklont) -->
+    <section class="card" id="contact" style="margin-top:24px;">
+      <h2 class="section-title">Contact</h2>
+      <p class="muted">Reply within 48h.</p>
+      <form action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
+        <input name="name" type="text" placeholder="Your name" required>
+        <input name="email" type="email" placeholder="your@email.com" required>
+        <textarea name="message" placeholder="What do you need?"></textarea>
+        <button class="btn primary" type="submit">Send message</button>
+      </form>
+    </section>
 
     <div class="divider"></div>
     <footer>© <span id="year"></span> Paul Richter</footer>
@@ -225,11 +246,9 @@
   // Jahr
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Theme Toggle (Fix: Textfarbe nimmt var(--txt) -> im Dark Mode weiß)
+  // Theme Toggle
   const root = document.body;
-  document.getElementById('themeToggle').addEventListener('click', ()=>{
-    root.classList.toggle('light');
-  });
+  document.getElementById('themeToggle').addEventListener('click', ()=>{ root.classList.toggle('light'); });
 
   // -------- Modal-Logik (Contact & Links) --------
   const backdrop = document.getElementById('backdrop');
@@ -237,7 +256,6 @@
   const linksCard   = document.getElementById('links');
 
   function makeModalFrom(section){
-    // Klon der Sektion, damit die Seite darunter unverändert bleibt
     const clone = section.cloneNode(true);
     clone.className = 'modalized';
     // Close-Button
@@ -247,21 +265,18 @@
     x.textContent = '✕';
     x.addEventListener('click', ()=>closeModal(clone));
     clone.appendChild(x);
-    // Einfügen
-    document.body.appendChild(clone);
-    // Scroll sperren
-    document.documentElement.style.overflow = 'hidden';
-    // Backdrop sichtbar
-    backdrop.classList.add('visible');
-    // Outside-Klick
-    const onClickBackdrop = ()=>closeModal(clone);
-    backdrop.addEventListener('click', onClickBackdrop, { once:true });
 
+    document.body.appendChild(clone);
+    document.documentElement.style.overflow = 'hidden';
+    backdrop.classList.add('visible');
+
+    // Outside click
+    const onBackdrop = ()=>closeModal(clone);
+    backdrop.addEventListener('click', onBackdrop, { once:true });
     // ESC
     const onEsc = (e)=>{ if(e.key==='Escape') closeModal(clone) };
     window.addEventListener('keydown', onEsc, { once:true });
 
-    // Rückgabefunktion speichert Listener-Refs
     clone._cleanup = ()=>{ window.removeEventListener('keydown', onEsc); };
     return clone;
   }
