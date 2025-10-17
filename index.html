@@ -1,150 +1,133 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paul Richter – Portfolio</title>
-  <meta name="description" content="Paul Richter – Portfolio, Bio, Projekte und Kontakt." />
-  <meta property="og:title" content="Paul Richter – Portfolio" />
-  <meta property="og:description" content="Bio, Projekte und Kontakt." />
+  <title>Paul Richter – Video Editor & Videographer</title>
+  <meta name="description" content="Cinematic video and short-form content for brands, events, and private clients. Based in Munich. Reply within 48h." />
+  <meta property="og:title" content="Paul Richter – Video Editor & Videographer" />
+  <meta property="og:description" content="I create cinematic videos and short-form content with a focus on quality and visual impact." />
   <meta property="og:type" content="website" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23000'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16'/%3E%3C/svg%3E">
 
   <style>
-    /* ===== Design-Tokens ===== */
+    /* ===== Design Tokens ===== */
     :root{
-      --bg: #0a0a0c;          /* Canvas */
-      --elev: #0f1115;        /* Cards / Surfaces */
-      --txt: #eef1f5;         /* Primary text */
-      --muted:#98a2b3;        /* Secondary text */
-      --line: rgba(148,163,184,.15);
-      --brand:#3b82f6;        /* Akzent */
-      --ring: rgba(59,130,246,.55);
-      --radius: 22px;
-
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-      --blur: saturate(140%) blur(0px);
+      --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
+      --line:rgba(148,163,184,.16); --brand:#3b82f6; --ring:rgba(59,130,246,.55);
+      --radius:22px; --shadow:0 20px 60px rgba(0,0,0,.35);
     }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
-        --line: rgba(15,23,42,.12); --brand:#2563eb; --ring: rgba(37,99,235,.35);
-        --shadow: 0 20px 50px rgba(2,6,23,.10);
-      }
+    .light{
+      --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
+      --line:rgba(15,23,42,.12); --brand:#2563eb; --ring:rgba(37,99,235,.35);
+      --shadow:0 20px 50px rgba(2,6,23,.10);
     }
 
     /* ===== Base ===== */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      color:var(--txt);
-      background:radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.08), transparent 60%) ,
-                 radial-gradient(1000px 500px at 10% 110%, rgba(59,130,246,.06), transparent 60%),
-                 var(--bg);
-      font:16px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      margin:0; color:var(--txt);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.08), transparent 60%),
+        radial-gradient(1000px 500px at 10% 110%, rgba(59,130,246,.06), transparent 60%),
+        var(--bg);
+      font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
     a{color:inherit; text-decoration:none}
-    img{display:block; max-width:100%}
     .wrap{max-width:1100px; margin:0 auto; padding:28px}
 
-    /* ===== Top Nav minimal ===== */
-    .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-    }
+    /* ===== Nav ===== */
+    .nav{display:flex; align-items:center; justify-content:space-between}
     .logo{font-weight:650; letter-spacing:.2px}
     .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 14px; border-radius:999px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
-      transition:transform .2s ease, border-color .2s ease, background .2s ease;
+      display:inline-flex; align-items:center; gap:10px; padding:10px 14px;
+      border-radius:999px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      transition:transform .2s ease, border-color .2s ease; cursor:pointer;
     }
-    .pill:hover{ transform:translateY(-1px); border-color:var(--ring) }
+    .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
 
     /* ===== Hero ===== */
     .hero{
-      display:grid; gap:28px; align-items:center;
-      grid-template-columns: 140px 1fr;
+      display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr;
       margin:48px 0 24px;
     }
     .avatar{
-      width:140px; height:140px; border-radius:24px; background:
+      width:140px; height:140px; border-radius:24px; border:1px solid var(--line); box-shadow:var(--shadow);
+      background:
         linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.03)),
         linear-gradient(135deg, #8ea6ff, #6cd3ff);
-      box-shadow: var(--shadow); border:1px solid var(--line);
+      background-size:cover; background-position:center;
     }
     h1{margin:0 0 6px; font-size:44px; line-height:1.1; letter-spacing:-.3px}
     .kicker{color:var(--muted); font-size:14px; letter-spacing:.3px; text-transform:uppercase}
+    .muted{color:var(--muted)}
     .cta{display:flex; gap:12px; margin-top:14px}
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:12px 16px; border-radius:14px; border:1px solid var(--line);
       background:var(--elev); box-shadow:var(--shadow);
-      transition:transform .15s ease, border-color .2s ease, background .2s ease;
-      will-change: transform;
+      transition:transform .15s ease, border-color .2s ease; will-change:transform;
     }
     .btn:hover{transform:translateY(-2px); border-color:var(--ring)}
-    .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:white; border-color:transparent}
+    .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
     .btn.ghost{background:transparent}
 
     /* ===== Sections ===== */
     .grid{display:grid; gap:18px; grid-template-columns: 1fr; margin-top:12px}
+    @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
     .card{
       background:var(--elev); border:1px solid var(--line); border-radius:var(--radius);
-      padding:22px; box-shadow: var(--shadow); backdrop-filter: var(--blur);
+      padding:22px; box-shadow:var(--shadow);
     }
-    .muted{color:var(--muted)}
     .section-title{margin:0 0 10px; font-size:22px; letter-spacing:.2px}
-    @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
-
-    /* Links-Liste */
     .links{display:grid; gap:10px; margin-top:8px}
     .link{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:transparent;
-      transition: border-color .2s ease, transform .15s ease;
+      padding:14px 16px; border-radius:14px; border:1px solid var(--line);
+      transition:border-color .2s ease, transform .15s ease;
     }
     .link:hover{border-color:var(--ring); transform:translateY(-1px)}
-
-    /* Kontaktformular */
     form{display:grid; gap:12px; margin-top:8px}
-    input, textarea{
+    input,textarea{
       width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line);
       background:transparent; color:var(--txt);
     }
-    input:focus, textarea:focus{outline:none; border-color:var(--ring); box-shadow:0 0 0 6px color-mix(in oklab, var(--ring) 30%, transparent)}
+    input:focus,textarea:focus{outline:none; border-color:var(--ring); box-shadow:0 0 0 6px color-mix(in oklab, var(--ring) 30%, transparent)}
     textarea{resize:vertical; min-height:140px}
-
-    /* Footer */
     footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
-    /* Motion-Respect */
-    @media (prefers-reduced-motion: reduce){
-      *{transition:none!important; animation:none!important}
-    }
+    /* ===== Reveal Animations ===== */
+    .reveal{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease}
+    .reveal.visible{opacity:1; transform:none}
+
+    /* Assistive text */
+    .sr{position:absolute; left:-9999px}
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" id="app">
     <!-- NAV -->
     <div class="nav">
-      <div class="logo">Paul&nbsp;Richter</div>
-      <div class="nav-cta">
-        <a class="pill" href="#kontakt">Projektanfrage</a>
+      <div class="logo">Paul Richter</div>
+      <div style="display:flex; gap:10px;">
+        <button id="themeToggle" class="pill" type="button" aria-label="Toggle theme">Toggle theme</button>
+        <a class="pill" href="#contact">Project inquiry</a>
       </div>
     </div>
 
     <!-- HERO -->
-    <header class="hero">
-      <div class="avatar" aria-hidden="true"></div>
+    <header class="hero reveal">
+      <!-- Swap the background-image once you upload your portrait: url('portrait.jpg') -->
+      <div class="avatar" style="background-image:url('');" aria-hidden="true"></div>
       <div>
-        <div class="kicker">Design · Web · kleine Produkte</div>
-        <h1>Ich baue klare, schnelle Websites, die verkaufen.</h1>
-        <p class="muted">Strategie, Gestaltung & Umsetzung – mit Fokus auf Wirkung statt Schnickschnack. Verfügbar für ausgewählte Projekte.</p>
+        <div class="kicker">Video Editor · Videographer</div>
+        <h1>I build clear, fast visuals that sell.</h1>
+        <p class="muted">I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.</p>
         <div class="cta">
-          <a class="btn primary" href="#kontakt">Anfrage starten</a>
-          <a class="btn ghost" href="#projekte">Projekte ansehen</a>
+          <a class="btn primary" href="#contact">Start a project</a>
+          <a class="btn ghost" href="#links">Watch my work</a>
         </div>
       </div>
     </header>
@@ -152,99 +135,116 @@
     <!-- CONTENT -->
     <main class="grid">
       <!-- Bio -->
-      <section class="card" id="bio">
-        <h2 class="section-title">Kurz-Bio</h2>
-        <p>Ich helfe Soloselbständigen und kleinen Teams, präzise digitale Auftritte aufzubauen: Landingpages, Markenauftritte und kleine Tools. Fokus: Geschwindigkeit, klare Botschaft, messbarer Nutzen.</p>
+      <section class="card reveal" id="bio">
+        <h2 class="section-title">About</h2>
+        <p>I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.</p>
         <ul class="muted">
-          <li>⚡ Performance-First: Lighthouse 95+ als Standard</li>
-          <li>🎯 Conversion: klare Struktur, klare CTA</li>
-          <li>🧰 Stack: HTML/CSS/JS, GitHub Pages, Cloudflare</li>
+          <li>On-site production (Munich area)</li>
+          <li>Video editing & post-production</li>
+          <li>Social media content & account management</li>
+          <li>Color grading, subtitles, and sound optimization</li>
+          <li>Consulting & content strategy for creators and brands</li>
         </ul>
       </section>
 
-      <!-- Links / Projekte -->
-      <section class="card" id="projekte">
-        <h2 class="section-title">Projekte & Links</h2>
+      <!-- Links / Projects -->
+      <section class="card reveal" id="links">
+        <h2 class="section-title">Projects & Links</h2>
         <div class="links">
           <a class="link" href="https://github.com/paulrichter6" target="_blank" rel="noreferrer">
             <span>GitHub</span><span>↗</span>
           </a>
-          <a class="link" href="https://www.linkedin.com" target="_blank" rel="noreferrer">
-            <span>LinkedIn</span><span>↗</span>
+          <a class="link" href="https://instagram.com" target="_blank" rel="noreferrer">
+            <span>Instagram</span><span>↗</span>
+          </a>
+          <a class="link" href="https://youtube.com" target="_blank" rel="noreferrer">
+            <span>YouTube / Showreel</span><span>↗</span>
           </a>
           <a class="link" href="https://example.com/cv.pdf" target="_blank" rel="noreferrer">
-            <span>Lebenslauf (PDF)</span><span>↗</span>
-          </a>
-          <a class="link" href="https://gumroad.com" target="_blank" rel="noreferrer">
-            <span>Produkte / Shop</span><span>↗</span>
+            <span>Resume (PDF)</span><span>↗</span>
           </a>
         </div>
+        <p class="muted" style="margin-top:12px;">
+          Currently managing social media for <strong>SAES School</strong>, alongside private clients and independent projects.
+        </p>
       </section>
 
-      <!-- Services (optional) -->
-      <section class="card">
-        <h2 class="section-title">Leistungen</h2>
+      <!-- Services -->
+      <section class="card reveal">
+        <h2 class="section-title">Services</h2>
         <ul>
-          <li>Landingpages & Markenauftritt</li>
-          <li>Site-Speed & Core Web Vitals</li>
-          <li>Kleine Tools/Automationen für wiederkehrende Aufgaben</li>
+          <li>Landing pages & brand visuals (for your site/portfolio)</li>
+          <li>Site speed & Core Web Vitals for web video delivery</li>
+          <li>Editing packages for ongoing social content</li>
         </ul>
       </section>
 
-      <!-- Kontakt -->
-      <section class="card" id="kontakt">
-        <h2 class="section-title">Kontakt</h2>
-        <p class="muted">Erzähl kurz von Ziel, Budgetrahmen und Timing. Antwort i. d. R. innerhalb von 24–48 Stunden.</p>
+      <!-- Contact -->
+      <section class="card reveal" id="contact">
+        <h2 class="section-title">Contact</h2>
+        <p class="muted">Reply within 48h. Tell me about goals, budget range, and timing.</p>
 
-        <!-- Formspree: ersetze die ACTION-URL -->
-        <form id="contact" action="https://formspree.io/f/DEIN-ENDPOINT" method="POST">
+        <!-- Formspree: replace the ACTION URL with your endpoint -->
+        <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
           <label>
             <span class="sr">Name</span>
-            <input name="name" type="text" placeholder="Dein Name" required />
+            <input name="name" type="text" placeholder="Your name" required />
           </label>
           <label>
-            <span class="sr">E-Mail</span>
-            <input name="email" type="email" placeholder="dein@mail.com" required />
+            <span class="sr">Email</span>
+            <input name="email" type="email" placeholder="your@email.com" required />
           </label>
           <label>
-            <span class="sr">Nachricht</span>
-            <textarea name="message" placeholder="Worum geht’s?"></textarea>
+            <span class="sr">Message</span>
+            <textarea name="message" placeholder="What do you need?"></textarea>
           </label>
 
           <!-- Honeypot -->
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
-          <input type="hidden" name="_subject" value="Neue Anfrage – paulrichter6.github.io" />
-          <button class="btn primary" type="submit">Nachricht senden</button>
+          <input type="hidden" name="_subject" value="New inquiry – paulrichter6.github.io" />
+          <button class="btn primary" type="submit">Send message</button>
           <span id="status" class="muted" role="status" aria-live="polite"></span>
         </form>
       </section>
     </main>
 
-    <footer>© <span id="year"></span> Paul Richter · <a href="#kontakt">Kontakt</a></footer>
+    <footer>© <span id="year"></span> Paul Richter · Freelancing student</footer>
   </div>
 
-  <style>
-    /* kleine Utility für Screenreader-Text */
-    .sr{position:absolute; left:-9999px}
-  </style>
-
   <script>
-    // Jahr automatisch
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Formspree AJAX (bleibt auf der Seite)
-    const form = document.getElementById('contact');
+    // Theme toggle with localStorage
+    const root = document.body;
+    const saved = localStorage.getItem('theme');
+    if(saved === 'light') root.classList.add('light');
+    document.getElementById('themeToggle').addEventListener('click', ()=>{
+      root.classList.toggle('light');
+      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // Scroll reveal
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Formspree AJAX
+    const form = document.getElementById('contactForm');
     const status = document.getElementById('status');
     form?.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      status.textContent = 'Sende …';
+      status.textContent = 'Sending…';
       try{
         const data = new FormData(form);
         const res = await fetch(form.action, { method:'POST', body:data, headers:{'Accept':'application/json'}});
-        if(res.ok){ form.reset(); status.textContent = 'Danke! Ich melde mich zeitnah.'; }
-        else{ status.textContent = 'Fehler beim Senden. Bitte per E-Mail kontaktieren.'; }
-      }catch{ status.textContent = 'Netzwerkfehler. Später erneut versuchen.'; }
+        if(res.ok){ form.reset(); status.textContent = 'Thanks! I will reply within 48h.'; }
+        else{ status.textContent = 'Send failed. Please try again or contact me via Instagram.'; }
+      }catch{ status.textContent = 'Network error. Please try again later.'; }
     });
   </script>
 </body>
