@@ -7,6 +7,7 @@
 <meta name="description" content="Cinematic video and short-form content for brands, events, and private clients. Based in Munich." />
 
 <style>
+  /* verhindert Seitensprung beim Scroll-Lock */
   html{ scrollbar-gutter: stable both-edges; }
 
   :root{
@@ -60,7 +61,7 @@
 
   /* HERO */
   .hero{display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr; margin:44px 0 8px}
-  .avatar{width:140px; height:140px; border-radius:24px; overflow:hidden; position:relative; background:var(--elev)}
+  .avatar{width:140px; height:140px; border-radius:24px; overflow:hidden; background:var(--elev)}
   .avatar img{width:100%; height:100%; object-fit:cover; display:block}
   h1{margin:0 0 6px; font-size:44px; line-height:1.1; letter-spacing:-.3px}
   .kicker{color:var(--muted); font-size:14px; text-transform:uppercase}
@@ -76,57 +77,54 @@
   .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
   .btn.ghost{background:transparent}
 
-  /* CONTENT LAYOUT */
+  /* LAYOUT */
   .grid{display:grid; gap:24px; grid-template-columns: 1fr; margin-top:12px}
   @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
   .card{background:var(--elev); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
   .section-title{margin:0 0 12px; font-size:22px}
 
+  /* ABOUT / HIGHLIGHTS */
   .about-grid{display:grid; gap:18px}
   @media (min-width:900px){.about-grid{grid-template-columns:1.2fr .8fr}}
   .highlight-panel{background: color-mix(in oklab, var(--brand) 4%, var(--elev)); border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line)); border-radius:16px; padding:14px}
   .badge{display:inline-flex; align-items:center; gap:8px; margin:8px 8px 0 0; padding:8px 12px; border-radius:999px; background: var(--capsule-bg); border:1px solid color-mix(in oklab, var(--brand) 14%, var(--line)); font-size:14px}
 
+  /* SERVICES */
   .features{display:grid;gap:12px}
   @media (min-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
   .feature{background: color-mix(in oklab, var(--brand) 4%, var(--elev)); border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line)); border-radius:16px; padding:16px}
   .feature h3{margin:0 0 6px;font-size:16px}
 
+  /* LINKS LIST */
   .links{display:grid; gap:10px; margin-top:8px}
   .link{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:14px; border:1px solid var(--line); transition:border-color .2s ease, transform .15s ease}
   .link:hover{border-color:var(--ring); transform:translateY(-1px)}
   .info-link{background:linear-gradient(180deg, color-mix(in oklab, var(--brand) 10%, transparent), transparent 85%); border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line))}
 
+  /* FORM */
   form{display:grid; gap:12px; margin-top:8px}
   input,textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
   textarea{resize:vertical; min-height:140px}
+
   footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
-  /* MODAL (Kontakt & Links) */
-  .backdrop{
-    position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%);
-    background: rgba(2,6,23,.45);
-    opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60;
-  }
-  .backdrop.visible{opacity:1; pointer-events:auto}
+  /* MODALS */
+  .backdrop{ position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%); background: rgba(2,6,23,.45); opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60; }
+  .backdrop.visible{ opacity:1; pointer-events:auto; }
 
   .modalized{
     position:fixed; left:50%; top:6vh; transform:translate(-50%,0);
     width:min(720px,92vw); max-height:88vh; overflow:auto; z-index:70;
-    background:var(--elev); border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 30px 80px rgba(0,0,0,.45); padding:22px;
+    background:var(--elev); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:0 30px 80px rgba(0,0,0,.45); padding:22px;
     animation:modalZoomIn .24s cubic-bezier(.2,.8,.2,1) both;
   }
   .modal-out{ animation:modalZoomOut .18s ease-in both; }
   @keyframes modalZoomIn{ from{ transform:translate(-50%,0) scale(.92); opacity:.85 } to{ transform:translate(-50%,0) scale(1); opacity:1 } }
   @keyframes modalZoomOut{ from{ transform:translate(-50%,0) scale(1); opacity:1 } to{ transform:translate(-50%,0) scale(.92); opacity:.85 } }
+  .close-btn{ position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); color:var(--txt); border-radius:12px; padding:6px 10px; cursor:pointer; }
 
-  .close-btn{
-    position:absolute; top:10px; right:10px;
-    border:1px solid var(--line); background:var(--elev);
-    color:var(--txt); border-radius:12px; padding:6px 10px; cursor:pointer;
-  }
-
-  /* Mobile Tuning */
+  /* MOBILE */
   @media (max-width:720px){
     .wrap{padding:18px}
     .hero{grid-template-columns:88px 1fr; gap:18px; margin:28px 0 4px}
@@ -159,7 +157,7 @@
       <div class="avatar"><img src="portrait.png" alt="Portrait of Paul Richter"></div>
       <div>
         <div class="kicker">VIDEO EDITOR · VIDEOGRAPHER</div>
-        <h1>Cinematic edits for brands, events, and creators.</h1>
+        <h1 id="mainHeadline">Cinematic edits for brands, events, and creators.</h1>
         <p class="muted">I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.</p>
         <div class="cta">
           <button class="btn primary" id="openContact2">Start a project</button>
@@ -170,14 +168,15 @@
 
     <div class="divider"></div>
 
-    <!-- MAIN GRID (About + Links) -->
+    <!-- GRID (About + Links) -->
     <main class="grid">
-      <!-- ABOUT -->
       <section class="card" id="about">
         <h2 class="section-title">About</h2>
         <div class="about-grid">
           <div>
-            <p>I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.</p>
+            <p>
+              I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.
+            </p>
           </div>
           <aside class="highlight-panel">
             <span class="badge">📍 Munich area</span>
@@ -187,12 +186,15 @@
         </div>
       </section>
 
-      <!-- PROJECTS & LINKS (normale Karte; wird als Modal geklont) -->
       <section class="card" id="links">
         <h2 class="section-title">Projects & Links</h2>
         <div class="links">
-          <a class="link" href="https://www.instagram.com/paul.richter6/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a>
-          <a class="link" href="https://www.youtube.com/@PaulRichter1" target="_blank" rel="noreferrer"><span>YouTube</span><span>↗</span></a>
+          <a class="link" href="https://www.instagram.com/paul.richter6/" target="_blank" rel="noreferrer">
+            <span>Instagram</span><span>↗</span>
+          </a>
+          <a class="link" href="https://www.youtube.com/@PaulRichter1" target="_blank" rel="noreferrer">
+            <span>YouTube</span><span>↗</span>
+          </a>
           <div class="link info-link">
             <span>Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.</span>
           </div>
@@ -200,7 +202,7 @@
       </section>
     </main>
 
-    <!-- SERVICES – wieder hinzugefügt -->
+    <!-- SERVICES -->
     <section class="card" id="services" style="margin-top:24px;">
       <h2 class="section-title">Services</h2>
       <div class="features">
@@ -223,7 +225,7 @@
       </div>
     </section>
 
-    <!-- CONTACT (normale Karte; wird als Modal geklont) -->
+    <!-- CONTACT -->
     <section class="card" id="contact" style="margin-top:24px;">
       <h2 class="section-title">Contact</h2>
       <p class="muted">Reply within 48h.</p>
@@ -239,7 +241,7 @@
     <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
 
-  <!-- Backdrop -->
+  <!-- Backdrop für Modals -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
 <script>
@@ -248,9 +250,24 @@
 
   // Theme Toggle
   const root = document.body;
-  document.getElementById('themeToggle').addEventListener('click', ()=>{ root.classList.toggle('light'); });
+  document.getElementById('themeToggle').addEventListener('click', ()=> root.classList.toggle('light'));
 
-  // -------- Modal-Logik (Contact & Links) --------
+  // Sprache: nur Headline wie gewünscht
+  const headline = document.getElementById('mainHeadline');
+  const langEN = document.getElementById('langEN');
+  const langDE = document.getElementById('langDE');
+  langEN.addEventListener('click', ()=>{
+    langEN.classList.add('active'); langDE.classList.remove('active');
+    headline.textContent = "Cinematic edits for brands, events, and creators.";
+    document.documentElement.setAttribute('lang','en');
+  });
+  langDE.addEventListener('click', ()=>{
+    langDE.classList.add('active'); langEN.classList.remove('active');
+    headline.textContent = "Videoschnitt & Film für Marken, Events und Creator.";
+    document.documentElement.setAttribute('lang','de');
+  });
+
+  // ------- Modal-Logik (Contact & Links) -------
   const backdrop = document.getElementById('backdrop');
   const contactCard = document.getElementById('contact');
   const linksCard   = document.getElementById('links');
@@ -263,18 +280,19 @@
     x.className = 'close-btn';
     x.type = 'button';
     x.textContent = '✕';
-    x.addEventListener('click', ()=>closeModal(clone));
+    x.addEventListener('click', ()=> closeModal(clone));
     clone.appendChild(x);
 
+    // einfügen & lock
     document.body.appendChild(clone);
     document.documentElement.style.overflow = 'hidden';
     backdrop.classList.add('visible');
 
-    // Outside click
-    const onBackdrop = ()=>closeModal(clone);
+    // outside
+    const onBackdrop = ()=> closeModal(clone);
     backdrop.addEventListener('click', onBackdrop, { once:true });
     // ESC
-    const onEsc = (e)=>{ if(e.key==='Escape') closeModal(clone) };
+    const onEsc = (e)=>{ if(e.key==='Escape') closeModal(clone); };
     window.addEventListener('keydown', onEsc, { once:true });
 
     clone._cleanup = ()=>{ window.removeEventListener('keydown', onEsc); };
