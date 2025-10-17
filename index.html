@@ -143,16 +143,30 @@
     textarea{resize:vertical; min-height:140px}
     footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
-    /* MODAL SYSTEM (Zoom from card position) */
-    .backdrop{position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%); background: rgba(2,6,23,.45);
-      opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60}
+    /* MODAL (fix: zentriert, kein Seitensprung) */
+    .backdrop{
+      position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%);
+      background: rgba(2,6,23,.45);
+      opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60;
+      will-change: opacity;
+    }
     .backdrop.visible{opacity:1; pointer-events:auto}
-    .modalized{position:fixed; left:50%; top:6vh; width:min(720px,92vw); max-height:88vh; overflow:auto; z-index:70; box-shadow:0 30px 80px rgba(0,0,0,.45)}
-    .modal-anim-in{animation: zoomIn .28s cubic-bezier(.2,.8,.2,1) both}
-    .modal-anim-out{animation: zoomOut .22s ease-in both}
-    @keyframes zoomIn{from{transform:translate(-50%,0) scale(.86); transform-origin:right bottom; opacity:.75} to{transform:translate(-50%,0) scale(1); opacity:1}}
-    @keyframes zoomOut{from{transform:translate(-50%,0) scale(1); opacity:1} to{transform:translate(-50%,0) scale(.86); opacity:.75}}
-
+    .modalized{
+      position:fixed; left:50%; top:6vh; transform:translate(-50%,0);
+      width:min(720px,92vw); max-height:88vh; overflow:auto; z-index:70;
+      box-shadow:0 30px 80px rgba(0,0,0,.45);
+      will-change: transform, opacity;
+    }
+    .modal-anim-in{animation: modalZoomIn .24s cubic-bezier(.2,.8,.2,1) both}
+    .modal-anim-out{animation: modalZoomOut .18s ease-in both}
+    @keyframes modalZoomIn{
+      from{ transform:translate(-50%,0) scale(.92); opacity:.85; transform-origin:center center; }
+      to  { transform:translate(-50%,0) scale(1);    opacity:1; }
+    }
+    @keyframes modalZoomOut{
+      from{ transform:translate(-50%,0) scale(1);   opacity:1; }
+      to  { transform:translate(-50%,0) scale(.92); opacity:.85; }
+    }
     .contact-close{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); border-radius:12px; padding:6px 10px; cursor:pointer}
 
     /* REVEAL */
@@ -292,14 +306,12 @@
     <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
 
-  <!-- MODAL BACKDROP -->
-  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
-
+  <!-- ONE SCRIPT ONLY -->
   <script>
-    // Year
+    // ===== Year =====
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Theme toggle
+    // ===== Theme toggle =====
     const root = document.body;
     const savedTheme = localStorage.getItem('theme');
     if(savedTheme === 'light') root.classList.add('light');
@@ -308,7 +320,7 @@
       localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
     });
 
-    // Scroll reveal
+    // ===== Scroll reveal =====
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
@@ -316,7 +328,7 @@
     }, { threshold: .12 });
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // i18n dictionary
+    // ===== i18n dictionary =====
     const i18n = {
       en: {
         toggleTheme:"Toggle theme", projectInquiry:"Project inquiry",
@@ -364,7 +376,7 @@
       }
     };
 
-    // i18n helpers
+    // ===== i18n helpers =====
     function applyI18n(lang){
       document.querySelectorAll("[data-i18n]").forEach(el=>{
         const key = el.getAttribute("data-i18n");
@@ -385,7 +397,7 @@
     document.getElementById("langEN").addEventListener("click", ()=>{ localStorage.setItem("lang","en"); applyI18n("en"); });
     document.getElementById("langDE").addEventListener("click", ()=>{ localStorage.setItem("lang","de"); applyI18n("de"); });
 
-    // Formspree AJAX
+    // ===== Formspree AJAX =====
     const form = document.getElementById('contactForm');
     const status = document.getElementById('status');
     form?.addEventListener('submit', async (e)=>{
@@ -400,51 +412,85 @@
       }catch{ status.textContent = i18n[lang].sentNet; }
     });
 
-    // Modal behaviour (zoom from on-page card)
+    // ===== Scroll lock ohne Layout-Sprung =====
+    let savedBodyPaddingRight = "";
+    function lockScroll(){
+      const hasVScroll = document.documentElement.scrollHeight > document.documentElement.clientHeight;
+      if(hasVScroll){
+        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+        savedBodyPaddingRight = document.body.style.paddingRight;
+        if(scrollBarWidth > 0){
+          document.body.style.paddingRight = scrollBarWidth + "px";
+        }
+      }
+      document.body.style.overflow = 'hidden';
+    }
+    function unlockScroll(){
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = savedBodyPaddingRight;
+    }
+
+    // ===== Modal behaviour (Contact & Links) – eine Stelle, ein Script =====
     const backdrop = document.getElementById('backdrop');
     const contact = document.getElementById('contact');
-    const links = document.getElementById('links');
+    const links   = document.getElementById('links');
     const closeContact = contact.querySelector('.contact-close');
-    const closeLinks = links.querySelector('.links-close');
+    const closeLinks   = links.querySelector('.links-close');
     const openContactBtns = document.querySelectorAll('.open-contact');
-    const openLinksBtns = document.querySelectorAll('.open-links');
+    const openLinksBtns   = document.querySelectorAll('.open-links');
 
     function openModal(section, closeBtn){
+      lockScroll();
       backdrop.classList.add('visible');
-      section.classList.add('modalized','modal-anim-in');
+      section.classList.add('modalized');
       closeBtn.hidden = false;
       section.setAttribute('role','dialog');
       section.setAttribute('aria-modal','true');
-      section.querySelector('input,textarea,button')?.focus({preventScroll:true});
-      document.body.style.overflow='hidden';
-      setTimeout(()=>section.classList.remove('modal-anim-in'), 300);
+
+      // Animation im nächsten Frame starten => kein „Rechts-Bug“
+      requestAnimationFrame(()=>{
+        section.classList.add('modal-anim-in');
+        section.addEventListener('animationend', function handler(e){
+          if(e.animationName === 'modalZoomIn'){
+            section.classList.remove('modal-anim-in');
+            section.removeEventListener('animationend', handler);
+            section.querySelector('input,textarea,button')?.focus({preventScroll:true});
+          }
+        });
+      });
     }
+
     function closeModal(section, closeBtn){
       section.classList.add('modal-anim-out');
       backdrop.classList.remove('visible');
-      setTimeout(()=>{
-        section.classList.remove('modalized','modal-anim-out');
-        closeBtn.hidden = true;
-        section.removeAttribute('role'); section.removeAttribute('aria-modal');
-        document.body.style.overflow='';
-      }, 220);
+      section.addEventListener('animationend', function handler(e){
+        if(e.animationName === 'modalZoomOut'){
+          section.classList.remove('modalized','modal-anim-out');
+          closeBtn.hidden = true;
+          section.removeAttribute('role'); section.removeAttribute('aria-modal');
+          section.removeEventListener('animationend', handler);
+          unlockScroll();
+        }
+      });
     }
 
     openContactBtns.forEach(b=>b.addEventListener('click', (e)=>{ e.preventDefault(); openModal(contact, closeContact); }));
-    openLinksBtns.forEach(b=>b.addEventListener('click', (e)=>{ e.preventDefault(); openModal(links, closeLinks); }));
+    openLinksBtns.forEach(b=>b.addEventListener('click', (e)=>{ e.preventDefault(); openModal(links,   closeLinks);   }));
     closeContact.addEventListener('click', ()=>closeModal(contact, closeContact));
-    closeLinks.addEventListener('click', ()=>closeModal(links, closeLinks));
+    closeLinks.addEventListener('click',   ()=>closeModal(links,   closeLinks));
     backdrop.addEventListener('click', ()=>{
       if(contact.classList.contains('modalized')) closeModal(contact, closeContact);
-      if(links.classList.contains('modalized')) closeModal(links, closeLinks);
+      if(links.classList.contains('modalized'))   closeModal(links,   closeLinks);
     });
     window.addEventListener('keydown', (e)=>{
       if(e.key==='Escape'){
         if(contact.classList.contains('modalized')) closeModal(contact, closeContact);
-        if(links.classList.contains('modalized')) closeModal(links, closeLinks);
+        if(links.classList.contains('modalized'))   closeModal(links,   closeLinks);
       }
     });
   </script>
+
+  <!-- Modal backdrop element -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 </body>
 </html>
-
