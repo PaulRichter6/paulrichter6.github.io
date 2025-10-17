@@ -11,7 +11,6 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16'/%3E%3C/svg%3E">
 
   <style>
-    /* ===== Design Tokens ===== */
     :root{
       --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
       --line:rgba(148,163,184,.16); --brand:#3b82f6; --ring:rgba(59,130,246,.55);
@@ -25,7 +24,6 @@
       --shadow:0 20px 50px rgba(2,6,23,.10);
     }
 
-    /* ===== Base ===== */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -38,9 +36,10 @@
     .wrap{max-width:1100px; margin:0 auto; padding:28px}
     .divider{height:1px; background:var(--line); margin:28px 0}
 
-    /* ===== Nav ===== */
-    .nav{display:flex; align-items:center; justify-content:space-between}
+    /* Nav */
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px}
     .logo{font-weight:650; letter-spacing:.2px}
+    .group{display:flex; gap:10px; align-items:center}
     .pill{
       display:inline-flex; align-items:center; gap:10px; padding:10px 14px;
       border-radius:999px; border:1px solid var(--line);
@@ -52,8 +51,13 @@
       color:#fff; border-color:transparent;
       background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black));
     }
+    .lang-toggle{display:flex; border-radius:999px; overflow:hidden; border:1px solid var(--line)}
+    .lang-toggle button{
+      padding:8px 12px; background:transparent; color:var(--txt); border:0; cursor:pointer;
+    }
+    .lang-toggle button.active{background:color-mix(in oklab, var(--brand) 22%, transparent)}
 
-    /* ===== Hero ===== */
+    /* Hero */
     .hero{
       display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr;
       margin:44px 0 8px;
@@ -79,7 +83,7 @@
     .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
     .btn.ghost{background:transparent}
 
-    /* ===== Sections ===== */
+    /* Sections */
     .grid{display:grid; gap:24px; grid-template-columns: 1fr; margin-top:12px}
     @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
     .card{
@@ -87,7 +91,29 @@
       padding:22px; box-shadow:var(--shadow);
     }
     .section-title{margin:0 0 12px; font-size:22px; letter-spacing:.2px}
-    .section-subtle{margin:6px 0 14px; color:var(--muted)}
+
+    /* About/Services nicer */
+    .about-grid{display:grid; gap:18px}
+    @media (min-width:900px){.about-grid{grid-template-columns:1.2fr .8fr}}
+    .highlight-panel{
+      background: color-mix(in oklab, var(--brand) 6%, var(--elev));
+      border:1px solid color-mix(in oklab, var(--brand) 25%, var(--line));
+      border-radius:16px; padding:14px;
+    }
+    .badge{
+      display:inline-block; margin:6px 8px 0 0; padding:8px 10px; border-radius:999px;
+      background:rgba(255,255,255,.04); border:1px solid var(--line); font-size:14px;
+    }
+    .features{display:grid;gap:12px}
+    @media (min-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
+    .feature{
+      background: color-mix(in oklab, var(--brand) 4%, var(--elev));
+      border:1px solid color-mix(in oklab, var(--brand) 22%, var(--line));
+      border-radius:16px; padding:16px;
+    }
+    .feature h3{margin:0 0 6px;font-size:16px}
+
+    /* Links panel */
     .links{display:grid; gap:10px; margin-top:8px}
     .link{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -96,12 +122,18 @@
     }
     .link:hover{border-color:var(--ring); transform:translateY(-1px)}
     .info{
-      margin-top:12px; padding:12px 14px; border:1px dashed var(--line); border-radius:14px; color:var(--muted);
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      margin-top:12px; padding:14px 16px; border-radius:14px;
+      background: linear-gradient(180deg, color-mix(in oklab, var(--brand) 18%, transparent), transparent 85%);
+      border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line));
+      display:flex; align-items:center; gap:10px; color:var(--txt);
     }
-    ul.clean{margin:0; padding-left:18px}
-    ul.clean li{margin:6px 0}
+    .info::before{
+      content:""; width:10px; height:10px; border-radius:50%;
+      background: color-mix(in oklab, var(--brand) 70%, white);
+      box-shadow:0 0 10px color-mix(in oklab, var(--brand) 60%, transparent);
+    }
 
+    /* Forms & footer */
     form{display:grid; gap:12px; margin-top:8px}
     input,textarea{
       width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line);
@@ -111,11 +143,10 @@
     textarea{resize:vertical; min-height:140px}
     footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
-    /* ===== Reveal Animations ===== */
+    /* Reveal Animations */
     .reveal{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease}
     .reveal.visible{opacity:1; transform:none}
 
-    /* Assistive text */
     .sr{position:absolute; left:-9999px}
   </style>
 </head>
@@ -124,23 +155,29 @@
     <!-- NAV -->
     <div class="nav">
       <div class="logo">Paul Richter</div>
-      <div style="display:flex; gap:10px;">
-        <button id="themeToggle" class="pill" type="button" aria-label="Toggle theme">Toggle theme</button>
-        <a class="pill primary" href="#contact">Project inquiry</a>
+      <div class="group">
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <button id="langEN" class="active" data-lang="en" role="tab" aria-selected="true">EN</button>
+          <button id="langDE" data-lang="de" role="tab" aria-selected="false">DE</button>
+        </div>
+        <button id="themeToggle" class="pill" type="button" aria-label="Toggle theme" data-i18n="toggleTheme">Toggle theme</button>
+        <a class="pill primary" href="#contact" data-i18n="projectInquiry">Project inquiry</a>
       </div>
     </div>
 
     <!-- HERO -->
     <header class="hero reveal">
-      <!-- Swap the background-image once you upload your portrait: url('portrait.jpg') -->
+      <!-- Add your portrait later: url('portrait.jpg') -->
       <div class="avatar" style="background-image:url('');" aria-hidden="true"></div>
       <div>
-        <div class="kicker">VIDEO EDITOR · VIDEOGRAPHER</div>
-        <h1>I build clear, fast visuals that sell.</h1>
-        <p class="muted">I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.</p>
+        <div class="kicker" data-i18n="roles">VIDEO EDITOR · VIDEOGRAPHER</div>
+        <h1 data-i18n="headline">Cinematic edits for brands, events, and creators.</h1>
+        <p class="muted" data-i18n="subtitle">
+          I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.
+        </p>
         <div class="cta">
-          <a class="btn primary" href="#contact">Start a project</a>
-          <a class="btn ghost" href="#links">Watch my work</a>
+          <a class="btn primary" href="#contact" data-i18n="startProject">Start a project</a>
+          <a class="btn ghost" href="#links" data-i18n="watchWork">Watch my work</a>
         </div>
       </div>
     </header>
@@ -151,75 +188,89 @@
     <main class="grid">
       <!-- About -->
       <section class="card reveal" id="about">
-        <h2 class="section-title">About</h2>
-        <p>I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.</p>
-        <ul class="clean">
-          <li>On-site production (Munich area)</li>
-          <li>Video editing & post-production</li>
-          <li>Social media content & account management</li>
-          <li>Color grading, subtitles, and sound optimization</li>
-          <li>Consulting & content strategy for creators and brands</li>
-        </ul>
+        <h2 class="section-title" data-i18n="aboutTitle">About</h2>
+        <div class="about-grid">
+          <div>
+            <p data-i18n="aboutText">
+              I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.
+            </p>
+          </div>
+          <aside class="highlight-panel">
+            <div class="badge" data-i18n="badgeMunich">📍 Munich area</div>
+            <div class="badge" data-i18n="badgeModes">🎥 On-site & remote</div>
+            <div class="badge" data-i18n="badgeReply">⏱ Reply within 48h</div>
+          </aside>
+        </div>
       </section>
 
       <!-- Projects & Links -->
       <section class="card reveal" id="links">
-        <h2 class="section-title">Projects & Links</h2>
+        <h2 class="section-title" data-i18n="linksTitle">Projects & Links</h2>
         <div class="links">
-          <a class="link" href="https://instagram.com" target="_blank" rel="noreferrer">
+          <a class="link" href="https://www.instagram.com/paul.richter6/" target="_blank" rel="noreferrer">
             <span>Instagram</span><span>↗</span>
           </a>
-          <a class="link" href="https://youtube.com" target="_blank" rel="noreferrer">
-            <span>YouTube / Showreel</span><span>↗</span>
+          <a class="link" href="https://www.youtube.com/@PaulRichter1" target="_blank" rel="noreferrer">
+            <span>YouTube</span><span>↗</span>
           </a>
         </div>
-        <div class="info">
-          Currently managing social media for <strong>SAES School</strong>, alongside private clients and independent projects.
+        <div class="info" data-i18n="saesNote">
+          Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.
         </div>
       </section>
 
       <!-- Services -->
       <section class="card reveal" id="services">
-        <h2 class="section-title">Services</h2>
-        <ul class="clean">
-          <li>Landing pages & brand visuals (for your site/portfolio)</li>
-          <li>Site speed & Core Web Vitals for web video delivery</li>
-          <li>Editing packages for ongoing social content</li>
-        </ul>
+        <h2 class="section-title" data-i18n="servicesTitle">Services</h2>
+        <div class="features">
+          <div class="feature">
+            <h3 data-i18n="svcProdT">Production</h3>
+            <p data-i18n="svcProdD">On-site filming for events, products, and interviews.</p>
+          </div>
+          <div class="feature">
+            <h3 data-i18n="svcEditT">Editing</h3>
+            <p data-i18n="svcEditD">Clean cuts, pacing, subtitles, and sound polish.</p>
+          </div>
+          <div class="feature">
+            <h3 data-i18n="svcShortT">Short-form</h3>
+            <p data-i18n="svcShortD">Reels/TikTok packages optimized for retention.</p>
+          </div>
+          <div class="feature">
+            <h3 data-i18n="svcOpsT">Content Ops</h3>
+            <p data-i18n="svcOpsD">Account management, scheduling, and templates.</p>
+          </div>
+        </div>
       </section>
 
       <!-- Contact -->
       <section class="card reveal" id="contact">
-        <h2 class="section-title">Contact</h2>
-        <p class="muted">Reply within 48h.</p>
+        <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
+        <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
 
-        <!-- Formspree: replace the ACTION URL with your endpoint -->
+        <!-- Replace ACTION with your Formspree endpoint -->
         <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
           <label>
-            <span class="sr">Name</span>
-            <input name="name" type="text" placeholder="Your name" required />
+            <span class="sr" data-i18n="nameLabel">Name</span>
+            <input name="name" type="text" placeholder="Your name" data-i18n-ph="phName" required />
           </label>
           <label>
-            <span class="sr">Email</span>
-            <input name="email" type="email" placeholder="your@email.com" required />
+            <span class="sr" data-i18n="emailLabel">Email</span>
+            <input name="email" type="email" placeholder="your@email.com" data-i18n-ph="phEmail" required />
           </label>
           <label>
-            <span class="sr">Message</span>
-            <textarea name="message" placeholder="What do you need?"></textarea>
+            <span class="sr" data-i18n="msgLabel">Message</span>
+            <textarea name="message" placeholder="What do you need?" data-i18n-ph="phMsg"></textarea>
           </label>
 
-          <!-- Honeypot -->
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-
           <input type="hidden" name="_subject" value="New inquiry – paulrichter6.github.io" />
-          <button class="btn primary" type="submit">Send message</button>
+          <button class="btn primary" type="submit" data-i18n="sendBtn">Send message</button>
           <span id="status" class="muted" role="status" aria-live="polite"></span>
         </form>
       </section>
     </main>
 
     <div class="divider"></div>
-
     <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
 
@@ -227,11 +278,11 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Theme toggle with localStorage
+    // Theme toggle
     const root = document.body;
-    const saved = localStorage.getItem('theme');
-    if(saved === 'light') root.classList.add('light');
-    document.getElementById('themeToggle').addEventListener('click', ()=>{
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'light') root.classList.add('light');
+    document.getElementById('themeToggle')?.addEventListener('click', ()=>{
       root.classList.toggle('light');
       localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
     });
@@ -244,18 +295,123 @@
     }, { threshold: .12 });
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
+    // i18n dictionary
+    const i18n = {
+      en: {
+        toggleTheme: "Toggle theme",
+        projectInquiry: "Project inquiry",
+        roles: "VIDEO EDITOR · VIDEOGRAPHER",
+        headline: "Cinematic edits for brands, events, and creators.",
+        subtitle: "I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.",
+        startProject: "Start a project",
+        watchWork: "Watch my work",
+        aboutTitle: "About",
+        aboutText: "I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.",
+        badgeMunich: "📍 Munich area",
+        badgeModes: "🎥 On-site & remote",
+        badgeReply: "⏱ Reply within 48h",
+        linksTitle: "Projects & Links",
+        saesNote: "Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.",
+        servicesTitle: "Services",
+        svcProdT: "Production",
+        svcProdD: "On-site filming for events, products, and interviews.",
+        svcEditT: "Editing",
+        svcEditD: "Clean cuts, pacing, subtitles, and sound polish.",
+        svcShortT: "Short-form",
+        svcShortD: "Reels/TikTok packages optimized for retention.",
+        svcOpsT: "Content Ops",
+        svcOpsD: "Account management, scheduling, and templates.",
+        contactTitle: "Contact",
+        replyLine: "Reply within 48h.",
+        nameLabel: "Name",
+        emailLabel: "Email",
+        msgLabel: "Message",
+        phName: "Your name",
+        phEmail: "your@email.com",
+        phMsg: "What do you need?",
+        sendBtn: "Send message",
+        sentOK: "Thanks! I will reply within 48h.",
+        sentFail: "Send failed. Please try again or contact me via Instagram.",
+        sentNet: "Network error. Please try again later."
+      },
+      de: {
+        toggleTheme: "Theme wechseln",
+        projectInquiry: "Projektanfrage",
+        roles: "VIDEOEDITOR · VIDEOGRAF",
+        headline: "Cinematische Edits für Marken, Events und Creator.",
+        subtitle: "Ich produziere cinematische Videos und Short-Form-Content für Marken, Events und Privatkund:innen — mit Fokus auf Qualität und Wirkung.",
+        startProject: "Projekt starten",
+        watchWork: "Arbeiten ansehen",
+        aboutTitle: "Über mich",
+        aboutText: "Ich arbeite mit Privat- und Unternehmenskunden im Großraum München. Vor Ort nach Terminvereinbarung; Remote ist ebenfalls möglich — inklusive Social-Media-Content, Schnittprojekten und laufender Account-Betreuung. Das erste Online-Gespräch ist kostenfrei.",
+        badgeMunich: "📍 Raum München",
+        badgeModes: "🎥 Vor Ort & Remote",
+        badgeReply: "⏱ Antwort innerhalb 48h",
+        linksTitle: "Projekte & Links",
+        saesNote: "Aktuell Social Media für <strong>@saes_school</strong>; zusätzlich Privatkund:innen und freie Projekte.",
+        servicesTitle: "Leistungen",
+        svcProdT: "Produktion",
+        svcProdD: "Vor-Ort-Drehs für Events, Produkte und Interviews.",
+        svcEditT: "Schnitt",
+        svcEditD: "Saubere Edits, Timing, Untertitel und Sound-Feinschliff.",
+        svcShortT: "Short-Form",
+        svcShortD: "Reels/TikTok-Pakete optimiert für Retention.",
+        svcOpsT: "Content Ops",
+        svcOpsD: "Account-Management, Planung und Templates.",
+        contactTitle: "Kontakt",
+        replyLine: "Antwort innerhalb von 48 Stunden.",
+        nameLabel: "Name",
+        emailLabel: "E-Mail",
+        msgLabel: "Nachricht",
+        phName: "Dein Name",
+        phEmail: "dein@mail.com",
+        phMsg: "Worum geht’s?",
+        sendBtn: "Nachricht senden",
+        sentOK: "Danke! Ich melde mich innerhalb von 48 Stunden.",
+        sentFail: "Senden fehlgeschlagen. Bitte erneut versuchen oder per Instagram schreiben.",
+        sentNet: "Netzwerkfehler. Bitte später erneut versuchen."
+      }
+    };
+
+    // i18n helpers
+    function applyI18n(lang){
+      // text content
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        const html = i18n[lang][key];
+        if(html !== undefined){ el.innerHTML = html; }
+      });
+      // placeholders
+      document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+        const key = el.getAttribute("data-i18n-ph");
+        const text = i18n[lang][key];
+        if(text !== undefined){ el.setAttribute("placeholder", text); }
+      });
+      // update active state
+      document.getElementById("langEN").classList.toggle("active", lang==="en");
+      document.getElementById("langDE").classList.toggle("active", lang==="de");
+      document.documentElement.setAttribute("lang", lang);
+    }
+
+    const savedLang = localStorage.getItem("lang") || "en";
+    applyI18n(savedLang);
+
+    document.getElementById("langEN").addEventListener("click", ()=>{ localStorage.setItem("lang","en"); applyI18n("en"); });
+    document.getElementById("langDE").addEventListener("click", ()=>{ localStorage.setItem("lang","de"); applyI18n("de"); });
+
     // Formspree AJAX
     const form = document.getElementById('contactForm');
     const status = document.getElementById('status');
     form?.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      status.textContent = 'Sending…';
+      const lang = localStorage.getItem("lang") || "en";
+      status.textContent = lang==="de" ? "Sende…" : "Sending…";
       try{
         const data = new FormData(form);
         const res = await fetch(form.action, { method:'POST', body:data, headers:{'Accept':'application/json'}});
-        if(res.ok){ form.reset(); status.textContent = 'Thanks! I will reply within 48h.'; }
-        else{ status.textContent = 'Send failed. Please try again or contact me via Instagram.'; }
-      }catch{ status.textContent = 'Network error. Please try again later.'; }
+        if(res.ok){ form.reset(); status.textContent = i18n[lang].sentOK; }
+        else{ status.textContent = i18n[lang].sentFail; }
+      }catch{ status.textContent = i18n[lang].sentNet; }
     });
   </script>
 </body>
