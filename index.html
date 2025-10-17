@@ -9,22 +9,21 @@
   <meta property="og:description" content="I create cinematic videos and short-form content with a focus on quality and visual impact." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16'/%3E%3C/svg%3E">
-
   <style>
     :root{
       --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
       --line:rgba(148,163,184,.16);
-      --brand:#38b6ff; --ring:rgba(56,182,255,.55);
+      /* >>> Brand-Blau: passe hier an, wenn du einen exakten Ton willst */
+      --brand:#2ea8ff;
+      --ring:rgba(46,168,255,.55);
       --radius:22px; --shadow:0 20px 60px rgba(0,0,0,.35);
-      --surface-grad:
-        radial-gradient(1200px 600px at 80% -10%, rgba(56,182,255,.12), transparent 60%),
-        radial-gradient(1000px 500px at 10% 110%, rgba(56,182,255,.10), transparent 60%);
+      --surface-grad: radial-gradient(1200px 600px at 80% -10%, rgba(46,168,255,.10), transparent 60%),
+                      radial-gradient(1000px 500px at 10% 110%, rgba(46,168,255,.08), transparent 60%);
       --capsule-bg: rgba(255,255,255,.055);
     }
     .light{
       --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
-      --line:rgba(15,23,42,.12);
-      --brand:#38b6ff; --ring:rgba(56,182,255,.35);
+      --line:rgba(15,23,42,.12); --brand:#2ea8ff; --ring:rgba(46,168,255,.35);
       --shadow:0 20px 50px rgba(2,6,23,.10);
       --capsule-bg: rgba(2,6,23,.04);
     }
@@ -41,7 +40,7 @@
     .wrap{max-width:1100px; margin:0 auto; padding:28px}
     .divider{height:1px; background:var(--line); margin:28px 0}
 
-    /* NAV */
+    /* Nav */
     .nav{display:flex; align-items:center; justify-content:space-between; gap:12px}
     .logo{font-weight:650; letter-spacing:.2px}
     .group{display:flex; gap:10px; align-items:center}
@@ -52,127 +51,81 @@
       transition:transform .2s ease, border-color .2s ease; cursor:pointer;
     }
     .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
-    .pill.primary{
-      color:#fff; border-color:transparent;
-      background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black));
-    }
+    .pill.primary{color:#fff; border-color:transparent;
+      background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black));}
     .lang-toggle{display:flex; border-radius:999px; overflow:hidden; border:1px solid var(--line)}
     .lang-toggle button{padding:8px 12px; background:transparent; color:var(--txt); border:0; cursor:pointer}
     .lang-toggle button.active{background:color-mix(in oklab, var(--brand) 22%, transparent)}
 
-    /* HERO */
-    .hero{
-      display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr;
-      margin:44px 0 8px;
-    }
-    .avatar{
-      width:140px; height:140px; border-radius:24px; overflow:hidden; position:relative; background:var(--elev);
-      transition: transform .3s ease;
-    }
-    .avatar::before{
-      content:""; position:absolute; inset:-6px; border-radius:28px;
-      background:radial-gradient(circle at 50% 40%, rgba(56,182,255,.35), transparent 60%);
-      z-index:0; filter:blur(18px); transition: opacity .3s ease, filter .3s ease;
-    }
-    .avatar img{position:relative; width:100%; height:100%; object-fit:cover; border-radius:24px; display:block; z-index:1; transition: transform .4s ease}
-    .avatar:hover img{transform:scale(1.04)}
-    .avatar:hover::before{filter:blur(26px); opacity:.9}
-
+    /* Hero */
+    .hero{display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr; margin:44px 0 8px}
+    .avatar{width:140px; height:140px; border-radius:24px; border:1px solid var(--line); box-shadow:var(--shadow); overflow:hidden; background:var(--elev)}
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block} /* kein Rand sichtbar */
     h1{margin:0 0 6px; font-size:44px; line-height:1.1; letter-spacing:-.3px}
     .kicker{color:var(--muted); font-size:14px; letter-spacing:.3px; text-transform:uppercase}
     .muted{color:var(--muted)}
     .cta{display:flex; gap:12px; margin-top:14px}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:12px 16px; border-radius:14px; border:1px solid var(--line);
       background:var(--elev); box-shadow:var(--shadow);
-      transition:transform .15s ease, border-color .2s ease;
-    }
+      transition:transform .15s ease, border-color .2s ease}
     .btn:hover{transform:translateY(-2px); border-color:var(--ring)}
     .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
     .btn.ghost{background:transparent}
 
-    /* SECTIONS */
+    /* Sections */
     .grid{display:grid; gap:24px; grid-template-columns: 1fr; margin-top:12px}
     @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
     .card{background:var(--elev); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
     .section-title{margin:0 0 12px; font-size:22px; letter-spacing:.2px}
 
-    /* ABOUT / SERVICES */
+    /* About / Services */
     .about-grid{display:grid; gap:18px}
     @media (min-width:900px){.about-grid{grid-template-columns:1.2fr .8fr}}
-    .highlight-panel{
-      background: color-mix(in oklab, var(--brand) 4%, var(--elev));
-      border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line));
-      border-radius:16px; padding:14px;
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      margin:8px 8px 0 0; padding:8px 12px; border-radius:999px;
-      background: var(--capsule-bg);
-      border:1px solid color-mix(in oklab, var(--brand) 14%, var(--line));
-      font-size:14px;
-    }
-    .features{display:grid;gap:12px}
+    .highlight-panel{background: color-mix(in oklab, var(--brand) 4%, var(--elev));
+      border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line)); border-radius:16px; padding:14px}
+    .badge{display:inline-flex; align-items:center; gap:8px; margin:8px 8px 0 0; padding:8px 12px; border-radius:999px;
+      background: var(--capsule-bg); border:1px solid color-mix(in oklab, var(--brand) 14%, var(--line)); font-size:14px}
+    .features{display:grid; gap:12px}
     @media (min-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
-    .feature{
-      background: color-mix(in oklab, var(--brand) 4%, var(--elev));
-      border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line));
-      border-radius:16px; padding:16px;
-    }
-    .feature h3{margin:0 0 6px;font-size:16px}
+    .feature{background: color-mix(in oklab, var(--brand) 4%, var(--elev));
+      border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line)); border-radius:16px; padding:16px}
+    .feature h3{margin:0 0 6px; font-size:16px}
 
-    /* LINKS PANEL */
+    /* Links panel */
     .links{display:grid; gap:10px; margin-top:8px}
-    .link{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    .link{display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:14px 16px; border-radius:14px; border:1px solid var(--line);
-      transition:border-color .2s ease, transform .15s ease;
-    }
+      transition:border-color .2s ease, transform .15s ease}
     .link:hover{border-color:var(--ring); transform:translateY(-1px)}
-    .info-link{
-      background:linear-gradient(180deg, color-mix(in oklab, var(--brand) 10%, transparent), transparent 85%);
-      border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line));
-    }
-    .links-close{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); border-radius:12px; padding:6px 10px; cursor:pointer}
+    .info-link{background:linear-gradient(180deg, color-mix(in oklab, var(--brand) 10%, transparent), transparent 85%);
+      border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line))}
+    .info-text{display:none} /* durch Kachel ersetzt */
 
-    /* FORM & FOOTER */
+    /* Forms & footer */
     form{display:grid; gap:12px; margin-top:8px}
     input,textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
     input:focus,textarea:focus{outline:none; border-color:var(--ring); box-shadow:0 0 0 6px color-mix(in oklab, var(--ring) 30%, transparent)}
     textarea{resize:vertical; min-height:140px}
     footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
-    /* MODAL (fix: zentriert, kein Seitensprung) */
-    .backdrop{
-      position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%);
-      background: rgba(2,6,23,.45);
-      opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60;
-      will-change: opacity;
-    }
+    /* Modal system (zoom from card) */
+    .backdrop{position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%); background: rgba(2,6,23,.45);
+      opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60}
     .backdrop.visible{opacity:1; pointer-events:auto}
-    .modalized{
-      position:fixed; left:50%; top:6vh; transform:translate(-50%,0);
-      width:min(720px,92vw); max-height:88vh; overflow:auto; z-index:70;
-      box-shadow:0 30px 80px rgba(0,0,0,.45);
-      will-change: transform, opacity;
-    }
-    .modal-anim-in{animation: modalZoomIn .24s cubic-bezier(.2,.8,.2,1) both}
-    .modal-anim-out{animation: modalZoomOut .18s ease-in both}
-    @keyframes modalZoomIn{
-      from{ transform:translate(-50%,0) scale(.92); opacity:.85; transform-origin:center center; }
-      to  { transform:translate(-50%,0) scale(1);    opacity:1; }
-    }
-    @keyframes modalZoomOut{
-      from{ transform:translate(-50%,0) scale(1);   opacity:1; }
-      to  { transform:translate(-50%,0) scale(.92); opacity:.85; }
-    }
-    .contact-close{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); border-radius:12px; padding:6px 10px; cursor:pointer}
+    .modalized{position:fixed; left:50%; top:6vh; width:min(720px,92vw); max-height:88vh; overflow:auto;
+      z-index:70; box-shadow:0 30px 80px rgba(0,0,0,.45)}
+    .modal-anim-in{animation: zoomIn .28s cubic-bezier(.2,.8,.2,1) both}
+    .modal-anim-out{animation: zoomOut .22s ease-in both}
+    @keyframes zoomIn{from{transform:translate(-50%,0) scale(.86); transform-origin: right bottom; opacity:.75}
+                      to{transform:translate(-50%,0) scale(1); opacity:1}}
+    @keyframes zoomOut{from{transform:translate(-50%,0) scale(1); opacity:1}
+                       to{transform:translate(-50%,0) scale(.86); opacity:.75}}
 
-    /* REVEAL */
+    .contact-close,.links-close{position:absolute; top:10px; right:10px; border:1px solid var(--line);
+      background:var(--elev); border-radius:12px; padding:6px 10px; cursor:pointer}
     .reveal{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease}
     .reveal.visible{opacity:1; transform:none}
-
     .sr{position:absolute; left:-9999px}
   </style>
 </head>
@@ -194,8 +147,8 @@
     <!-- HERO -->
     <header class="hero reveal">
       <div class="avatar" aria-hidden="true">
-        <img src="portrait.png" alt="Portrait of Paul Richter"
-             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 140 140%27%3E%3Crect width=%27140%27 height=%27140%27 rx=%2724%27 fill=%27%2338b6ff%27/%3E%3C/svg%3E'">
+        <!-- Lade portrait.jpg oder assets/portrait.jpg hoch und passe src an -->
+        <img src="portrait.jpg" alt="Portrait of Paul Richter" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 140 140%27%3E%3Crect width=%27140%27 height=%27140%27 rx=%2724%27 fill=%27%232ea8ff%27/%3E%3C/svg%3E'">
       </div>
       <div>
         <div class="kicker" data-i18n="roles">VIDEO EDITOR · VIDEOGRAPHER</div>
@@ -214,7 +167,7 @@
 
     <!-- CONTENT -->
     <main class="grid">
-      <!-- ABOUT -->
+      <!-- About -->
       <section class="card reveal" id="about">
         <h2 class="section-title" data-i18n="aboutTitle">About</h2>
         <div class="about-grid">
@@ -231,7 +184,7 @@
         </div>
       </section>
 
-      <!-- PROJECTS & LINKS -->
+      <!-- Projects & Links -->
       <section class="card reveal" id="links">
         <button class="links-close" type="button" aria-label="Close links" hidden>✕</button>
         <h2 class="section-title" data-i18n="linksTitle">Projects & Links</h2>
@@ -242,15 +195,16 @@
           <a class="link" href="https://www.youtube.com/@PaulRichter1" target="_blank" rel="noreferrer">
             <span>YouTube</span><span>↗</span>
           </a>
-          <!-- SAES as own tile -->
+          <!-- SAES als eigene Kachel -->
           <div class="link info-link">
             <span data-i18n="saesNoteInline">Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.</span>
             <span>•</span>
           </div>
         </div>
+        <p class="info-text" data-i18n="saesNote"></p>
       </section>
 
-      <!-- SERVICES -->
+      <!-- Services -->
       <section class="card reveal" id="services">
         <h2 class="section-title" data-i18n="servicesTitle">Services</h2>
         <div class="features">
@@ -273,27 +227,21 @@
         </div>
       </section>
 
-      <!-- CONTACT -->
+      <!-- Contact -->
       <section class="card reveal" id="contact" aria-labelledby="contactTitle">
         <button class="contact-close" type="button" aria-label="Close contact" hidden>✕</button>
         <h2 class="section-title" id="contactTitle" data-i18n="contactTitle">Contact</h2>
         <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
-
-        <!-- Replace with your Formspree endpoint -->
         <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
-          <label>
-            <span class="sr" data-i18n="nameLabel">Name</span>
+          <label><span class="sr" data-i18n="nameLabel">Name</span>
             <input name="name" type="text" placeholder="Your name" data-i18n-ph="phName" required />
           </label>
-          <label>
-            <span class="sr" data-i18n="emailLabel">Email</span>
+          <label><span class="sr" data-i18n="emailLabel">Email</span>
             <input name="email" type="email" placeholder="your@email.com" data-i18n-ph="phEmail" required />
           </label>
-          <label>
-            <span class="sr" data-i18n="msgLabel">Message</span>
+          <label><span class="sr" data-i18n="msgLabel">Message</span>
             <textarea name="message" placeholder="What do you need?" data-i18n-ph="phMsg"></textarea>
           </label>
-
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
           <input type="hidden" name="_subject" value="New inquiry – paulrichter6.github.io" />
           <button class="btn primary" type="submit" data-i18n="sendBtn">Send message</button>
@@ -306,12 +254,14 @@
     <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
 
-  <!-- ONE SCRIPT ONLY -->
+  <!-- Modal backdrop -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
   <script>
-    // ===== Year =====
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ===== Theme toggle =====
+    // Theme toggle
     const root = document.body;
     const savedTheme = localStorage.getItem('theme');
     if(savedTheme === 'light') root.classList.add('light');
@@ -320,7 +270,7 @@
       localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
     });
 
-    // ===== Scroll reveal =====
+    // Scroll reveal
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
@@ -328,7 +278,7 @@
     }, { threshold: .12 });
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // ===== i18n dictionary =====
+    // i18n dictionary
     const i18n = {
       en: {
         toggleTheme:"Toggle theme", projectInquiry:"Project inquiry",
@@ -376,7 +326,7 @@
       }
     };
 
-    // ===== i18n helpers =====
+    // i18n helpers
     function applyI18n(lang){
       document.querySelectorAll("[data-i18n]").forEach(el=>{
         const key = el.getAttribute("data-i18n");
@@ -397,7 +347,7 @@
     document.getElementById("langEN").addEventListener("click", ()=>{ localStorage.setItem("lang","en"); applyI18n("en"); });
     document.getElementById("langDE").addEventListener("click", ()=>{ localStorage.setItem("lang","de"); applyI18n("de"); });
 
-    // ===== Formspree AJAX =====
+    // Formspree AJAX
     const form = document.getElementById('contactForm');
     const status = document.getElementById('status');
     form?.addEventListener('submit', async (e)=>{
@@ -412,85 +362,51 @@
       }catch{ status.textContent = i18n[lang].sentNet; }
     });
 
-    // ===== Scroll lock ohne Layout-Sprung =====
-    let savedBodyPaddingRight = "";
-    function lockScroll(){
-      const hasVScroll = document.documentElement.scrollHeight > document.documentElement.clientHeight;
-      if(hasVScroll){
-        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-        savedBodyPaddingRight = document.body.style.paddingRight;
-        if(scrollBarWidth > 0){
-          document.body.style.paddingRight = scrollBarWidth + "px";
-        }
-      }
-      document.body.style.overflow = 'hidden';
-    }
-    function unlockScroll(){
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = savedBodyPaddingRight;
-    }
-
-    // ===== Modal behaviour (Contact & Links) – eine Stelle, ein Script =====
+    // Modal behaviour (zoom from card position)
     const backdrop = document.getElementById('backdrop');
     const contact = document.getElementById('contact');
-    const links   = document.getElementById('links');
+    const links = document.getElementById('links');
     const closeContact = contact.querySelector('.contact-close');
-    const closeLinks   = links.querySelector('.links-close');
+    const closeLinks = links.querySelector('.links-close');
     const openContactBtns = document.querySelectorAll('.open-contact');
-    const openLinksBtns   = document.querySelectorAll('.open-links');
+    const openLinksBtns = document.querySelectorAll('.open-links');
 
     function openModal(section, closeBtn){
-      lockScroll();
       backdrop.classList.add('visible');
-      section.classList.add('modalized');
+      section.classList.add('modalized','modal-anim-in');
       closeBtn.hidden = false;
       section.setAttribute('role','dialog');
       section.setAttribute('aria-modal','true');
-
-      // Animation im nächsten Frame starten => kein „Rechts-Bug“
-      requestAnimationFrame(()=>{
-        section.classList.add('modal-anim-in');
-        section.addEventListener('animationend', function handler(e){
-          if(e.animationName === 'modalZoomIn'){
-            section.classList.remove('modal-anim-in');
-            section.removeEventListener('animationend', handler);
-            section.querySelector('input,textarea,button')?.focus({preventScroll:true});
-          }
-        });
-      });
+      section.querySelector('input,textarea,button')?.focus({preventScroll:true});
+      document.body.style.overflow='hidden';
+      // Nach der Einblendung die Animationsklasse entfernen (damit close sauber läuft)
+      setTimeout(()=>section.classList.remove('modal-anim-in'), 300);
     }
-
     function closeModal(section, closeBtn){
       section.classList.add('modal-anim-out');
       backdrop.classList.remove('visible');
-      section.addEventListener('animationend', function handler(e){
-        if(e.animationName === 'modalZoomOut'){
-          section.classList.remove('modalized','modal-anim-out');
-          closeBtn.hidden = true;
-          section.removeAttribute('role'); section.removeAttribute('aria-modal');
-          section.removeEventListener('animationend', handler);
-          unlockScroll();
-        }
-      });
+      setTimeout(()=>{
+        section.classList.remove('modalized','modal-anim-out');
+        closeBtn.hidden = true;
+        section.removeAttribute('role'); section.removeAttribute('aria-modal');
+        document.body.style.overflow='';
+      }, 220);
     }
 
     openContactBtns.forEach(b=>b.addEventListener('click', (e)=>{ e.preventDefault(); openModal(contact, closeContact); }));
-    openLinksBtns.forEach(b=>b.addEventListener('click', (e)=>{ e.preventDefault(); openModal(links,   closeLinks);   }));
+    openLinksBtns.forEach(b=>b.addEventListener('click', (e)=>{ e.preventDefault(); openModal(links, closeLinks); }));
     closeContact.addEventListener('click', ()=>closeModal(contact, closeContact));
-    closeLinks.addEventListener('click',   ()=>closeModal(links,   closeLinks));
+    closeLinks.addEventListener('click', ()=>closeModal(links, closeLinks));
     backdrop.addEventListener('click', ()=>{
       if(contact.classList.contains('modalized')) closeModal(contact, closeContact);
-      if(links.classList.contains('modalized'))   closeModal(links,   closeLinks);
+      if(links.classList.contains('modalized')) closeModal(links, closeLinks);
     });
     window.addEventListener('keydown', (e)=>{
       if(e.key==='Escape'){
         if(contact.classList.contains('modalized')) closeModal(contact, closeContact);
-        if(links.classList.contains('modalized'))   closeModal(links,   closeLinks);
+        if(links.classList.contains('modalized')) closeModal(links, closeLinks);
       }
     });
   </script>
-
-  <!-- Modal backdrop element -->
-  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 </body>
 </html>
