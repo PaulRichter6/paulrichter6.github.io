@@ -17,11 +17,13 @@
       --radius:22px; --shadow:0 20px 60px rgba(0,0,0,.35);
       --surface-grad: radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.08), transparent 60%),
                       radial-gradient(1000px 500px at 10% 110%, rgba(59,130,246,.06), transparent 60%);
+      --capsule-bg: rgba(255,255,255,.055); /* subtile Badge-Farbe dark */
     }
     .light{
       --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
       --line:rgba(15,23,42,.12); --brand:#2563eb; --ring:rgba(37,99,235,.35);
       --shadow:0 20px 50px rgba(2,6,23,.10);
+      --capsule-bg: rgba(2,6,23,.04);       /* subtile Badge-Farbe light */
     }
 
     *{box-sizing:border-box}
@@ -92,23 +94,26 @@
     }
     .section-title{margin:0 0 12px; font-size:22px; letter-spacing:.2px}
 
-    /* About/Services nicer */
+    /* About / Services nicer */
     .about-grid{display:grid; gap:18px}
     @media (min-width:900px){.about-grid{grid-template-columns:1.2fr .8fr}}
     .highlight-panel{
-      background: color-mix(in oklab, var(--brand) 6%, var(--elev));
-      border:1px solid color-mix(in oklab, var(--brand) 25%, var(--line));
+      background: color-mix(in oklab, var(--brand) 4%, var(--elev));
+      border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line));
       border-radius:16px; padding:14px;
     }
     .badge{
-      display:inline-block; margin:6px 8px 0 0; padding:8px 10px; border-radius:999px;
-      background:rgba(255,255,255,.04); border:1px solid var(--line); font-size:14px;
+      display:inline-flex; align-items:center; gap:8px;
+      margin:8px 8px 0 0; padding:8px 12px; border-radius:999px;
+      background: var(--capsule-bg);
+      border:1px solid color-mix(in oklab, var(--brand) 14%, var(--line));
+      font-size:14px;
     }
     .features{display:grid;gap:12px}
     @media (min-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
     .feature{
       background: color-mix(in oklab, var(--brand) 4%, var(--elev));
-      border:1px solid color-mix(in oklab, var(--brand) 22%, var(--line));
+      border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line));
       border-radius:16px; padding:16px;
     }
     .feature h3{margin:0 0 6px;font-size:16px}
@@ -121,17 +126,7 @@
       transition:border-color .2s ease, transform .15s ease;
     }
     .link:hover{border-color:var(--ring); transform:translateY(-1px)}
-    .info{
-      margin-top:12px; padding:14px 16px; border-radius:14px;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--brand) 18%, transparent), transparent 85%);
-      border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line));
-      display:flex; align-items:center; gap:10px; color:var(--txt);
-    }
-    .info::before{
-      content:""; width:10px; height:10px; border-radius:50%;
-      background: color-mix(in oklab, var(--brand) 70%, white);
-      box-shadow:0 0 10px color-mix(in oklab, var(--brand) 60%, transparent);
-    }
+    .info-text{ margin-top:14px; color:var(--muted); line-height:1.65; }
 
     /* Forms & footer */
     form{display:grid; gap:12px; margin-top:8px}
@@ -143,7 +138,24 @@
     textarea{resize:vertical; min-height:140px}
     footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
-    /* Reveal Animations */
+    /* Modal contact */
+    .backdrop{
+      position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%);
+      background: rgba(2,6,23,.45);
+      opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:60;
+    }
+    .backdrop.visible{opacity:1; pointer-events:auto}
+    #contact.modalized{
+      position:fixed; left:50%; top:6vh; transform:translateX(-50%);
+      width:min(680px,92vw); max-height:88vh; overflow:auto;
+      z-index:70; box-shadow:0 30px 80px rgba(0,0,0,.45);
+    }
+    .contact-close{
+      position:absolute; top:10px; right:10px; border:1px solid var(--line);
+      background:var(--elev); border-radius:12px; padding:6px 10px; cursor:pointer;
+    }
+
+    /* Reveal */
     .reveal{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease}
     .reveal.visible{opacity:1; transform:none}
 
@@ -161,13 +173,12 @@
           <button id="langDE" data-lang="de" role="tab" aria-selected="false">DE</button>
         </div>
         <button id="themeToggle" class="pill" type="button" aria-label="Toggle theme" data-i18n="toggleTheme">Toggle theme</button>
-        <a class="pill primary" href="#contact" data-i18n="projectInquiry">Project inquiry</a>
+        <a class="pill primary open-contact" href="#contact" data-i18n="projectInquiry">Project inquiry</a>
       </div>
     </div>
 
     <!-- HERO -->
     <header class="hero reveal">
-      <!-- Add your portrait later: url('portrait.jpg') -->
       <div class="avatar" style="background-image:url('');" aria-hidden="true"></div>
       <div>
         <div class="kicker" data-i18n="roles">VIDEO EDITOR · VIDEOGRAPHER</div>
@@ -176,7 +187,7 @@
           I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.
         </p>
         <div class="cta">
-          <a class="btn primary" href="#contact" data-i18n="startProject">Start a project</a>
+          <a class="btn primary open-contact" href="#contact" data-i18n="startProject">Start a project</a>
           <a class="btn ghost" href="#links" data-i18n="watchWork">Watch my work</a>
         </div>
       </div>
@@ -196,9 +207,9 @@
             </p>
           </div>
           <aside class="highlight-panel">
-            <div class="badge" data-i18n="badgeMunich">📍 Munich area</div>
-            <div class="badge" data-i18n="badgeModes">🎥 On-site & remote</div>
-            <div class="badge" data-i18n="badgeReply">⏱ Reply within 48h</div>
+            <span class="badge" data-i18n="badgeMunich">📍 Munich area</span>
+            <span class="badge" data-i18n="badgeModes">🎥 On-site & remote</span>
+            <span class="badge" data-i18n="badgeReply">🗓 First online consultation is free</span>
           </aside>
         </div>
       </section>
@@ -214,9 +225,9 @@
             <span>YouTube</span><span>↗</span>
           </a>
         </div>
-        <div class="info" data-i18n="saesNote">
+        <p class="info-text" data-i18n="saesNote">
           Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.
-        </div>
+        </p>
       </section>
 
       <!-- Services -->
@@ -232,8 +243,8 @@
             <p data-i18n="svcEditD">Clean cuts, pacing, subtitles, and sound polish.</p>
           </div>
           <div class="feature">
-            <h3 data-i18n="svcShortT">Short-form</h3>
-            <p data-i18n="svcShortD">Reels/TikTok packages optimized for retention.</p>
+            <h3 data-i18n="svcShortT">Short-form (Reels / TikTok & YouTube videos)</h3>
+            <p data-i18n="svcShortD">Packages optimized for retention and platform rhythm.</p>
           </div>
           <div class="feature">
             <h3 data-i18n="svcOpsT">Content Ops</h3>
@@ -242,12 +253,12 @@
         </div>
       </section>
 
-      <!-- Contact -->
-      <section class="card reveal" id="contact">
-        <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
+      <!-- Contact (can turn into modal) -->
+      <section class="card reveal" id="contact" aria-labelledby="contactTitle">
+        <button class="contact-close" type="button" aria-label="Close contact" hidden>✕</button>
+        <h2 class="section-title" id="contactTitle" data-i18n="contactTitle">Contact</h2>
         <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
 
-        <!-- Replace ACTION with your Formspree endpoint -->
         <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
           <label>
             <span class="sr" data-i18n="nameLabel">Name</span>
@@ -273,6 +284,9 @@
     <div class="divider"></div>
     <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
+
+  <!-- Modal backdrop -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
   <script>
     // Year
@@ -309,7 +323,7 @@
         aboutText: "I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.",
         badgeMunich: "📍 Munich area",
         badgeModes: "🎥 On-site & remote",
-        badgeReply: "⏱ Reply within 48h",
+        badgeReply: "🗓 First online consultation is free",
         linksTitle: "Projects & Links",
         saesNote: "Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.",
         servicesTitle: "Services",
@@ -317,8 +331,8 @@
         svcProdD: "On-site filming for events, products, and interviews.",
         svcEditT: "Editing",
         svcEditD: "Clean cuts, pacing, subtitles, and sound polish.",
-        svcShortT: "Short-form",
-        svcShortD: "Reels/TikTok packages optimized for retention.",
+        svcShortT: "Short-form (Reels / TikTok & YouTube videos)",
+        svcShortD: "Packages optimized for retention and platform rhythm.",
         svcOpsT: "Content Ops",
         svcOpsD: "Account management, scheduling, and templates.",
         contactTitle: "Contact",
@@ -346,7 +360,7 @@
         aboutText: "Ich arbeite mit Privat- und Unternehmenskunden im Großraum München. Vor Ort nach Terminvereinbarung; Remote ist ebenfalls möglich — inklusive Social-Media-Content, Schnittprojekten und laufender Account-Betreuung. Das erste Online-Gespräch ist kostenfrei.",
         badgeMunich: "📍 Raum München",
         badgeModes: "🎥 Vor Ort & Remote",
-        badgeReply: "⏱ Antwort innerhalb 48h",
+        badgeReply: "🗓 Erstes Online-Gespräch kostenfrei",
         linksTitle: "Projekte & Links",
         saesNote: "Aktuell Social Media für <strong>@saes_school</strong>; zusätzlich Privatkund:innen und freie Projekte.",
         servicesTitle: "Leistungen",
@@ -354,8 +368,8 @@
         svcProdD: "Vor-Ort-Drehs für Events, Produkte und Interviews.",
         svcEditT: "Schnitt",
         svcEditD: "Saubere Edits, Timing, Untertitel und Sound-Feinschliff.",
-        svcShortT: "Short-Form",
-        svcShortD: "Reels/TikTok-Pakete optimiert für Retention.",
+        svcShortT: "Short-Form (Reels / TikTok & YouTube Videos)",
+        svcShortD: "Pakete optimiert für Retention und Plattform-Rhythmus.",
         svcOpsT: "Content Ops",
         svcOpsD: "Account-Management, Planung und Templates.",
         contactTitle: "Kontakt",
@@ -375,27 +389,22 @@
 
     // i18n helpers
     function applyI18n(lang){
-      // text content
       document.querySelectorAll("[data-i18n]").forEach(el=>{
         const key = el.getAttribute("data-i18n");
         const html = i18n[lang][key];
         if(html !== undefined){ el.innerHTML = html; }
       });
-      // placeholders
       document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
         const key = el.getAttribute("data-i18n-ph");
         const text = i18n[lang][key];
         if(text !== undefined){ el.setAttribute("placeholder", text); }
       });
-      // update active state
       document.getElementById("langEN").classList.toggle("active", lang==="en");
       document.getElementById("langDE").classList.toggle("active", lang==="de");
       document.documentElement.setAttribute("lang", lang);
     }
-
     const savedLang = localStorage.getItem("lang") || "en";
     applyI18n(savedLang);
-
     document.getElementById("langEN").addEventListener("click", ()=>{ localStorage.setItem("lang","en"); applyI18n("en"); });
     document.getElementById("langDE").addEventListener("click", ()=>{ localStorage.setItem("lang","de"); applyI18n("de"); });
 
@@ -413,6 +422,35 @@
         else{ status.textContent = i18n[lang].sentFail; }
       }catch{ status.textContent = i18n[lang].sentNet; }
     });
+
+    // Contact modal behaviour
+    const backdrop = document.getElementById('backdrop');
+    const contact = document.getElementById('contact');
+    const closeBtn = contact.querySelector('.contact-close');
+    const openers = document.querySelectorAll('.open-contact');
+
+    function openContact(e){
+      e?.preventDefault();
+      backdrop.classList.add('visible');
+      contact.classList.add('modalized');
+      closeBtn.hidden = false;
+      contact.setAttribute('role','dialog');
+      contact.setAttribute('aria-modal','true');
+      contact.querySelector('input,textarea,button').focus({preventScroll:true});
+      document.body.style.overflow='hidden';
+    }
+    function closeContact(){
+      backdrop.classList.remove('visible');
+      contact.classList.remove('modalized');
+      closeBtn.hidden = true;
+      contact.removeAttribute('role'); contact.removeAttribute('aria-modal');
+      document.body.style.overflow='';
+    }
+
+    openers.forEach(btn=>btn.addEventListener('click', openContact));
+    closeBtn.addEventListener('click', closeContact);
+    backdrop.addEventListener('click', closeContact);
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && contact.classList.contains('modalized')) closeContact(); });
   </script>
 </body>
 </html>
