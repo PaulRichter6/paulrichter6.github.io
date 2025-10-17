@@ -238,7 +238,7 @@
           <aside class="highlight-panel">
             <span class="badge" data-i18n="badgeMunich">📍 Munich area</span>
             <span class="badge" data-i18n="badgeModes">🎥 On-site & remote</span>
-            <span class="badge" data-i18n="badgeFirstCall">💻 First online consultation is free</span>
+            <span class="badge" data-i18n="badgeFirstCall">🗓 First online consultation is free</span>
           </aside>
         </div>
       </section>
@@ -271,10 +271,23 @@
     <section class="card" id="contact" style="margin-top:24px;">
       <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
       <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
-      <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
+      <!-- FormSubmit: E-Mail Versand ohne Account -->
+      <form id="contactForm" action="https://formsubmit.co/paulribusiness@gmail.com" method="POST">
         <input name="name" type="text" data-i18n-ph="phName" placeholder="Your name" required>
         <input name="email" type="email" data-i18n-ph="phEmail" placeholder="your@email.com" required>
         <textarea name="message" data-i18n-ph="phMsg" placeholder="What do you need?"></textarea>
+
+        <!-- Anti-Spam (Honeypot) -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <!-- Keine Captcha-Zwischenseite -->
+        <input type="hidden" name="_captcha" value="false">
+        <!-- Betreff -->
+        <input type="hidden" name="_subject" value="Neue Projektanfrage über paulrichter6.github.io">
+        <!-- Schönes Tabellen-Layout in der E-Mail -->
+        <input type="hidden" name="_template" value="table">
+        <!-- Optional: Redirect-URL, falls jemand JS blockiert -->
+        <input type="hidden" name="_next" value="https://paulrichter6.github.io/#contact?sent=1">
+
         <button class="btn primary" type="submit" data-i18n="sendBtn">Send message</button>
       </form>
     </section>
@@ -310,7 +323,7 @@
       startProject:"Start a project",watchWork:"Watch my work",
       aboutTitle:"About",
       aboutText:"I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.",
-      badgeMunich:"📍 Munich area",badgeModes:"🎥 On-site & remote",badgeFirstCall:"💻 First online consultation free",
+      badgeMunich:"📍 Munich area",badgeModes:"🎥 On-site & remote",badgeFirstCall:"🗓 First online consultation is free",
       linksTitle:"Projects & Links",
       saesNote:"Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.",
       servicesTitle:"Services",
@@ -329,7 +342,7 @@
       startProject:"Projekt starten",watchWork:"Arbeiten ansehen",
       aboutTitle:"Über mich",
       aboutText:"Ich arbeite mit Privat- und Unternehmenskunden im Großraum München. Vor Ort nach Terminvereinbarung; Remote ist ebenfalls möglich — inklusive Social-Media-Content, Schnittprojekten und laufender Account-Betreuung. Das erste Online-Gespräch ist kostenfrei.",
-      badgeMunich:"📍 Raum München",badgeModes:"🎥 Vor Ort & Remote",badgeFirstCall:"💻 Erstes Online-Gespräch kostenfrei",
+      badgeMunich:"📍 Raum München",badgeModes:"🎥 Vor Ort & Remote",badgeFirstCall:"🗓 Erstes Online-Gespräch kostenfrei",
       linksTitle:"Projekte & Links",
       saesNote:"Aktuell Social Media für <strong>@saes_school</strong>; zusätzlich Privatkund:innen und freie Projekte.",
       servicesTitle:"Leistungen",
@@ -397,6 +410,52 @@
   document.getElementById('openContact2').addEventListener('click', ()=>makeModalFrom(contactCard));
   document.getElementById('openContactMobile').addEventListener('click', ()=>makeModalFrom(contactCard));
   document.getElementById('openLinks').addEventListener('click', ()=>makeModalFrom(linksCard));
+
+  // ------- AJAX Submit für FormSubmit (ohne Redirect) -------
+  const form = document.getElementById('contactForm');
+
+  function toast(msg){
+    let t = document.getElementById('toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'toast';
+      t.style.position='fixed'; t.style.left='50%'; t.style.bottom='24px';
+      t.style.transform='translateX(-50%)'; t.style.background='rgba(15,17,21,.9)';
+      t.style.color='#fff'; t.style.border='1px solid rgba(148,163,184,.2)';
+      t.style.borderRadius='12px'; t.style.padding='10px 14px';
+      t.style.boxShadow='0 12px 36px rgba(0,0,0,.35)'; t.style.zIndex='100';
+      t.style.opacity='0'; t.style.transition='opacity .25s ease';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    requestAnimationFrame(()=> t.style.opacity='1');
+    setTimeout(()=> t.style.opacity='0', 2500);
+  }
+
+  if(form){
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      try{
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept':'application/json' }, // JSON Antwort -> kein Redirect
+          body: new FormData(form)
+        });
+        if(res.ok){
+          form.reset();
+          toast(document.documentElement.lang==='de' ? 'Gesendet. Danke!' : 'Sent. Thank you!');
+        }else{
+          toast(document.documentElement.lang==='de' ? 'Senden fehlgeschlagen.' : 'Sending failed.');
+        }
+      }catch{
+        toast(document.documentElement.lang==='de' ? 'Netzwerkfehler.' : 'Network error.');
+      }finally{
+        btn.disabled = false;
+      }
+    });
+  }
 </script>
 </body>
 </html>
