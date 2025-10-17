@@ -16,6 +16,8 @@
       --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
       --line:rgba(148,163,184,.16); --brand:#3b82f6; --ring:rgba(59,130,246,.55);
       --radius:22px; --shadow:0 20px 60px rgba(0,0,0,.35);
+      --surface-grad: radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.08), transparent 60%),
+                      radial-gradient(1000px 500px at 10% 110%, rgba(59,130,246,.06), transparent 60%);
     }
     .light{
       --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
@@ -28,30 +30,33 @@
     html,body{height:100%}
     body{
       margin:0; color:var(--txt);
-      background:
-        radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.08), transparent 60%),
-        radial-gradient(1000px 500px at 10% 110%, rgba(59,130,246,.06), transparent 60%),
-        var(--bg);
+      background: var(--surface-grad), var(--bg);
       font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial;
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
     a{color:inherit; text-decoration:none}
     .wrap{max-width:1100px; margin:0 auto; padding:28px}
+    .divider{height:1px; background:var(--line); margin:28px 0}
 
     /* ===== Nav ===== */
     .nav{display:flex; align-items:center; justify-content:space-between}
     .logo{font-weight:650; letter-spacing:.2px}
     .pill{
       display:inline-flex; align-items:center; gap:10px; padding:10px 14px;
-      border-radius:999px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+      border-radius:999px; border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
       transition:transform .2s ease, border-color .2s ease; cursor:pointer;
     }
     .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
+    .pill.primary{
+      color:#fff; border-color:transparent;
+      background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black));
+    }
 
     /* ===== Hero ===== */
     .hero{
       display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr;
-      margin:48px 0 24px;
+      margin:44px 0 8px;
     }
     .avatar{
       width:140px; height:140px; border-radius:24px; border:1px solid var(--line); box-shadow:var(--shadow);
@@ -75,13 +80,14 @@
     .btn.ghost{background:transparent}
 
     /* ===== Sections ===== */
-    .grid{display:grid; gap:18px; grid-template-columns: 1fr; margin-top:12px}
+    .grid{display:grid; gap:24px; grid-template-columns: 1fr; margin-top:12px}
     @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
     .card{
       background:var(--elev); border:1px solid var(--line); border-radius:var(--radius);
       padding:22px; box-shadow:var(--shadow);
     }
-    .section-title{margin:0 0 10px; font-size:22px; letter-spacing:.2px}
+    .section-title{margin:0 0 12px; font-size:22px; letter-spacing:.2px}
+    .section-subtle{margin:6px 0 14px; color:var(--muted)}
     .links{display:grid; gap:10px; margin-top:8px}
     .link{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -89,6 +95,13 @@
       transition:border-color .2s ease, transform .15s ease;
     }
     .link:hover{border-color:var(--ring); transform:translateY(-1px)}
+    .info{
+      margin-top:12px; padding:12px 14px; border:1px dashed var(--line); border-radius:14px; color:var(--muted);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+    ul.clean{margin:0; padding-left:18px}
+    ul.clean li{margin:6px 0}
+
     form{display:grid; gap:12px; margin-top:8px}
     input,textarea{
       width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line);
@@ -113,7 +126,7 @@
       <div class="logo">Paul Richter</div>
       <div style="display:flex; gap:10px;">
         <button id="themeToggle" class="pill" type="button" aria-label="Toggle theme">Toggle theme</button>
-        <a class="pill" href="#contact">Project inquiry</a>
+        <a class="pill primary" href="#contact">Project inquiry</a>
       </div>
     </div>
 
@@ -122,7 +135,7 @@
       <!-- Swap the background-image once you upload your portrait: url('portrait.jpg') -->
       <div class="avatar" style="background-image:url('');" aria-hidden="true"></div>
       <div>
-        <div class="kicker">Video Editor · Videographer</div>
+        <div class="kicker">VIDEO EDITOR · VIDEOGRAPHER</div>
         <h1>I build clear, fast visuals that sell.</h1>
         <p class="muted">I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.</p>
         <div class="cta">
@@ -132,13 +145,15 @@
       </div>
     </header>
 
+    <div class="divider"></div>
+
     <!-- CONTENT -->
     <main class="grid">
-      <!-- Bio -->
-      <section class="card reveal" id="bio">
+      <!-- About -->
+      <section class="card reveal" id="about">
         <h2 class="section-title">About</h2>
         <p>I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.</p>
-        <ul class="muted">
+        <ul class="clean">
           <li>On-site production (Munich area)</li>
           <li>Video editing & post-production</li>
           <li>Social media content & account management</li>
@@ -147,32 +162,26 @@
         </ul>
       </section>
 
-      <!-- Links / Projects -->
+      <!-- Projects & Links -->
       <section class="card reveal" id="links">
         <h2 class="section-title">Projects & Links</h2>
         <div class="links">
-          <a class="link" href="https://github.com/paulrichter6" target="_blank" rel="noreferrer">
-            <span>GitHub</span><span>↗</span>
-          </a>
           <a class="link" href="https://instagram.com" target="_blank" rel="noreferrer">
             <span>Instagram</span><span>↗</span>
           </a>
           <a class="link" href="https://youtube.com" target="_blank" rel="noreferrer">
             <span>YouTube / Showreel</span><span>↗</span>
           </a>
-          <a class="link" href="https://example.com/cv.pdf" target="_blank" rel="noreferrer">
-            <span>Resume (PDF)</span><span>↗</span>
-          </a>
         </div>
-        <p class="muted" style="margin-top:12px;">
+        <div class="info">
           Currently managing social media for <strong>SAES School</strong>, alongside private clients and independent projects.
-        </p>
+        </div>
       </section>
 
       <!-- Services -->
-      <section class="card reveal">
+      <section class="card reveal" id="services">
         <h2 class="section-title">Services</h2>
-        <ul>
+        <ul class="clean">
           <li>Landing pages & brand visuals (for your site/portfolio)</li>
           <li>Site speed & Core Web Vitals for web video delivery</li>
           <li>Editing packages for ongoing social content</li>
@@ -182,7 +191,7 @@
       <!-- Contact -->
       <section class="card reveal" id="contact">
         <h2 class="section-title">Contact</h2>
-        <p class="muted">Reply within 48h. Tell me about goals, budget range, and timing.</p>
+        <p class="muted">Reply within 48h.</p>
 
         <!-- Formspree: replace the ACTION URL with your endpoint -->
         <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
@@ -209,7 +218,9 @@
       </section>
     </main>
 
-    <footer>© <span id="year"></span> Paul Richter · Freelancing student</footer>
+    <div class="divider"></div>
+
+    <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
 
   <script>
