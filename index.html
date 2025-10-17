@@ -6,7 +6,9 @@
 <title>Paul Richter – Video Editor & Videographer</title>
 <meta name="description" content="Cinematic video and short-form content for brands, events, and private clients. Based in Munich." />
 <style>
+  /* Layout-stabil beim Scroll-Lock */
   html{scrollbar-gutter:stable both-edges}
+
   :root{
     --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
     --line:rgba(148,163,184,.16); --brand:#38b6ff; --ring:rgba(56,182,255,.55);
@@ -14,117 +16,197 @@
     --surface-grad:
       radial-gradient(1200px 600px at 80% -10%, rgba(56,182,255,.12), transparent 60%),
       radial-gradient(1000px 500px at 10% 110%, rgba(56,182,255,.10), transparent 60%);
+    --hero-glow: radial-gradient(800px 400px at 90% -10%, rgba(56,182,255,.10), transparent 60%);
     --capsule-bg: rgba(255,255,255,.055);
   }
   .light{
     --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
     --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
     --shadow:0 20px 50px rgba(2,6,23,.10); --capsule-bg: rgba(2,6,23,.04);
+    --hero-glow: radial-gradient(800px 400px at 90% -10%, rgba(56,182,255,.16), transparent 60%);
   }
+
   *{box-sizing:border-box} html,body{height:100%}
-  body{margin:0;color:var(--txt);background:var(--surface-grad),var(--bg);
-       font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial;
-       -webkit-font-smoothing:antialiased;scroll-behavior:smooth;touch-action:manipulation}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1100px;margin:0 auto;padding:28px}
-  .divider{height:1px;background:var(--line);margin:28px 0}
+  body{
+    margin:0; color:var(--txt);
+    background: var(--hero-glow), var(--surface-grad), var(--bg);
+    font:16px/1.6 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    scroll-behavior:smooth; touch-action:manipulation;
+  }
+  a{color:inherit; text-decoration:none}
 
-  .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .logo{font-weight:650;letter-spacing:.2px}
-  .group{display:flex;gap:10px;align-items:center}
+  /* --- Sticky Header --- */
+  .nav-wrap{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(10px);
+    background: color-mix(in oklab, var(--bg) 80%, transparent);
+    border-bottom:1px solid var(--line);
+  }
+
+  .wrap{max-width:1100px; margin:0 auto; padding:28px}
+  .divider{height:1px; background:var(--line); margin:28px 0}
+
+  /* NAV */
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .logo{font-weight:650; letter-spacing:.2px}
+  .group{display:flex; gap:10px; align-items:center}
   .pill{
-    display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;
+    display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
     border:1px solid var(--line);
-    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));
-    transition:transform .2s ease,border-color .2s ease;cursor:pointer;
-    color:var(--txt);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0));
+    transition:transform .2s ease, border-color .2s ease; cursor:pointer; color:var(--txt)
   }
-  .pill:hover{transform:translateY(-1px);border-color:var(--ring)}
-  .pill.primary{color:#fff;border-color:transparent;
-    background:linear-gradient(180deg,var(--brand),color-mix(in oklab,var(--brand) 88%, black))}
-  .lang-toggle{display:flex;border-radius:999px;overflow:hidden;border:1px solid var(--line)}
-  .lang-toggle button{padding:8px 12px;background:transparent;color:var(--txt);border:0;cursor:pointer}
-  .lang-toggle button.active{background:color-mix(in oklab,var(--brand) 22%,transparent)}
+  .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
+  .pill.primary{color:#fff; border-color:transparent;
+    background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black))}
+  .lang-toggle{display:flex; border-radius:999px; overflow:hidden; border:1px solid var(--line)}
+  .lang-toggle button{padding:8px 12px; background:transparent; color:var(--txt); border:0; cursor:pointer}
+  .lang-toggle button.active{background:color-mix(in oklab, var(--brand) 22%, transparent)}
 
-  .hero{display:grid;gap:28px;align-items:center;grid-template-columns:140px 1fr;margin:44px 0 8px}
-  .avatar{width:140px;height:140px;border-radius:24px;overflow:hidden;background:var(--elev)}
-  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-  h1{margin:0 0 6px;font-size:44px;line-height:1.1;letter-spacing:-.3px}
-  .kicker{color:var(--muted);font-size:14px;text-transform:uppercase}
-  .muted{color:var(--muted)}
-  .cta{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:10px;
-    padding:12px 16px;border-radius:14px;border:1px solid var(--line);
-    background:var(--elev);box-shadow:var(--shadow);
-    transition:transform .15s ease,border-color .2s ease;
-    color:var(--txt);
+  /* HERO */
+  .hero{display:grid; gap:28px; align-items:center; grid-template-columns:140px 1fr; margin:44px 0 8px}
+  .avatar{width:140px; height:140px; border-radius:24px; overflow:hidden; position:relative; background:var(--elev)}
+  .avatar::before{
+    content:""; position:absolute; inset:-8px; border-radius:28px;
+    background: radial-gradient(60% 50% at 50% 35%, rgba(56,182,255,.38), transparent 60%);
+    filter: blur(24px);
   }
-  .btn:hover{transform:translateY(-2px);border-color:var(--ring)}
-  .btn.primary{background:linear-gradient(180deg,var(--brand),color-mix(in oklab,var(--brand) 88%, black));color:#fff;border-color:transparent}
+  .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+  h1{margin:0 0 6px; font-size:44px; line-height:1.05; letter-spacing:-.02em}
+  .kicker{color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.3px}
+  .muted{color:var(--muted)}
+  .cta{display:flex; gap:12px; margin-top:14px; flex-wrap:wrap}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:12px 16px; border-radius:14px; border:1px solid var(--line);
+    background:var(--elev); box-shadow:var(--shadow);
+    transition:transform .15s ease, border-color .2s ease, filter .1s ease;
+    color:var(--txt)
+  }
+  .btn:hover{transform:translateY(-2px); border-color:var(--ring)}
+  .btn:active{transform:translateY(0); filter:brightness(.98)}
+  .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
   .btn.ghost{background:transparent}
 
-  .grid{display:grid;gap:24px;grid-template-columns:1fr;margin-top:12px}
-  @media (min-width:900px){.grid{grid-template-columns:1.1fr .9fr}}
-  .card{background:var(--elev);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-  .section-title{margin:0 0 12px;font-size:22px}
+  /* LAYOUT */
+  .grid{display:grid; gap:24px; grid-template-columns:1fr; margin-top:12px}
+  @media (min-width:900px){ .grid{ grid-template-columns: 1.1fr .9fr } }
 
-  .about-grid{display:grid;gap:18px}
+  .card{
+    background:var(--elev); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.04) inset,
+      0 20px 40px rgba(0,0,0,.35),
+      0 1px 2px rgba(0,0,0,.25);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .2s ease;
+  }
+  .card:hover{ transform: translateY(-2px); box-shadow:0 26px 70px rgba(0,0,0,.42); border-color: color-mix(in oklab,var(--brand) 25%, var(--line)); }
+
+  .section-title{margin:0 0 12px; font-size:22px; position:relative; padding-left:12px}
+  .section-title::before{content:""; position:absolute; left:0; top:.2em; width:4px; height:1.2em; border-radius:4px; background:var(--brand)}
+
+  /* ABOUT / HIGHLIGHTS */
+  .about-grid{display:grid; gap:18px}
   @media (min-width:900px){.about-grid{grid-template-columns:1.2fr .8fr}}
-  .highlight-panel{background:color-mix(in oklab,var(--brand) 4%,var(--elev));border:1px solid color-mix(in oklab,var(--brand) 18%,var(--line));border-radius:16px;padding:14px}
-  .badge{display:inline-flex;align-items:center;gap:8px;margin:8px 8px 0 0;padding:8px 12px;border-radius:999px;background:var(--capsule-bg);border:1px solid color-mix(in oklab,var(--brand) 14%,var(--line));font-size:14px}
+  .highlight-panel{background: color-mix(in oklab, var(--brand) 4%, var(--elev)); border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line)); border-radius:16px; padding:14px}
+  .badge{display:inline-flex; align-items:center; gap:8px; margin:8px 8px 0 0; padding:8px 12px; border-radius:999px; background: var(--capsule-bg); border:1px solid color-mix(in oklab, var(--brand) 14%, var(--line)); font-size:14px}
 
+  /* LINKS */
+  .links{display:grid; gap:12px; margin-top:8px; grid-template-columns:1fr}
+  @media(min-width:560px){ .links{ grid-template-columns:1fr 1fr } }
+  .link{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 16px; border-radius:14px; border:1px solid var(--line);
+    transition:border-color .2s ease, transform .15s ease;
+  }
+  .link:hover{border-color: color-mix(in oklab,var(--brand) 50%, var(--line)); transform:translateY(-1px)}
+  .info-link{background:linear-gradient(180deg, color-mix(in oklab, var(--brand) 10%, transparent), transparent 85%); border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line))}
+
+  /* SERVICES */
   .features{display:grid;gap:12px}
   @media (min-width:900px){.features{grid-template-columns:repeat(2,1fr)}}
-  .feature{background:color-mix(in oklab,var(--brand) 4%,var(--elev));border:1px solid color-mix(in oklab,var(--brand) 18%,var(--line));border-radius:16px;padding:16px}
-  .feature h3{margin:0 0 6px;font-size:16px}
+  .feature{background: color-mix(in oklab, var(--brand) 4%, var(--elev)); border:1px solid color-mix(in oklab, var(--brand) 18%, var(--line)); border-radius:16px; padding:16px}
+  .feature h3{
+    margin:0 0 6px;font-size:16px;
+    background: color-mix(in oklab,var(--brand) 12%, var(--elev));
+    border:1px solid color-mix(in oklab,var(--brand) 25%, var(--line));
+    display:inline-block; padding:6px 10px; border-radius:10px;
+  }
 
-  .links{display:grid;gap:10px;margin-top:8px}
-  .link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);transition:border-color .2s ease,transform .15s ease}
-  .link:hover{border-color:var(--ring);transform:translateY(-1px)}
-  .info-link{background:linear-gradient(180deg,color-mix(in oklab,var(--brand) 10%,transparent),transparent 85%);border:1px solid color-mix(in oklab,var(--brand) 28%,var(--line))}
+  /* FORM */
+  form{display:grid; gap:12px; margin-top:8px}
+  input,textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
+  input:focus,textarea:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
+  textarea{resize:vertical; min-height:140px}
 
-  form{display:grid;gap:12px;margin-top:8px}
-  input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--txt)}
-  textarea{resize:vertical;min-height:140px}
-  footer{color:var(--muted);font-size:14px;text-align:center;padding:28px 0}
+  footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
   /* MODALS */
-  .backdrop{position:fixed;inset:0;backdrop-filter:blur(6px) saturate(120%);background:rgba(2,6,23,.45);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:60}
-  .backdrop.visible{opacity:1;pointer-events:auto}
-  .modalized{position:fixed;left:50%;top:6vh;transform:translate(-50%,0);width:min(720px,92vw);max-height:88vh;overflow:auto;z-index:70;background:var(--elev);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 30px 80px rgba(0,0,0,.45);padding:22px;animation:modalZoomIn .24s cubic-bezier(.2,.8,.2,1) both}
+  .backdrop{position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%); background: rgba(2,6,23,.45); opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:60}
+  .backdrop.visible{opacity:1; pointer-events:auto}
+  .modalized{
+    position:fixed; left:50%; top:6vh; transform:translate(-50%,0);
+    width:min(720px,92vw); max-height:88vh; overflow:auto; z-index:70;
+    background: color-mix(in oklab, var(--elev) 85%, transparent);
+    backdrop-filter: blur(8px) saturate(120%);
+    border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:0 30px 80px rgba(0,0,0,.45); padding:22px;
+    animation:modalZoomIn .24s cubic-bezier(.2,.8,.2,1) both;
+  }
   .modal-out{animation:modalZoomOut .18s ease-in both}
   @keyframes modalZoomIn{from{transform:translate(-50%,0) scale(.92);opacity:.85}to{transform:translate(-50%,0) scale(1);opacity:1}}
   @keyframes modalZoomOut{from{transform:translate(-50%,0) scale(1);opacity:1}to{transform:translate(-50%,0) scale(.92);opacity:.85}}
-  .close-btn{position:absolute;top:10px;right:10px;border:1px solid var(--line);background:var(--elev);color:var(--txt);border-radius:12px;padding:6px 10px;cursor:pointer}
+  .close-btn{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); color:var(--txt); border-radius:12px; padding:6px 10px; cursor:pointer}
 
+  /* Focus sichtbar */
+  :focus-visible{ outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent) }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+
+  /* Subtiler Noise-Film */
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .04 .06 .04 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity:.35; mix-blend-mode:soft-light;
+  }
+
+  /* Mobile Tuning + Sticky CTA */
   @media (max-width:720px){
     .wrap{padding:18px}
-    .hero{grid-template-columns:88px 1fr;gap:18px;margin:28px 0 4px}
-    .avatar{width:88px;height:88px;border-radius:18px}
+    .hero{grid-template-columns:88px 1fr; gap:18px; margin:28px 0 4px}
+    .avatar{width:88px; height:88px; border-radius:18px}
     h1{font-size:32px}
-    .btn{width:100%}.cta{flex-direction:column}
+    .btn{width:100%} .cta{flex-direction:column}
     .card{padding:16px}
     .features{grid-template-columns:1fr}
-    .modalized{top:4vh;width:min(720px,96vw)}
+    .modalized{top:4vh; width:min(720px,96vw)}
+    .sticky-cta{ position:fixed; left:16px; right:16px; bottom:16px; z-index:40; }
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- NAV -->
-    <div class="nav">
-      <div class="logo">Paul Richter</div>
-      <div class="group">
-        <div class="lang-toggle">
-          <button id="langEN" class="active">EN</button>
-          <button id="langDE">DE</button>
+  <!-- Sticky Header -->
+  <div class="nav-wrap">
+    <div class="wrap">
+      <div class="nav">
+        <div class="logo">Paul Richter</div>
+        <div class="group">
+          <div class="lang-toggle">
+            <button id="langEN" class="active">EN</button>
+            <button id="langDE">DE</button>
+          </div>
+          <button id="themeToggle" class="pill" data-i18n="toggleTheme">Toggle theme</button>
+          <button class="pill primary" id="openContact" data-i18n="projectInquiry">Project inquiry</button>
         </div>
-        <button id="themeToggle" class="pill" data-i18n="toggleTheme">Toggle theme</button>
-        <button class="pill primary" id="openContact" data-i18n="projectInquiry">Project inquiry</button>
       </div>
     </div>
+  </div>
 
+  <div class="wrap">
     <!-- HERO -->
     <header class="hero">
       <div class="avatar"><img src="portrait.png" alt="Portrait of Paul Richter"></div>
@@ -166,12 +248,8 @@
       <section class="card" id="links">
         <h2 class="section-title" data-i18n="linksTitle">Projects & Links</h2>
         <div class="links">
-          <a class="link" href="https://www.instagram.com/paul.richter6/" target="_blank" rel="noreferrer">
-            <span>Instagram</span><span>↗</span>
-          </a>
-          <a class="link" href="https://www.youtube.com/@PaulRichter1" target="_blank" rel="noreferrer">
-            <span>YouTube</span><span>↗</span>
-          </a>
+          <a class="link" href="https://www.instagram.com/paul.richter6/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a>
+          <a class="link" href="https://www.youtube.com/@PaulRichter1" target="_blank" rel="noreferrer"><span>YouTube</span><span>↗</span></a>
           <div class="link info-link">
             <span data-i18n="saesNote">Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.</span>
           </div>
@@ -183,22 +261,10 @@
     <section class="card" id="services" style="margin-top:24px;">
       <h2 class="section-title" data-i18n="servicesTitle">Services</h2>
       <div class="features">
-        <div class="feature">
-          <h3 data-i18n="svcProdT">Production</h3>
-          <p data-i18n="svcProdD">On-site filming for events, products, and interviews.</p>
-        </div>
-        <div class="feature">
-          <h3 data-i18n="svcEditT">Editing</h3>
-          <p data-i18n="svcEditD">Clean cuts, pacing, subtitles, and sound polish.</p>
-        </div>
-        <div class="feature">
-          <h3 data-i18n="svcShortT">Short-form (Reels / TikTok & YouTube videos)</h3>
-          <p data-i18n="svcShortD">Packages optimized for retention and platform rhythm.</p>
-        </div>
-        <div class="feature">
-          <h3 data-i18n="svcOpsT">Content Ops</h3>
-          <p data-i18n="svcOpsD">Account management, scheduling, and templates.</p>
-        </div>
+        <div class="feature"><h3 data-i18n="svcProdT">Production</h3><p data-i18n="svcProdD">On-site filming for events, products, and interviews.</p></div>
+        <div class="feature"><h3 data-i18n="svcEditT">Editing</h3><p data-i18n="svcEditD">Clean cuts, pacing, subtitles, and sound polish.</p></div>
+        <div class="feature"><h3 data-i18n="svcShortT">Short-form (Reels / TikTok & YouTube videos)</h3><p data-i18n="svcShortD">Packages optimized for retention and platform rhythm.</p></div>
+        <div class="feature"><h3 data-i18n="svcOpsT">Content Ops</h3><p data-i18n="svcOpsD">Account management, scheduling, and templates.</p></div>
       </div>
     </section>
 
@@ -206,7 +272,7 @@
     <section class="card" id="contact" style="margin-top:24px;">
       <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
       <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
-      <form action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
+      <form id="contactForm" action="https://formspree.io/f/YOUR-ENDPOINT" method="POST">
         <input name="name" type="text" data-i18n-ph="phName" placeholder="Your name" required>
         <input name="email" type="email" data-i18n-ph="phEmail" placeholder="your@email.com" required>
         <textarea name="message" data-i18n-ph="phMsg" placeholder="What do you need?"></textarea>
@@ -218,6 +284,14 @@
     <footer>© <span id="year"></span> Paul Richter</footer>
   </div>
 
+  <!-- Mobile Sticky CTA -->
+  <div class="sticky-cta">
+    <div class="wrap" style="padding:0 18px;">
+      <button class="btn primary" id="openContactMobile" style="width:100%" data-i18n="startProject">Start a project</button>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
 <script>
@@ -228,118 +302,104 @@
   const root = document.body;
   document.getElementById('themeToggle').addEventListener('click', ()=> root.classList.toggle('light'));
 
-  // --- i18n Wörterbuch (EN/DE) ---
+  // --- i18n ---
   const dict = {
-    en:{
-      toggleTheme:"Toggle theme", projectInquiry:"Project inquiry",
+    en:{toggleTheme:"Toggle theme",projectInquiry:"Project inquiry",
       roles:"VIDEO EDITOR · VIDEOGRAPHER",
       headline:"Cinematic edits for brands, events, and creators.",
       subtitle:"I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.",
-      startProject:"Start a project", watchWork:"Watch my work",
+      startProject:"Start a project",watchWork:"Watch my work",
       aboutTitle:"About",
       aboutText:"I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.",
-      badgeMunich:"📍 Munich area", badgeModes:"🎥 On-site & remote", badgeFirstCall:"🗓 First online consultation is free",
+      badgeMunich:"📍 Munich area",badgeModes:"🎥 On-site & remote",badgeFirstCall:"🗓 First online consultation is free",
       linksTitle:"Projects & Links",
       saesNote:"Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.",
       servicesTitle:"Services",
-      svcProdT:"Production",  svcProdD:"On-site filming for events, products, and interviews.",
-      svcEditT:"Editing",     svcEditD:"Clean cuts, pacing, subtitles, and sound polish.",
-      svcShortT:"Short-form (Reels / TikTok & YouTube videos)", svcShortD:"Packages optimized for retention and platform rhythm.",
-      svcOpsT:"Content Ops",  svcOpsD:"Account management, scheduling, and templates.",
-      contactTitle:"Contact", replyLine:"Reply within 48h.",
-      phName:"Your name", phEmail:"your@email.com", phMsg:"What do you need?",
+      svcProdT:"Production",svcProdD:"On-site filming for events, products, and interviews.",
+      svcEditT:"Editing",svcEditD:"Clean cuts, pacing, subtitles, and sound polish.",
+      svcShortT:"Short-form (Reels / TikTok & YouTube videos)",svcShortD:"Packages optimized for retention and platform rhythm.",
+      svcOpsT:"Content Ops",svcOpsD:"Account management, scheduling, and templates.",
+      contactTitle:"Contact",replyLine:"Reply within 48h.",
+      phName:"Your name",phEmail:"your@email.com",phMsg:"What do you need?",
       sendBtn:"Send message"
     },
-    de:{
-      toggleTheme:"Theme wechseln", projectInquiry:"Projektanfrage",
+    de:{toggleTheme:"Theme wechseln",projectInquiry:"Projektanfrage",
       roles:"VIDEOEDITOR · VIDEOGRAF",
       headline:"Videoschnitt & Film für Marken, Events und Creator.",
       subtitle:"Ich produziere cinematische Videos und Short-Form-Content für Marken, Events und Privatkund:innen — mit Fokus auf Qualität und Wirkung.",
-      startProject:"Projekt starten", watchWork:"Arbeiten ansehen",
+      startProject:"Projekt starten",watchWork:"Arbeiten ansehen",
       aboutTitle:"Über mich",
       aboutText:"Ich arbeite mit Privat- und Unternehmenskunden im Großraum München. Vor Ort nach Terminvereinbarung; Remote ist ebenfalls möglich — inklusive Social-Media-Content, Schnittprojekten und laufender Account-Betreuung. Das erste Online-Gespräch ist kostenfrei.",
-      badgeMunich:"📍 Raum München", badgeModes:"🎥 Vor Ort & Remote", badgeFirstCall:"🗓 Erstes Online-Gespräch kostenfrei",
+      badgeMunich:"📍 Raum München",badgeModes:"🎥 Vor Ort & Remote",badgeFirstCall:"🗓 Erstes Online-Gespräch kostenfrei",
       linksTitle:"Projekte & Links",
       saesNote:"Aktuell Social Media für <strong>@saes_school</strong>; zusätzlich Privatkund:innen und freie Projekte.",
       servicesTitle:"Leistungen",
-      svcProdT:"Produktion",  svcProdD:"Vor-Ort-Drehs für Events, Produkte und Interviews.",
-      svcEditT:"Schnitt",     svcEditD:"Saubere Edits, Timing, Untertitel und Sound-Feinschliff.",
-      svcShortT:"Short-Form (Reels / TikTok & YouTube Videos)", svcShortD:"Pakete optimiert für Retention und Plattform-Rhythmus.",
-      svcOpsT:"Content Ops",  svcOpsD:"Account-Management, Planung und Templates.",
-      contactTitle:"Kontakt", replyLine:"Antwort innerhalb von 48 Stunden.",
-      phName:"Dein Name", phEmail:"dein@mail.com", phMsg:"Worum geht’s?",
+      svcProdT:"Produktion",svcProdD:"Vor-Ort-Drehs für Events, Produkte und Interviews.",
+      svcEditT:"Schnitt",svcEditD:"Saubere Edits, Timing, Untertitel und Sound-Feinschliff.",
+      svcShortT:"Short-Form (Reels / TikTok & YouTube Videos)",svcShortD:"Pakete optimiert für Retention und Plattform-Rhythmus.",
+      svcOpsT:"Content Ops",svcOpsD:"Account-Management, Planung und Templates.",
+      contactTitle:"Kontakt",replyLine:"Antwort innerhalb von 48 Stunden.",
+      phName:"Dein Name",phEmail:"dein@mail.com",phMsg:"Worum geht’s?",
       sendBtn:"Nachricht senden"
     }
   };
 
-  // wendet Übersetzungen an
   function applyLang(lang){
     document.documentElement.setAttribute('lang', lang);
     document.getElementById('langEN').classList.toggle('active', lang==='en');
     document.getElementById('langDE').classList.toggle('active', lang==='de');
-
-    // alle data-i18n Nodes
     document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const key = el.getAttribute('data-i18n');
-      const val = dict[lang][key];
-      if(val !== undefined) el.innerHTML = val;
+      const key=el.getAttribute('data-i18n'); if(dict[lang][key]!==undefined){ el.innerHTML=dict[lang][key]; }
     });
-    // Placeholders
     document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
-      const key = el.getAttribute('data-i18n-ph');
-      const val = dict[lang][key];
-      if(val !== undefined) el.setAttribute('placeholder', val);
+      const key=el.getAttribute('data-i18n-ph'); if(dict[lang][key]!==undefined){ el.setAttribute('placeholder',dict[lang][key]); }
     });
-
-    // sicherstellen, dass Button-Textfarbe passt
-    document.getElementById('openLinks').style.color =
-      getComputedStyle(document.body).getPropertyValue('--txt').trim();
-
+    // Farben der Ghost-Buttons sicherstellen
+    document.querySelectorAll('.btn.ghost,#openLinks').forEach(b=>{
+      b.style.color=getComputedStyle(document.body).getPropertyValue('--txt').trim();
+    });
     localStorage.setItem('lang', lang);
   }
-
-  // init Sprache
   applyLang(localStorage.getItem('lang') || 'en');
-
-  // Events
   document.getElementById('langEN').addEventListener('click', ()=>applyLang('en'));
   document.getElementById('langDE').addEventListener('click', ()=>applyLang('de'));
 
   // ------- Modal-Logik (Contact & Links) -------
-  const backdrop = document.getElementById('backdrop');
-  const contactCard = document.getElementById('contact');
-  const linksCard   = document.getElementById('links');
+  const backdrop=document.getElementById('backdrop');
+  const contactCard=document.getElementById('contact');
+  const linksCard=document.getElementById('links');
 
   function makeModalFrom(section){
-    const clone = section.cloneNode(true);
-    clone.className = 'modalized';
-    const x = document.createElement('button');
-    x.className = 'close-btn'; x.type='button'; x.textContent='✕';
-    x.addEventListener('click', ()=> closeModal(clone));
+    const clone=section.cloneNode(true);
+    clone.className='modalized';
+    const x=document.createElement('button');
+    x.className='close-btn'; x.type='button'; x.textContent='✕';
+    x.addEventListener('click',()=>closeModal(clone));
     clone.appendChild(x);
     document.body.appendChild(clone);
     document.documentElement.style.overflow='hidden';
     backdrop.classList.add('visible');
-    const onBackdrop = ()=> closeModal(clone);
-    backdrop.addEventListener('click', onBackdrop, {once:true});
-    const onEsc = (e)=>{ if(e.key==='Escape') closeModal(clone); };
-    window.addEventListener('keydown', onEsc, {once:true});
-    clone._cleanup = ()=> window.removeEventListener('keydown', onEsc);
+    const onBackdrop=()=>closeModal(clone);
+    backdrop.addEventListener('click',onBackdrop,{once:true});
+    const onEsc=e=>{ if(e.key==='Escape') closeModal(clone); };
+    window.addEventListener('keydown',onEsc,{once:true});
+    clone._cleanup=()=>window.removeEventListener('keydown',onEsc);
     return clone;
   }
   function closeModal(node){
     if(!node) return;
-    node.classList.add('modal-out');
-    backdrop.classList.remove('visible');
-    node.addEventListener('animationend', ()=>{
+    node.classList.add('modal-out'); backdrop.classList.remove('visible');
+    node.addEventListener('animationend',()=>{
       node.remove(); document.documentElement.style.overflow='';
       node._cleanup && node._cleanup();
-    }, {once:true});
+    },{once:true});
   }
 
-  document.getElementById('openContact').addEventListener('click', ()=> makeModalFrom(contactCard));
-  document.getElementById('openContact2').addEventListener('click', ()=> makeModalFrom(contactCard));
-  document.getElementById('openLinks').addEventListener('click',   ()=> makeModalFrom(linksCard));
+  // Öffner (inkl. Mobile Sticky CTA)
+  document.getElementById('openContact').addEventListener('click', ()=>makeModalFrom(contactCard));
+  document.getElementById('openContact2').addEventListener('click', ()=>makeModalFrom(contactCard));
+  document.getElementById('openContactMobile').addEventListener('click', ()=>makeModalFrom(contactCard));
+  document.getElementById('openLinks').addEventListener('click', ()=>makeModalFrom(linksCard));
 </script>
 </body>
 </html>
