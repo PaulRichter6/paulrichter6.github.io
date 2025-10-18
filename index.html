@@ -193,6 +193,27 @@
     .modalized{top:4vh; width:min(720px,96vw)}
     .sticky-cta{ position:fixed; left:16px; right:16px; bottom:calc(12px + var(--safe-bottom)); z-index:40; }
   }
+
+  /* --- Floating CTA: Animation & Hide-Logik (nur Ergänzung, keine Änderungen am Rest) --- */
+  .sticky-cta{
+    transition: transform .28s ease, opacity .28s ease;
+    will-change: transform, opacity;
+  }
+  .sticky-cta.hide{
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  @keyframes ctaPulse{
+    0%{ box-shadow:0 0 0 0 color-mix(in oklab, var(--brand) 28%, transparent) }
+    100%{ box-shadow:0 0 0 10px transparent }
+  }
+  #contact .btn.primary.cta-focus{
+    animation: ctaPulse 1.2s ease-out 1;
+  }
+  @media (min-width:721px){
+    .sticky-cta{ display:none; } /* Desktop: Floating-CTA aus */
+  }
 </style>
 </head>
 <body>
@@ -464,6 +485,28 @@
       }
     });
   }
+
+  // ------- Floating-CTA Hide/Show bei Kontakt & Footer -------
+  (function(){
+    const sticky = document.querySelector('.sticky-cta');
+    const contact = document.getElementById('contact');
+    const footer  = document.querySelector('footer');
+    const sendBtn = document.querySelector('#contact button[type="submit"]');
+    if(!sticky || !contact || !footer) return;
+
+    const io = new IntersectionObserver((entries)=>{
+      let hide = false;
+      for(const e of entries){ if(e.isIntersecting) hide = true; }
+      sticky.classList.toggle('hide', hide);
+      if(sendBtn){
+        if(hide){ sendBtn.classList.add('cta-focus'); }
+        else    { sendBtn.classList.remove('cta-focus'); }
+      }
+    }, { root: null, rootMargin: '0px 0px -40% 0px', threshold: 0.01 });
+
+    io.observe(contact);
+    io.observe(footer);
+  })();
 </script>
 </body>
 </html>
