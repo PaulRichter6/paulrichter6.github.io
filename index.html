@@ -23,12 +23,73 @@
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
+
+    /* ===== Light mode (verbessert) ===== */
     .light{
-      --bg:#fbfbfd; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
-      --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
-      --shadow:0 20px 50px rgba(2,6,23,.12); --capsule-bg: rgba(2,6,23,.04);
-      --hero-glow: radial-gradient(900px 480px at 90% -15%, rgba(56,182,255,.22), transparent 60%);
+      --bg:#f6f8fb;
+      --elev:#ffffff;
+      --txt:#0b1020;
+      --muted:#5b6573;
+      --line:rgba(15,23,42,.12);
+      --brand:#38b6ff;
+      --ring:rgba(56,182,255,.35);
+      --shadow:0 18px 48px rgba(2,6,23,.08), 0 1px 0 rgba(2,6,23,.04) inset;
+      --capsule-bg: rgba(2,6,23,.04);
+      --hero-glow: radial-gradient(900px 480px at 88% -18%, rgba(56,182,255,.16), transparent 65%);
     }
+    .light .nav-wrap{
+      background: color-mix(in oklab, white 78%, transparent);
+      border-bottom-color: color-mix(in oklab, black 8%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .light .pill,
+    .light #themeToggle,
+    .light .btn.ghost{ color: var(--txt) !important; }
+    .light .pill{
+      border-color: color-mix(in oklab, black 12%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.55));
+    }
+    .light .card{
+      background: var(--elev);
+      border-color: color-mix(in oklab, black 12%, transparent);
+      box-shadow: var(--shadow);
+    }
+    .light .card:hover{
+      border-color: color-mix(in oklab, var(--brand) 45%, color-mix(in oklab, black 12%, transparent));
+      box-shadow:
+        0 28px 70px rgba(2,6,23,.12),
+        0 2px 10px rgba(2,6,23,.06),
+        0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset;
+    }
+    .light .highlight-panel,
+    .light .feature{
+      background: color-mix(in oklab, white 88%, var(--brand) 4%);
+      border-color: color-mix(in oklab, black 12%, transparent);
+    }
+    .light .highlight-panel:hover,
+    .light .feature:hover{
+      border-color: color-mix(in oklab, var(--brand) 45%, color-mix(in oklab, black 12%, transparent));
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset;
+    }
+    .light .badge{
+      background: color-mix(in oklab, white 85%, var(--brand) 6%);
+      border-color: color-mix(in oklab, black 10%, transparent);
+    }
+    .light .link{
+      border-color: color-mix(in oklab, black 12%, transparent);
+      background: color-mix(in oklab, white 92%, transparent);
+    }
+    .light .link:hover{
+      border-color: color-mix(in oklab, var(--brand) 55%, color-mix(in oklab, black 12%, transparent));
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 20%, transparent) inset;
+    }
+    .light input, .light textarea{
+      color: var(--txt);
+      background: #ffffff;
+      border-color: color-mix(in oklab, black 12%, transparent);
+    }
+    .light footer{ color: color-mix(in oklab, black 45%, transparent); }
+
     *{box-sizing:border-box} html,body{height:100%}
     body{
       margin:0; color:var(--txt);
@@ -87,7 +148,6 @@
     .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
     .btn.ghost{background:transparent}
 
-    /* GRID: jetzt bewusst einspaltig auf Desktop */
     .grid{display:grid; gap:24px; grid-template-columns:1fr; margin-top:12px}
 
     .card{
