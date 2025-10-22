@@ -638,74 +638,126 @@ stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='r
       setTimeout(()=> t.style.opacity='0', 2200);
     }
 
-    // Inline-Validierung
-    const $ = sel => document.querySelector(sel);
-    function setErr(input, show, errSel){
-      input.setAttribute('aria-invalid', show?'true':'false');
-      const e = $(errSel); if(e) e.style.display = show ? 'block' : 'none';
-    }
-    function validate(){
+    // === Inline-Validierung (Fehler erst nach Submit anzeigen) ===
+const $ = sel => document.querySelector(sel);
+
+function setErr(input, show, errSel){
+  input.setAttribute('aria-invalid', show ? 'true' : 'false');
+  const e = $(errSel);
+  if(e) e.style.display = show ? 'block' : 'none';
+}
+
+// Einzelnes Feld prüfen
+function validateField(el){
+  const id = el.id;
+  let ok = true;
+
+  if(id === 'need'){
+    ok = !!el.value;
+    setErr(el, !ok, '#needErr');
+  }else if(id === 'name'){
+    ok = !!el.value.trim();
+    setErr(el, !ok, '#nameErr');
+  }else if(id === 'email'){
+    const em = el.value.trim();
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    ok = re.test(em);
+    setErr(el, !ok, '#emailErr');
+  }else if(id === 'message'){
+    ok = el.value.trim().length >= 8;
+    setErr(el, !ok, '#msgErr');
+  }
+  return ok;
+}
+
+// Alle Felder prüfen; show=true => Fehler sichtbar machen
+function validateAll(show){
+  const need = $('#need');
+  const name = $('#name');
+  const email = $('#email');
+  const msg = $('#message');
+
+  let ok = true;
+  if(show){ ok = validateField(need)  && ok; }
+  if(show){ ok = validateField(name)  && ok; }
+  if(show){ ok = validateField(email) && ok; }
+  if(show){ ok = validateField(msg)   && ok; }
+  return ok;
+}
+
+let hasSubmittedOnce = false;
+
+if(form){
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+
+    // Erst jetzt: Fehler zeigen
+    hasSubmittedOnce = true;
+    const allGood = validateAll(true);
+    if(!allGood){
       const lang = document.documentElement.lang || 'en';
-      const need = $('#need'); const name = $('#name'); const email = $('#email'); const msg = $('#message');
-      let ok = true;
-
-      if(!need.value){ setErr(need, true, '#needErr'); ok=false; } else setErr(need, false, '#needErr');
-      if(!name.value.trim()){ setErr(name, true, '#nameErr'); ok=false; } else setErr(name, false, '#nameErr');
-
-      const em = email.value.trim();
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-      if(!re.test(em)){ setErr(email, true, '#emailErr'); ok=false; } else setErr(email, false, '#emailErr');
-
-      if(msg.value.trim().length < 8){ setErr(msg, true, '#msgErr'); ok=false; } else setErr(msg, false, '#msgErr');
-
-      if(!ok){ toast(lang==='de' ? 'Bitte Eingaben prüfen.' : 'Please check the fields.'); }
-      return ok;
+      toast(lang==='de' ? 'Bitte Eingaben prüfen.' : 'Please check the fields.');
+      return;
     }
 
-    if(form){
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        if(!validate()) return;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
 
-        const btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true;
-
-        try{
-          const res = await fetch(form.action, {
-            method: 'POST',
-            headers: { 'Accept':'application/json' },
-            body: new FormData(form)
-          });
-          if(res.ok){
-            form.reset();
-            const lang = document.documentElement.lang || 'en';
-            successBox.style.display = 'block';
-            successBox.innerHTML = `
-              <strong>${dict[lang].successTitle}</strong><div style="height:6px"></div>
-              <div>${dict[lang].successBody}</div>
-              <div style="height:12px"></div>
-              <button class="btn" id="againBtn">${dict[lang].successCta}</button>
-            `;
-            $('#againBtn').addEventListener('click', ()=>{
-              successBox.style.display='none';
-              form.scrollIntoView({behavior:'smooth', block:'start'});
-              $('#name').focus();
-            });
-            toast(lang==='de' ? 'Gesendet. Danke!' : 'Sent. Thank you!');
-          }else{
-            toast(document.documentElement.lang==='de' ? 'Senden fehlgeschlagen.' : 'Sending failed.');
-          }
-        }catch{
-          toast(document.documentElement.lang==='de' ? 'Netzwerkfehler.' : 'Network error.');
-        }finally{
-          btn.disabled = false;
-        }
+    try{
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept':'application/json' },
+        body: new FormData(form)
       });
+      if(res.ok){
+        form.reset();
 
-      ['need','name','email','message'].forEach(id=>{
-        const el = document.getElementById(id);
-        if(!el) return;
-        el.addEventListener('blur', validate);
+        // Fehlerzustände zurücksetzen
+        ['need','name','email','message'].forEach(id=>{
+          const el = document.getElementById(id);
+          if(!el) return;
+          const map = { need:'#needErr', name:'#nameErr', email:'#emailErr', message:'#msgErr' };
+          setErr(el, false, map[id]);
+        });
+
+        const lang = document.documentElement.lang || 'en';
+        successBox.style.display = 'block';
+        successBox.innerHTML = `
+          <strong>${dict[lang].successTitle}</strong><div style="height:6px"></div>
+          <div>${dict[lang].successBody}</div>
+          <div style="height:12px"></div>
+          <button class="btn" id="againBtn">${dict[lang].successCta}</button>
+        `;
+        $('#againBtn').addEventListener('click', ()=>{
+          successBox.style.display='none';
+          form.scrollIntoView({behavior:'smooth', block:'start'});
+          $('#name').focus();
+        });
+        toast(lang==='de' ? 'Gesendet. Danke!' : 'Sent. Thank you!');
+      }else{
+        toast(document.documentElement.lang==='de' ? 'Senden fehlgeschlagen.' : 'Sending failed.');
+      }
+    }catch{
+      toast(document.documentElement.lang==='de' ? 'Netzwerkfehler.' : 'Network error.');
+    }finally{
+      const btn2 = form.querySelector('button[type="submit"]');
+      btn2.disabled = false;
+    }
+  });
+
+  // Live-Korrektur NUR nachdem man einmal gesendet hat
+  ['input','change'].forEach(evt=>{
+    ['need','name','email','message'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener(evt, ()=>{
+        if(!hasSubmittedOnce) return;
+        validateField(el);
+      });
+    });
+  });
+}
+
       });
     }
 
