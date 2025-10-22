@@ -133,7 +133,6 @@
     .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
     .pill.primary{color:#fff; border-color:transparent;
       background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black))}
-
     .lang-toggle{display:flex; border-radius:999px; overflow:hidden; border:1px solid var(--line); flex:0 0 auto}
     .lang-toggle button{padding:8px 12px; background:transparent; color:var(--txt); border:0; cursor:pointer; min-height:44px}
     .lang-toggle button.active{background:color-mix(in oklab, var(--brand) 22%, transparent)}
@@ -240,57 +239,38 @@
     }
 
     /* === 5) Form & Conversion – Felder, Hilfen, Fehler, Success === */
-    
     form{display:grid; gap:12px; margin-top:8px}
-input,textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
+    input,textarea,select{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
 
-/* === Select: Dark/Light, Popup-Farben & eigener Pfeil === */
-select{
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: var(--elev);
-  color: var(--txt);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px 40px 12px 14px;
-  line-height: 1.2;
-  min-height: 44px;
-  background-image: url("data:image/svg+xml;utf8,\
+    /* === Select: Dark/Light, Popup-Farben & eigener Pfeil === */
+    select{
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: var(--elev);
+      color: var(--txt);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 40px 12px 14px;
+      line-height: 1.2;
+      min-height: 44px;
+      background-image: url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' \
 stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
 <polyline points='6 9 12 15 18 9'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 18px 18px;
-  color-scheme: dark light;
-}
-.light select{
-  background-color: #ffffff;
-}
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px 18px;
+      color-scheme: dark light;
+    }
+    .light select{ background-color:#ffffff; }
+    select:required:invalid{ color: var(--muted); }
+    select option[value=""]{ color: var(--muted); }
+    select option{ color: var(--txt); background-color: var(--elev); }
+    .light select option{ color:#0b1020; background-color:#fff; }
+    select::-ms-expand{ display:none; }
 
-select:focus{
-  outline: none;
-  box-shadow: 0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent);
-  border-color: color-mix(in oklab,var(--brand) 50%, var(--line));
-}
-
-select:required:invalid{ color: var(--muted); }
-select option[value=""]{ color: var(--muted); }
-
-select option{
-  color: var(--txt);
-  background-color: var(--elev);
-}
-.light select option{
-  color: #0b1020;
-  background-color: #ffffff;
-}
-select::-ms-expand{ display:none; }
-
-/* danach geht’s normal weiter */
-input:focus,textarea:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
-textarea{resize:vertical; min-height:140px}
-
+    input:focus,textarea:focus,select:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
+    textarea{resize:vertical; min-height:140px}
     .field{display:grid; gap:6px}
     .hint{font-size:13px; color:var(--muted)}
     .error{font-size:13px; color:#ff6b6b; display:none}
@@ -339,20 +319,14 @@ textarea{resize:vertical; min-height:140px}
       border-radius:8px;
       padding:2px 4px;
     }
-    .saes:hover,
-    .saes:focus-visible{
-      text-shadow:
-        0 0 6px color-mix(in oklab, var(--brand) 65%, transparent),
-        0 0 18px color-mix(in oklab, var(--brand) 35%, transparent);
+    .saes:hover,.saes:focus-visible{
+      text-shadow:0 0 6px color-mix(in oklab, var(--brand) 65%, transparent),0 0 18px color-mix(in oklab, var(--brand) 35%, transparent);
       transform: translateY(-1px);
       outline: none;
       box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 25%, transparent) inset;
     }
-    .light .saes:hover,
-    .light .saes:focus-visible{
-      text-shadow:
-        0 0 7px color-mix(in oklab, var(--brand) 55%, transparent),
-        0 0 18px color-mix(in oklab, var(--brand) 28%, transparent);
+    .light .saes:hover,.light .saes:focus-visible{
+      text-shadow:0 0 7px color-mix(in oklab, var(--brand) 55%, transparent),0 0 18px color-mix(in oklab, var(--brand) 28%, transparent);
       box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset;
     }
 
@@ -461,11 +435,10 @@ textarea{resize:vertical; min-height:140px}
       <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
       <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
 
-      <!-- === 5) Form & Conversion: Select + Hilfetexte + Inline-Errors === -->
       <form id="contactForm" action="https://formsubmit.co/519546999335d55342a75243961835b7" method="POST" novalidate>
         <div class="field">
           <label for="need" data-i18n="needLabel">What do you need?</label>
-          <select id="need" name="need" required aria-invalid="false" data-i18n-ph="">
+          <select id="need" name="need" required aria-invalid="false">
             <option value="" data-i18n="needChoose" selected>Choose an option</option>
             <option value="editing" data-i18n="needEditing">Editing</option>
             <option value="production" data-i18n="needProduction">Production</option>
@@ -501,7 +474,6 @@ textarea{resize:vertical; min-height:140px}
         <button class="btn primary" type="submit" data-i18n="sendBtn">Send message</button>
       </form>
 
-      <!-- Success-Container; wird per JS befüllt -->
       <div id="formSuccess" class="success-block" style="display:none"></div>
     </section>
 
@@ -542,8 +514,6 @@ textarea{resize:vertical; min-height:140px}
         contactTitle:"Contact",replyLine:"Reply within 48h.",
         phName:"Your name",phEmail:"your@email.com",phMsg:"What do you need?",
         sendBtn:"Send message",
-
-        /* Form & Conversion i18n */
         needLabel:"What do you need?",
         needChoose:"Choose an option",
         needEditing:"Editing",
@@ -575,8 +545,6 @@ textarea{resize:vertical; min-height:140px}
         contactTitle:"Kontakt",replyLine:"Antwort innerhalb von 48 Stunden.",
         phName:"Dein Name",phEmail:"dein@mail.com",phMsg:"Worum geht’s?",
         sendBtn:"Nachricht senden",
-
-        /* Form & Conversion i18n */
         needLabel:"Worum geht’s?",
         needChoose:"Bitte auswählen",
         needEditing:"Schnitt",
@@ -622,8 +590,7 @@ textarea{resize:vertical; min-height:140px}
       x.className='close-btn'; x.type='button'; x.textContent='✕';
       x.addEventListener('click',()=>closeModal(clone));
       clone.appendChild(x);
-      document.body.appendChild(clone);
-      // kompensiere Scrollbar, damit nichts springt
+      // Scrollbar-Breite kompensieren
       const sw = window.innerWidth - document.documentElement.clientWidth;
       if(sw>0){ document.documentElement.style.paddingRight = sw+'px'; }
       document.documentElement.style.overflow='hidden';
@@ -671,7 +638,7 @@ textarea{resize:vertical; min-height:140px}
       setTimeout(()=> t.style.opacity='0', 2200);
     }
 
-    // === 5) Inline-Validierung ===
+    // Inline-Validierung
     const $ = sel => document.querySelector(sel);
     function setErr(input, show, errSel){
       input.setAttribute('aria-invalid', show?'true':'false');
@@ -683,7 +650,6 @@ textarea{resize:vertical; min-height:140px}
       let ok = true;
 
       if(!need.value){ setErr(need, true, '#needErr'); ok=false; } else setErr(need, false, '#needErr');
-
       if(!name.value.trim()){ setErr(name, true, '#nameErr'); ok=false; } else setErr(name, false, '#nameErr');
 
       const em = email.value.trim();
@@ -712,7 +678,6 @@ textarea{resize:vertical; min-height:140px}
           });
           if(res.ok){
             form.reset();
-            // Success-Block anzeigen
             const lang = document.documentElement.lang || 'en';
             successBox.style.display = 'block';
             successBox.innerHTML = `
@@ -737,7 +702,6 @@ textarea{resize:vertical; min-height:140px}
         }
       });
 
-      // Live-Validierung bei Blur
       ['need','name','email','message'].forEach(id=>{
         const el = document.getElementById(id);
         if(!el) return;
