@@ -22,8 +22,6 @@
       --capsule-bg: rgba(255,255,255,.055);
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
-
-      /* Typo-Feinschliff */
       --fs-hero: clamp(32px, 4.2vw, 48px);
       --fs-h2: clamp(18px, 2.2vw, 24px);
       --fs-body: 16px;
@@ -31,7 +29,6 @@
       --lh-default: 1.6;
     }
 
-    /* ===== Light mode ===== */
     .light{
       --bg:#f6f8fb; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
       --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
@@ -45,42 +42,18 @@
       backdrop-filter: blur(10px);
     }
     .light .pill, .light #themeToggle, .light .btn.ghost{ color: var(--txt) !important; }
-    .light .pill{
-      border-color: color-mix(in oklab, black 12%, transparent);
-      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.55));
-    }
-    .light .card{
-      background: var(--elev);
-      border-color: color-mix(in oklab, black 12%, transparent);
-      box-shadow: var(--shadow);
-    }
+    .light .pill{ border-color: color-mix(in oklab, black 12%, transparent); background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.55)); }
+    .light .card{ background: var(--elev); border-color: color-mix(in oklab, black 12%, transparent); box-shadow: var(--shadow); }
     .light .card:hover{
       border-color: color-mix(in oklab, var(--brand) 45%, color-mix(in oklab, black 12%, transparent));
       box-shadow: 0 28px 70px rgba(2,6,23,.12), 0 2px 10px rgba(2,6,23,.06), 0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset;
     }
-    .light .highlight-panel, .light .feature{
-      background: color-mix(in oklab, white 88%, var(--brand) 4%);
-      border-color: color-mix(in oklab, black 12%, transparent);
-    }
-    .light .highlight-panel:hover, .light .feature:hover{
-      border-color: color-mix(in oklab, var(--brand) 45%, color-mix(in oklab, black 12%, transparent));
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset;
-    }
-    .light .badge{
-      background: color-mix(in oklab, white 85%, var(--brand) 6%);
-      border-color: color-mix(in oklab, black 10%, transparent);
-    }
-    .light .link{
-      border-color: color-mix(in oklab, black 12%, transparent);
-      background: color-mix(in oklab, white 92%, transparent);
-    }
-    .light .link:hover{
-      border-color: color-mix(in oklab, var(--brand) 55%, color-mix(in oklab, black 12%, transparent));
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 20%, transparent) inset;
-    }
-    .light input, .light textarea, .light select{
-      color: var(--txt); background: #ffffff; border-color: color-mix(in oklab, black 12%, transparent);
-    }
+    .light .highlight-panel, .light .feature{ background: color-mix(in oklab, white 88%, var(--brand) 4%); border-color: color-mix(in oklab, black 12%, transparent); }
+    .light .highlight-panel:hover, .light .feature:hover{ border-color: color-mix(in oklab, var(--brand) 45%, color-mix(in oklab, black 12%, transparent)); box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset; }
+    .light .badge{ background: color-mix(in oklab, white 85%, var(--brand) 6%); border-color: color-mix(in oklab, black 10%, transparent); }
+    .light .link{ border-color: color-mix(in oklab, black 12%, transparent); background: color-mix(in oklab, white 92%, transparent); }
+    .light .link:hover{ border-color: color-mix(in oklab, var(--brand) 55%, color-mix(in oklab, black 12%, transparent)); box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 20%, transparent) inset; }
+    .light input, .light textarea, .light select{ color: var(--txt); background: #ffffff; border-color: color-mix(in oklab, black 12%, transparent); }
     .light footer{ color: color-mix(in oklab, black 45%, transparent); }
 
     *{box-sizing:border-box} html,body{height:100%}
@@ -94,12 +67,7 @@
     }
     a{color:inherit; text-decoration:none}
 
-    .nav-wrap{
-      position:sticky; top:0; z-index:50; padding-top:var(--safe-top);
-      backdrop-filter: blur(10px);
-      background: color-mix(in oklab, var(--bg) 82%, transparent);
-      border-bottom:1px solid var(--line);
-    }
+    .nav-wrap{ position:sticky; top:0; z-index:50; padding-top:var(--safe-top); backdrop-filter: blur(10px); background: color-mix(in oklab, var(--bg) 82%, transparent); border-bottom:1px solid var(--line); }
 
     .wrap{max-width:1100px; margin:0 auto; padding:28px}
     .divider{height:1px; background:var(--line); margin:28px 0}
@@ -171,11 +139,7 @@
       border-radius:16px; padding:14px;
       transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
     }
-    .highlight-panel:hover{
-      border-color: color-mix(in oklab, var(--brand) 50%, var(--line));
-      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset;
-      transform: translateY(-1px);
-    }
+    .highlight-panel:hover{ border-color: color-mix(in oklab, var(--brand) 50%, var(--line)); box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset; transform: translateY(-1px); }
 
     .badge{display:inline-flex; align-items:center; gap:8px; margin:8px 8px 0 0; padding:8px 12px; border-radius:999px; background: var(--capsule-bg); border:1px solid color-mix(in oklab, var(--brand) 16%, var(--line)); font-size:14px}
 
@@ -185,11 +149,7 @@
       display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:14px;
       border:1px solid var(--line); transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease; min-height:52px;
     }
-    .link:hover{
-      border-color: color-mix(in oklab,var(--brand) 65%, var(--line));
-      transform:translateY(-1px);
-      box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 25%, transparent) inset;
-    }
+    .link:hover{ border-color: color-mix(in oklab,var(--brand) 65%, var(--line)); transform:translateY(-1px); box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 25%, transparent) inset; }
     .info-link{background:linear-gradient(180deg, color-mix(in oklab, var(--brand) 12%, transparent), transparent 85%); border:1px solid color-mix(in oklab, var(--brand) 30%, var(--line))}
 
     .features{display:grid;gap:12px}
@@ -201,11 +161,7 @@
       transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
       min-height:120px;
     }
-    .feature:hover{
-      border-color: color-mix(in oklab, var(--brand) 55%, var(--line));
-      box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset;
-      transform:translateY(-1px);
-    }
+    .feature:hover{ border-color: color-mix(in oklab, var(--brand) 55%, var(--line)); box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset; transform:translateY(-1px); }
     .feature h3{
       margin:0 0 8px; font-size:16px;
       background: color-mix(in oklab,var(--brand) 14%, var(--elev));
@@ -219,7 +175,7 @@
     input:focus,textarea:focus,select:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
     textarea{resize:vertical; min-height:140px}
     .field{display:grid; gap:6px}
-    .hint{display:none}                   /* standardmäßig CLEAN */
+    .hint{display:none}
     .error{font-size:13px; color:#ff6b6b; display:none; margin-top:6px}
     [aria-invalid="true"]{border-color:rgba(255,107,107,.6)}
     .success-block{background: color-mix(in oklab, var(--brand) 8%, var(--elev)); border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line)); border-radius:16px; padding:16px; margin-top:12px}
@@ -253,6 +209,9 @@
       box-shadow:0 30px 90px rgba(0,0,0,.5); padding:22px;
       animation:modalZoomIn .18s cubic-bezier(.2,.8,.2,1) both;
     }
+    /* im Modal: die verschobene Card nicht doppelt rahmen */
+    .modalized > .card{ background:transparent; border:0; box-shadow:none; padding:0; }
+
     .modal-out{animation:modalZoomOut .14s ease-in both}
     @keyframes modalZoomIn{from{transform:translate(-50%,0) scale(.96);opacity:.9}to{transform:translate(-50%,0) scale(1);opacity:1}}
     @keyframes modalZoomOut{from{transform:translate(-50%,0) scale(1);opacity:1}to{transform:translate(-50%,0) scale(.96);opacity:.9}}
@@ -265,7 +224,7 @@
       opacity:.35; mix-blend-mode:soft-light;
     }
 
-    /* === @saes_school glow link === */
+    /* @saes_school glow link */
     .saes{font-weight:600; position:relative; text-decoration:underline; text-underline-offset:2px; transition: text-shadow .15s ease, transform .15s ease, box-shadow .15s ease; border-radius:8px; padding:2px 4px}
     .saes:hover,.saes:focus-visible{ text-shadow:0 0 6px color-mix(in oklab, var(--brand) 65%, transparent),0 0 18px color-mix(in oklab, var(--brand) 35%, transparent); transform: translateY(-1px); outline:none; box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 25%, transparent) inset }
     .light .saes:hover,.light .saes:focus-visible{ text-shadow:0 0 7px color-mix(in oklab, var(--brand) 55%, transparent),0 0 18px color-mix(in oklab, var(--brand) 28%, transparent); box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset }
@@ -372,7 +331,7 @@
       <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
       <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
 
-      <!-- IMPORTANT: FormSubmit token from your activation email -->
+      <!-- FormSubmit token -->
       <form id="contactForm" action="https://formsubmit.co/519546999335d55342a75243961835b7" method="POST" novalidate>
         <div class="field">
           <label for="need" data-i18n="needLabel">What do you need?</label>
@@ -401,7 +360,6 @@
           <div class="error" id="msgErr"></div>
         </div>
 
-        <!-- FormSubmit settings -->
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="Neue Projektanfrage über paulrichter6.github.io">
@@ -428,7 +386,6 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
     const root = document.body;
     document.getElementById('themeToggle').addEventListener('click', ()=> root.classList.toggle('light'));
 
@@ -503,31 +460,61 @@
     const contactCard=document.getElementById('contact');
     const linksCard=document.getElementById('links');
 
+    // ===== Modal-Mechanik: Sektion verschieben (nicht klonen) =====
     function makeModalFrom(section){
-      const clone=section.cloneNode(true);
-      clone.className='modalized';
-      const x=document.createElement('button');
+      // Platzhalter an alter Position
+      const placeholder = document.createElement('div');
+      placeholder.style.display = 'none';
+      section.parentNode.insertBefore(placeholder, section);
+
+      // Modal-Container
+      const modal = document.createElement('div');
+      modal.className = 'modalized';
+      modal.setAttribute('role','dialog');
+      modal.setAttribute('aria-modal','true');
+
+      // Close-Button
+      const x = document.createElement('button');
       x.className='close-btn'; x.type='button'; x.textContent='✕';
-      x.addEventListener('click',()=>closeModal(clone));
-      clone.appendChild(x);
+      x.addEventListener('click', ()=> closeModal(modal, section, placeholder));
+      modal.appendChild(x);
+
+      // Sektion ins Modal verschieben
+      modal.appendChild(section);
+      document.body.appendChild(modal);
+
+      // Scroll sperren + Blur an
       const sw = window.innerWidth - document.documentElement.clientWidth;
       if(sw>0){ document.documentElement.style.paddingRight = sw+'px'; }
       document.documentElement.style.overflow='hidden';
       backdrop.classList.add('visible');
-      const onBackdrop=()=>closeModal(clone);
-      backdrop.addEventListener('click',onBackdrop,{once:true});
-      const onEsc=e=>{ if(e.key==='Escape') closeModal(clone); };
-      window.addEventListener('keydown',onEsc,{once:true});
-      clone._cleanup=()=>window.removeEventListener('keydown',onEsc);
-      return clone;
+
+      // ESC / Klick auf Backdrop
+      const onBackdrop = ()=> closeModal(modal, section, placeholder);
+      backdrop.addEventListener('click', onBackdrop, {once:true});
+      const onEsc = e => { if(e.key==='Escape') closeModal(modal, section, placeholder); };
+      window.addEventListener('keydown', onEsc, {once:true});
+
+      // Cleanup-Refs
+      modal._cleanup = () => window.removeEventListener('keydown', onEsc);
+      modal._placeholder = placeholder;
+
+      return modal;
     }
-    function closeModal(node){
-      if(!node) return;
-      node.classList.add('modal-out'); backdrop.classList.remove('visible');
-      node.addEventListener('animationend',()=>{
-        node.remove(); document.documentElement.style.overflow=''; document.documentElement.style.paddingRight='';
-        node._cleanup && node._cleanup();
-      },{once:true});
+
+    function closeModal(modal, section, placeholder){
+      if(!modal) return;
+      modal.classList.add('modal-out'); backdrop.classList.remove('visible');
+      modal.addEventListener('animationend', ()=>{
+        // Sektion zurück an ursprüngliche Stelle
+        placeholder.parentNode.insertBefore(section, placeholder);
+        placeholder.remove();
+
+        modal.remove();
+        document.documentElement.style.overflow='';
+        document.documentElement.style.paddingRight='';
+        modal._cleanup && modal._cleanup();
+      }, {once:true});
     }
 
     document.getElementById('openContact').addEventListener('click', ()=>makeModalFrom(contactCard));
@@ -535,6 +522,7 @@
     document.getElementById('openContactMobile').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openLinks').addEventListener('click', ()=>makeModalFrom(linksCard));
 
+    // ===== Form + Toast =====
     const form = document.getElementById('contactForm');
     const successBox = document.getElementById('formSuccess');
 
@@ -556,9 +544,8 @@
       setTimeout(()=> t.style.opacity='0', 2200);
     }
 
-    // === Inline-Validierung (erst nach Submit; danach feldweise live) ===
+    // === Validierung (erst nach Submit; danach feldweise live) ===
     const $ = sel => document.querySelector(sel);
-
     function errorText(id){
       const lang = document.documentElement.lang || 'en';
       const T = {
@@ -627,7 +614,6 @@
         }
       });
 
-      // Live-Korrektur NUR nach erstem Submit
       ['input','change'].forEach(evt=>{
         ['need','name','email','message'].forEach(id=>{
           const el=document.getElementById(id); if(!el) return;
@@ -636,6 +622,7 @@
       });
     }
 
+    // Sticky CTA bleibt wie gehabt
     (function(){
       const sticky = document.querySelector('.sticky-cta');
       const contact = document.getElementById('contact');
