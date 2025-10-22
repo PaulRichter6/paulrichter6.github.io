@@ -240,10 +240,57 @@
     }
 
     /* === 5) Form & Conversion – Felder, Hilfen, Fehler, Success === */
+    
     form{display:grid; gap:12px; margin-top:8px}
-    input,textarea,select{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
-    input:focus,textarea:focus,select:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
-    textarea{resize:vertical; min-height:140px}
+input,textarea{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
+
+/* === Select: Dark/Light, Popup-Farben & eigener Pfeil === */
+select{
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--elev);
+  color: var(--txt);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 14px;
+  line-height: 1.2;
+  min-height: 44px;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' \
+stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
+<polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px 18px;
+  color-scheme: dark light;
+}
+.light select{
+  background-color: #ffffff;
+}
+
+select:focus{
+  outline: none;
+  box-shadow: 0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent);
+  border-color: color-mix(in oklab,var(--brand) 50%, var(--line));
+}
+
+select:required:invalid{ color: var(--muted); }
+select option[value=""]{ color: var(--muted); }
+
+select option{
+  color: var(--txt);
+  background-color: var(--elev);
+}
+.light select option{
+  color: #0b1020;
+  background-color: #ffffff;
+}
+select::-ms-expand{ display:none; }
+
+/* danach geht’s normal weiter */
+input:focus,textarea:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
+textarea{resize:vertical; min-height:140px}
+
     .field{display:grid; gap:6px}
     .hint{font-size:13px; color:var(--muted)}
     .error{font-size:13px; color:#ff6b6b; display:none}
