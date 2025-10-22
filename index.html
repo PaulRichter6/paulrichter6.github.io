@@ -248,6 +248,32 @@
       opacity:.35; mix-blend-mode:soft-light;
     }
 
+    /* === @saes_school glow link === */
+    .saes{
+      font-weight:600;
+      position:relative;
+      text-decoration:none;
+      transition: text-shadow .18s ease, filter .18s ease, transform .18s ease;
+      border-radius:8px;
+      padding:2px 4px;
+    }
+    .saes:hover,
+    .saes:focus-visible{
+      text-shadow:
+        0 0 6px color-mix(in oklab, var(--brand) 65%, transparent),
+        0 0 18px color-mix(in oklab, var(--brand) 35%, transparent);
+      transform: translateY(-1px);
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 25%, transparent) inset;
+    }
+    .light .saes:hover,
+    .light .saes:focus-visible{
+      text-shadow:
+        0 0 7px color-mix(in oklab, var(--brand) 55%, transparent),
+        0 0 18px color-mix(in oklab, var(--brand) 28%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset;
+    }
+
     @media (max-width:720px){
       .wrap{padding:18px}
       .nav{gap:8px}
@@ -331,7 +357,7 @@
           <a class="link" href="https://www.instagram.com/paul.richter6/" target="_blank" rel="noreferrer"><span>Instagram</span><span>↗</span></a>
           <a class="link" href="https://www.youtube.com/@PaulRichter6" target="_blank" rel="noreferrer"><span>YouTube</span><span>↗</span></a>
           <div class="link info-link">
-            <span data-i18n="saesNote">Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.</span>
+            <span data-i18n="saesNote">Currently managing social media for <a class="saes" href="https://www.instagram.com/saes_school/" target="_blank" rel="noreferrer">@saes_school</a>, alongside private clients and independent projects.</span>
           </div>
         </div>
       </section>
@@ -391,7 +417,7 @@
         aboutText:"I work with both private and corporate clients in and around Munich. For local projects I’m available on site by appointment. Remote collaborations are also possible — including social media content, editing projects, and ongoing account management. The first online consultation is free.",
         badgeMunich:"📍 Munich area",badgeModes:"🎥 On-site & remote",badgeFirstCall:"🗓 First online consultation is free",
         linksTitle:"Projects & Links",
-        saesNote:"Currently managing social media for <strong>@saes_school</strong>, alongside private clients and independent projects.",
+        saesNote:"Currently managing social media for <a class='saes' href='https://www.instagram.com/saes_school/' target='_blank' rel='noreferrer'>@saes_school</a>, alongside private clients and independent projects.",
         servicesTitle:"Services",
         svcProdT:"Production",svcProdD:"On-site filming for events, products, and interviews.",
         svcEditT:"Editing",svcEditD:"Clean cuts, pacing, subtitles, and sound polish.",
@@ -410,7 +436,7 @@
         aboutText:"Ich arbeite mit Privat- und Unternehmenskunden im Großraum München. Vor Ort nach Terminvereinbarung; Remote ist ebenfalls möglich — inklusive Social-Media-Content, Schnittprojekten und laufender Account-Betreuung. Das erste Online-Gespräch ist kostenfrei.",
         badgeMunich:"📍 Raum München",badgeModes:"🎥 Vor Ort & Remote",badgeFirstCall:"🗓 Erstes Online-Gespräch kostenfrei",
         linksTitle:"Projekte & Links",
-        saesNote:"Aktuell Social Media für <strong>@saes_school</strong>; zusätzlich Privatkund:innen und freie Projekte.",
+        saesNote:"Aktuell Social Media für <a class='saes' href='https://www.instagram.com/saes_school/' target='_blank' rel='noreferrer'>@saes_school</a>; zusätzlich Privatkund:innen und freie Projekte.",
         servicesTitle:"Leistungen",
         svcProdT:"Produktion",svcProdD:"Vor-Ort-Drehs für Events, Produkte und Interviews.",
         svcEditT:"Schnitt",svcEditD:"Saubere Edits, Timing, Untertitel und Sound-Feinschliff.",
