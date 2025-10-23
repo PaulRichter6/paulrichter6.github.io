@@ -42,11 +42,32 @@
       --shadow:0 18px 48px rgba(2,6,23,.08), 0 1px 0 rgba(2,6,23,.04) inset;
       --capsule-bg: rgba(2,6,23,.04);
       --hero-glow: radial-gradient(900px 480px at 88% -18%, rgba(56,182,255,.16), transparent 65%);
+    .light body {
+      background:
+        radial-gradient(1200px 800px at 15% 25%, rgba(56,182,255,0.08), transparent 65%),
+        radial-gradient(1200px 800px at 85% 75%, rgba(56,182,255,0.06), transparent 68%),
+        linear-gradient(180deg, rgba(240,246,255,1) 0%, rgba(228,236,250,1) 100%);
+      background-attachment: fixed;
     }
-    .light .nav-wrap{
-      background: color-mix(in oklab, white 78%, transparent);
-      border-bottom-color: color-mix(in oklab, black 8%, transparent);
-      backdrop-filter: blur(10px);
+    
+    /* leichte Überlagerung für Frost-Effekt im Light Mode */
+    .light body::before {
+      content:"";
+      position:fixed;
+      inset:-20px;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(800px 600px at -10% 30%, rgba(56,182,255,0.12), transparent 70%),
+        radial-gradient(800px 600px at 110% 70%, rgba(56,182,255,0.10), transparent 72%);
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+    
+        }
+        .light .nav-wrap{
+          background: color-mix(in oklab, white 78%, transparent);
+          border-bottom-color: color-mix(in oklab, black 8%, transparent);
+          backdrop-filter: blur(10px);
     }
     .light .pill, .light #themeToggle, .light .btn.ghost{ color: var(--txt) !important; }
     .light .pill{ border-color: color-mix(in oklab, black 12%, transparent); background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.55)); }
