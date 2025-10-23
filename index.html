@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +15,14 @@
       --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
       --line:rgba(148,163,184,.16); --brand:#38b6ff; --ring:rgba(56,182,255,.55);
       --radius:22px; --shadow:0 24px 70px rgba(0,0,0,.40);
+      /* softer, farbige Glows */
       --surface-grad:
-        radial-gradient(1200px 600px at 80% -10%, rgba(56,182,255,.14), transparent 60%),
-        radial-gradient(1000px 500px at 10% 110%, rgba(56,182,255,.10), transparent 60%);
-      --hero-glow: radial-gradient(900px 480px at 90% -15%, rgba(56,182,255,.16), transparent 60%);
+        radial-gradient(1600px 900px at 15% 20%, rgba(56,182,255,.10), transparent 62%),
+        radial-gradient(1600px 900px at 85% 80%, rgba(56,182,255,.09), transparent 64%),
+        radial-gradient(1200px 700px at 50% -12%, rgba(56,182,255,.06), transparent 72%),
+        radial-gradient(1400px 800px at 50% 120%, rgba(56,182,255,.05), transparent 70%);
+      --hero-glow:
+        radial-gradient(1100px 520px at 80% -18%, rgba(56,182,255,.13), transparent 68%);
       --capsule-bg: rgba(255,255,255,.055);
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -35,7 +38,7 @@
       --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
       --shadow:0 18px 48px rgba(2,6,23,.08), 0 1px 0 rgba(2,6,23,.04) inset;
       --capsule-bg: rgba(2,6,23,.04);
-      --hero-glow: radial-gradient(900px 480px at 88% -18%, rgba(56,182,255,.16), transparent 65%);
+      --hero-glow: radial-gradient(1100px 520px at 80% -18%, rgba(56,182,255,.13), transparent 68%);
     }
     .light .nav-wrap{
       background: color-mix(in oklab, white 78%, transparent);
@@ -201,9 +204,8 @@
 
     .backdrop{position:fixed; inset:0; backdrop-filter: blur(6px) saturate(120%); background: rgba(2,6,23,.45); opacity:0; pointer-events:none; transition:opacity .15s ease; z-index:60}
     .backdrop.visible{opacity:1; pointer-events:auto}
-
     .modalized{
-      position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+      position:fixed; left:50%; top:6vh; transform:translate(-50%,0);
       width:min(720px,92vw); max-height:88vh; overflow:auto; z-index:70;
       background: color-mix(in oklab, var(--elev) 86%, transparent);
       backdrop-filter: blur(10px) saturate(130%);
@@ -214,24 +216,35 @@
     /* im Modal: die verschobene Card nicht doppelt rahmen */
     .modalized > .card{ background:transparent; border:0; box-shadow:none; padding:0; }
 
-    /* Modal-Fix: keine Hover/Fokus-Ringe auf Card im Modal + große Hit-Area fürs ✕ */
-    .modalized:focus,
-    .modalized:focus-visible{ outline:none !important; box-shadow:none !important; }
-    .modalized .card:hover{ transform:none !important; box-shadow:none !important; border-color:var(--line) !important; }
-
-    .close-btn{
-      position:absolute; top:10px; right:10px;
-      width:44px; height:44px; display:flex; align-items:center; justify-content:center;
-      border:1px solid var(--line); background:var(--elev); color:var(--txt);
-      border-radius:12px; cursor:pointer; min-height:36px; z-index:2;
-      line-height:1; font-size:18px;
-    }
-
     .modal-out{animation:modalZoomOut .14s ease-in both}
-    @keyframes modalZoomIn{from{transform:translate(-50%,-50%) scale(.96);opacity:.9}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
-    @keyframes modalZoomOut{from{transform:translate(-50%,-50%) scale(1);opacity:1}to{transform:translate(-50%,-50%) scale(.96);opacity:.9}}
+    @keyframes modalZoomIn{from{transform:translate(-50%,0) scale(.96);opacity:.9}to{transform:translate(-50%,0) scale(1);opacity:1}}
+    @keyframes modalZoomOut{from{transform:translate(-50%,0) scale(1);opacity:1}to{transform:translate(-50%,0) scale(.96);opacity:.9}}
+    .close-btn{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); color:var(--txt); border-radius:12px; padding:6px 10px; cursor:pointer; min-height:36px; z-index:2}
 
     @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+
+    /* Frosted-Glass Ebene (unter dem Noise) */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-20px;
+      pointer-events:none;
+      z-index:0;
+      background:
+        radial-gradient(900px 600px at -10% 25%, rgba(56,182,255,.14), transparent 72%),
+        radial-gradient(1000px 700px at 110% 75%, rgba(56,182,255,.14), transparent 74%),
+        linear-gradient(180deg, rgba(8,12,16,0.00) 0%, rgba(8,12,16,0.35) 38%, rgba(8,12,16,0.52) 62%, rgba(8,12,16,0.00) 100%);
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+    .light body::before{
+      background:
+        radial-gradient(900px 600px at -10% 25%, rgba(56,182,255,.18), transparent 74%),
+        radial-gradient(1000px 700px at 110% 75%, rgba(56,182,255,.16), transparent 76%),
+        linear-gradient(180deg, rgba(255,255,255,0.00) 0%, rgba(56,182,255,0.10) 45%, rgba(56,182,255,0.08) 65%, rgba(255,255,255,0.00) 100%);
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+
+    /* Film-Körnung (liegt über body::before) */
     body::after{
       content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .04 .06 .04 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
@@ -257,7 +270,7 @@
       .card{padding:16px}
       .features{grid-template-columns:1fr}
       .links{grid-template-columns:1fr}
-      .modalized{top:50%}
+      .modalized{top:4vh; width:min(720px,96vw)}
       .sticky-cta{ position:fixed; left:16px; right:16px; bottom:calc(12px + var(--safe-bottom)); z-index:40; }
     }
     .sticky-cta{ transition: transform .28s ease, opacity .28s ease; will-change: transform, opacity; }
@@ -474,9 +487,9 @@
     const contactCard=document.getElementById('contact');
     const linksCard=document.getElementById('links');
 
-    // ===== Modal mit Platzhalter + Scroll-Lock ohne Layout-Shift =====
+    // ===== Modal-Mechanik: Sektion verschieben (nicht klonen) ohne Wackler =====
     function makeModalFrom(section){
-      // Platzhalter mit gleicher Höhe/Margins, damit nichts nachrutscht
+      // Platzhalter mit Höhe/Margins, damit nichts nachrutscht
       const ph = document.createElement('div');
       const rect = section.getBoundingClientRect();
       const cs = getComputedStyle(section);
@@ -484,43 +497,41 @@
       ph.style.height = rect.height + 'px';
       ph.style.margin  = cs.margin;
       ph.style.width   = '100%';
-      ph.style.visibility = 'hidden';
+      ph.style.visibility='hidden';
       section.parentNode.insertBefore(ph, section);
 
-      // Modal-Container
+      // Modal
       const modal = document.createElement('div');
       modal.className = 'modalized';
       modal.setAttribute('role','dialog');
       modal.setAttribute('aria-modal','true');
 
-      // Close-Button mit großer Hit-Area
       const x=document.createElement('button');
       x.className='close-btn'; x.type='button'; x.setAttribute('aria-label','Close'); x.textContent='✕';
       x.addEventListener('click', ()=>closeModal(modal, section, ph));
       modal.appendChild(x);
 
-      // Sektion in Modal verschieben
       modal.appendChild(section);
       document.body.appendChild(modal);
 
-      // Body-Scroll sperren + Scrollbar-Breite kompensieren (kein 2mm-Sprung)
-      const sw = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow='hidden';
-      if(sw>0) document.body.style.paddingRight = sw+'px';
+      // Root-Scroll sperren + Scrollbarbreite kompensieren (keine Links-Verschiebung)
+      const rootEl = document.documentElement;
+      const sw = window.innerWidth - rootEl.clientWidth;
+      rootEl.style.overflow = 'hidden';
+      if(sw>0){ rootEl.style.paddingRight = sw + 'px'; }
 
       backdrop.classList.add('visible');
 
-      // Close bei Backdrop/ESC
       const onBackdrop=()=>closeModal(modal, section, ph);
       backdrop.addEventListener('click', onBackdrop, {once:true});
       const onEsc=e=>{ if(e.key==='Escape') closeModal(modal, section, ph); };
       window.addEventListener('keydown', onEsc, {once:true});
       modal._cleanup = () => window.removeEventListener('keydown', onEsc);
 
-      // Fokus aufs ✕
       setTimeout(()=>x.focus(),0);
       return modal;
     }
+
     function closeModal(modal, section, placeholder){
       if(!modal) return;
       modal.classList.add('modal-out'); backdrop.classList.remove('visible');
@@ -528,17 +539,24 @@
         placeholder.parentNode.insertBefore(section, placeholder);
         placeholder.remove();
         modal.remove();
-        document.body.style.overflow='';
-        document.body.style.paddingRight='';
+
+        const rootEl = document.documentElement;
+        rootEl.style.overflow = '';
+        rootEl.style.paddingRight = '';
+
         modal._cleanup && modal._cleanup();
       }, {once:true});
     }
+
     document.getElementById('openContact').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openContact2').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openContactMobile').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openLinks').addEventListener('click', ()=>makeModalFrom(linksCard));
 
-    // ===== Toast =====
+    // ===== Form + Toast =====
+    const form = document.getElementById('contactForm');
+    const successBox = document.getElementById('formSuccess');
+
     function toast(msg){
       let t = document.getElementById('toast');
       if(!t){
@@ -557,11 +575,8 @@
       setTimeout(()=> t.style.opacity='0', 2200);
     }
 
-    // ===== Validierung (zeigt Fehler erst NACH Submit; danach live pro Feld) =====
-    const form = document.getElementById('contactForm');
-    const successBox = document.getElementById('formSuccess');
-    const $ = s => document.querySelector(s);
-
+    // === Validierung (erst nach Submit; danach feldweise live) ===
+    const $ = sel => document.querySelector(sel);
     function errorText(id){
       const lang = document.documentElement.lang || 'en';
       const T = {
