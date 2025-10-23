@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -213,7 +214,7 @@
     /* im Modal: die verschobene Card nicht doppelt rahmen */
     .modalized > .card{ background:transparent; border:0; box-shadow:none; padding:0; }
 
-    /* === Modal-Fix: keine Hover/Fokus-Ringe im Modal + große Hit-Area fürs ✕ === */
+    /* Modal-Fix: keine Hover/Fokus-Ringe auf Card im Modal + große Hit-Area fürs ✕ */
     .modalized:focus,
     .modalized:focus-visible{ outline:none !important; box-shadow:none !important; }
     .modalized .card:hover{ transform:none !important; box-shadow:none !important; border-color:var(--line) !important; }
@@ -402,8 +403,54 @@
     const root = document.body;
     document.getElementById('themeToggle').addEventListener('click', ()=> root.classList.toggle('light'));
 
-    const dict = {/* … unverändert aus deiner Version … */};
-
+    const dict = {
+      en:{toggleTheme:"Toggle theme",projectInquiry:"Project inquiry",
+        roles:"VIDEO EDITOR · VIDEOGRAPHER",
+        headline:"Cinematic edits for brands, events, and creators.",
+        subtitle:"I create cinematic videos and short-form content for brands, events, and private clients — focusing on quality and visual impact.",
+        startProject:"Start a project",watchWork:"Watch my work",
+        aboutTitle:"About",
+        aboutText:"I work remotely with businesses and private clients on social media content, video production, and ongoing account management — from editing to full channel managing. I also collaborate on-site in the greater Munich area for film projects, event coverage, and custom video productions by appointment. The first online consultation is free",
+        badgeMunich:"📍 Munich area",badgeModes:"🎥 On-site & remote",badgeFirstCall:"💻 First online consultation free",
+        linksTitle:"Projects & Links",
+        saesNote:"Currently managing social media for <a class='saes' href='https://www.instagram.com/saes_school/' target='_blank' rel='noreferrer'>@saes_school</a>, alongside private clients and independent projects.",
+        servicesTitle:"Services",
+        svcProdT:"Production",svcProdD:"On-site shoots for events, brands, and video projects.",
+        svcEditT:"Editing",svcEditD:"Video editing, precise, cohesive and tailored to your style.",
+        svcShortT:"Formats",svcShortD:"Short-form content & long videos, individually edited.",
+        svcOpsT:"Management",svcOpsD:"Account management, scheduling, and execution.",
+        contactTitle:"Contact",replyLine:"Reply within 48h.",
+        phName:"Your name",phEmail:"your@email.com",phMsg:"What do you need?",
+        sendBtn:"Send message",
+        needLabel:"What do you need?",
+        needChoose:"Choose an option",
+        needEditing:"Editing", needProduction:"Production", needShortform:"General", needOps:"Account management",
+        successTitle:"Thanks!", successBody:"Your message has been sent. I’ll get back to you within 24–48 hours.", successCta:"Start another inquiry"
+      },
+      de:{toggleTheme:"Theme wechseln",projectInquiry:"Projektanfrage",
+        roles:"VIDEOEDITOR · VIDEOGRAF",
+        headline:"Videoschnitt & Film für Marken, Events und Creator.",
+        subtitle:"Ich produziere Videos und Short-Form-Content für Marken, Events und Privatkund:innen — mit Fokus auf Qualität und Wirkung.",
+        startProject:"Projekt starten",watchWork:"Arbeiten ansehen",
+        aboutTitle:"Über mich",
+        aboutText:"Ich arbeite remote mit Unternehmen und Privatkunden an Social-Media-Content, Videoproduktion und laufender Account-Betreuung – vom Videoschnitt bis zum vollständigen Social-Media-Management. Darüber hinaus bin ich im Großraum München auch vor Ort im Einsatz: für Filmprojekte, Eventaufnahmen und individuelle Videoproduktionen nach Terminvereinbarung. Das erste Online-Gespräch ist kostenfrei.",
+        badgeMunich:"📍 Raum München",badgeModes:"🎥 Vor Ort & Remote",badgeFirstCall:"💻 Erstes Online-Gespräch kostenfrei",
+        linksTitle:"Projekte & Links",
+        saesNote:"Aktuell Social Media für <a class='saes' href='https://www.instagram.com/saes_school/' target='_blank' rel=Wirkung>@saes_school</a>; zusätzlich Privatkund:innen und freie Projekte.",
+        servicesTitle:"Leistungen",
+        svcProdT:"Produktion",svcProdD:"Vor-Ort-Drehs für Events, Marken und Videoprojekte.",
+        svcEditT:"Schnitt",svcEditD:"Videoschnitt, präzise, stimmig und auf euren Stil abgestimmt.",
+        svcShortT:"Formate",svcShortD:"Short-Form-Content & lange Videos, individuell geschnitten.",
+        svcOpsT:"Management",svcOpsD:"Account-Management, Planung und Umsetzung.",
+        contactTitle:"Kontakt",replyLine:"Antwort innerhalb von 48 Stunden.",
+        phName:"Dein Name",phEmail:"dein@mail.com",phMsg:"Worum geht’s?",
+        sendBtn:"Nachricht senden",
+        needLabel:"Worum geht’s?",
+        needChoose:"Bitte auswählen",
+        needEditing:"Schnitt", needProduction:"Produktion", needShortform:"Allgemein", needOpsps:"Account Produktion",
+        successTitle:"Danke!", successBody:"Deine Nachricht ist eingegangen. Rückmeldung innerhalb von 24–48 Stunden.", successCta:"Neue Anfrage starten"
+      }
+    };
     function applyLang(lang){
       document.documentElement.setAttribute('lang', lang);
       document.getElementById('langEN').classList.toggle('active', lang==='en');
@@ -427,13 +474,14 @@
     const contactCard=document.getElementById('contact');
     const linksCard=document.getElementById('links');
 
-    // ===== Modal: Sektion verschieben + Platzhalter; Body-Scroll sperren (kein Shift) =====
+    // ===== Modal mit Platzhalter + Scroll-Lock ohne Layout-Shift =====
     function makeModalFrom(section){
-      // Platzhalter mit gleicher Höhe/Margins
+      // Platzhalter mit gleicher Höhe/Margins, damit nichts nachrutscht
       const ph = document.createElement('div');
+      const rect = section.getBoundingClientRect();
       const cs = getComputedStyle(section);
-      ph.style.display = 'block';
-      ph.style.height  = section.getBoundingClientRect().height + 'px';
+      ph.style.display='block';
+      ph.style.height = rect.height + 'px';
       ph.style.margin  = cs.margin;
       ph.style.width   = '100%';
       ph.style.visibility = 'hidden';
@@ -445,35 +493,34 @@
       modal.setAttribute('role','dialog');
       modal.setAttribute('aria-modal','true');
 
-      // Close-Button (große Hit-Area)
-      const x = document.createElement('button');
+      // Close-Button mit großer Hit-Area
+      const x=document.createElement('button');
       x.className='close-btn'; x.type='button'; x.setAttribute('aria-label','Close'); x.textContent='✕';
-      x.addEventListener('click', ()=> closeModal(modal, section, ph));
+      x.addEventListener('click', ()=>closeModal(modal, section, ph));
       modal.appendChild(x);
 
-      // Sektion ins Modal verschieben
+      // Sektion in Modal verschieben
       modal.appendChild(section);
       document.body.appendChild(modal);
 
-      // Nur Body sperren -> keine Root-Scrollbar-Änderung, kein “2 mm-Sprung”
+      // Body-Scroll sperren + Scrollbar-Breite kompensieren (kein 2mm-Sprung)
+      const sw = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow='hidden';
+      if(sw>0) document.body.style.paddingRight = sw+'px';
+
       backdrop.classList.add('visible');
 
-      // Backdrop / ESC schließen
-      const onBackdrop = ()=> closeModal(modal, section, ph);
+      // Close bei Backdrop/ESC
+      const onBackdrop=()=>closeModal(modal, section, ph);
       backdrop.addEventListener('click', onBackdrop, {once:true});
-      const onEsc = e => { if(e.key==='Escape') closeModal(modal, section, ph); };
+      const onEsc=e=>{ if(e.key==='Escape') closeModal(modal, section, ph); };
       window.addEventListener('keydown', onEsc, {once:true});
-
       modal._cleanup = () => window.removeEventListener('keydown', onEsc);
-      modal._placeholder = ph;
 
       // Fokus aufs ✕
-      setTimeout(()=>{ x.focus(); }, 0);
-
+      setTimeout(()=>x.focus(),0);
       return modal;
     }
-
     function closeModal(modal, section, placeholder){
       if(!modal) return;
       modal.classList.add('modal-out'); backdrop.classList.remove('visible');
@@ -482,17 +529,135 @@
         placeholder.remove();
         modal.remove();
         document.body.style.overflow='';
+        document.body.style.paddingRight='';
         modal._cleanup && modal._cleanup();
       }, {once:true});
     }
-
     document.getElementById('openContact').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openContact2').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openContactMobile').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openLinks').addEventListener('click', ()=>makeModalFrom(linksCard));
 
-    // ===== Form + Toast + Validierung (unverändert funktional) =====
-    /* … ab hier bleibt dein Formular-/Toast-/Validation-Code wie in deiner letzten Version … */
+    // ===== Toast =====
+    function toast(msg){
+      let t = document.getElementById('toast');
+      if(!t){
+        t = document.createElement('div');
+        t.id = 'toast';
+        t.style.position='fixed'; t.style.left='50%'; t.style.bottom='24px';
+        t.style.transform='translateX(-50%)'; t.style.background='rgba(15,17,21,.9)';
+        t.style.color='#fff'; t.style.border='1px solid rgba(148,163,184,.2)';
+        t.style.borderRadius='12px'; t.style.padding='10px 14px';
+        t.style.boxShadow='0 12px 36px rgba(0,0,0,.35)'; t.style.zIndex='100';
+        t.style.opacity='0'; t.style.transition='opacity .15s ease';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      requestAnimationFrame(()=> t.style.opacity='1');
+      setTimeout(()=> t.style.opacity='0', 2200);
+    }
+
+    // ===== Validierung (zeigt Fehler erst NACH Submit; danach live pro Feld) =====
+    const form = document.getElementById('contactForm');
+    const successBox = document.getElementById('formSuccess');
+    const $ = s => document.querySelector(s);
+
+    function errorText(id){
+      const lang = document.documentElement.lang || 'en';
+      const T = {
+        en:{need:"Please choose one option.",name:"Your real name helps us respond properly. Please enter your name.",email:"We only use this to reply. Please enter a valid email.",msg:"Share links, deadlines, and goals. Please add a short message (min. 8 characters).",banner:"Please check the fields."},
+        de:{need:"Bitte eine Option auswählen.",name:"Dein echter Name hilft bei der Zuordnung. Bitte Namen eingeben.",email:"Wird nur für die Antwort genutzt. Bitte gültige E-Mail eingeben.",msg:"Links, Deadlines und Ziele. Bitte eine kurze Nachricht hinzufügen (min. 8 Zeichen).",banner:"Bitte Eingaben prüfen."}
+      }[lang];
+      return { need:T.need, name:T.name, email:T.email, message:T.msg, _banner:T.banner }[id];
+    }
+    function setErr(input, show, errSel){
+      input.setAttribute('aria-invalid', show ? 'true' : 'false');
+      const e = document.querySelector(errSel);
+      if(e){ if(show){ e.textContent = errorText(input.id); } e.style.display = show ? 'block' : 'none'; }
+    }
+    function validateField(el){
+      const id = el.id; let ok = true;
+      if(id==='need'){ ok = !!el.value; setErr(el, !ok, '#needErr'); }
+      else if(id==='name'){ ok = !!el.value.trim(); setErr(el, !ok, '#nameErr'); }
+      else if(id==='email'){ const em=el.value.trim(); const re=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/; ok=re.test(em); setErr(el, !ok, '#emailErr'); }
+      else if(id==='message'){ ok = el.value.trim().length>=8; setErr(el, !ok, '#msgErr'); }
+      return ok;
+    }
+    function validateAll(show){
+      const need=$('#need'), name=$('#name'), email=$('#email'), msg=$('#message');
+      let ok=true;
+      if(show){ ok = validateField(need)  && ok; }
+      if(show){ ok = validateField(name)  && ok; }
+      if(show){ ok = validateField(email) && ok; }
+      if(show){ ok = validateField(msg)   && ok; }
+      return ok;
+    }
+    let hasSubmittedOnce=false;
+
+    if(form){
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        hasSubmittedOnce=true;
+        const allGood = validateAll(true);
+        if(!allGood){ toast(errorText('_banner')); return; }
+
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+
+        try{
+          const res = await fetch(form.action, { method:'POST', headers:{'Accept':'application/json'}, body:new FormData(form) });
+          if(res.ok){
+            form.reset();
+            ['need','name','email','message'].forEach(id=>{
+              const el=document.getElementById(id);
+              const map={need:'#needErr',name:'#nameErr',email:'#emailErr',message:'#msgErr'};
+              setErr(el,false,map[id]);
+            });
+            const lang = document.documentElement.lang || 'en';
+            successBox.style.display='block';
+            successBox.innerHTML = `<strong>${dict[lang].successTitle}</strong><div style="height:6px"></div><div>${dict[lang].successBody}</div><div style="height:12px"></div><button class="btn" id="againBtn">${dict[lang].successCta}</button>`;
+            document.getElementById('againBtn').addEventListener('click', ()=>{
+              successBox.style.display='none'; form.scrollIntoView({behavior:'smooth', block:'start'}); document.getElementById('name').focus();
+            });
+            toast(lang==='de'?'Gesendet. Danke!':'Sent. Thank you!');
+          }else{
+            toast(document.documentElement.lang==='de'?'Senden fehlgeschlagen.':'Sending failed.');
+          }
+        }catch{
+          toast(document.documentElement.lang==='de'?'Netzwerkfehler.':'Network error.');
+        }finally{
+          btn.disabled=false;
+        }
+      });
+
+      ['input','change'].forEach(evt=>{
+        ['need','name','email','message'].forEach(id=>{
+          const el=document.getElementById(id); if(!el) return;
+          el.addEventListener(evt, ()=>{ if(!hasSubmittedOnce) return; validateField(el); });
+        });
+      });
+    }
+
+    // Sticky CTA bleibt wie gehabt
+    (function(){
+      const sticky = document.querySelector('.sticky-cta');
+      const contact = document.getElementById('contact');
+      const footer  = document.querySelector('footer');
+      const sendBtn = document.querySelector('#contact button[type="submit"]');
+      if(!sticky || !contact || !footer) return;
+
+      const io = new IntersectionObserver((entries)=>{
+        let hide = false;
+        for(const e of entries){ if(e.isIntersecting) hide = true; }
+        sticky.classList.toggle('hide', hide);
+        if(sendBtn){
+          if(hide){ sendBtn.classList.add('cta-focus'); }
+          else    { sendBtn.classList.remove('cta-focus'); }
+        }
+      }, { root: null, rootMargin: '0px 0px -40% 0px', threshold: 0.01 });
+
+      io.observe(contact); io.observe(footer);
+    })();
   </script>
 </body>
 </html>
