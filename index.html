@@ -212,10 +212,22 @@
     /* im Modal: die verschobene Card nicht doppelt rahmen */
     .modalized > .card{ background:transparent; border:0; box-shadow:none; padding:0; }
 
+    /* === Modal-Fix: keine Fokus-/Hover-Ringe + Click-Zone fürs ✕ === */
+    .modalized:focus,
+    .modalized:focus-visible{
+      outline:none !important;
+      box-shadow:none !important;
+    }
+    .modalized .card:hover{
+      transform:none !important;
+      box-shadow:none !important;
+      border-color:var(--line) !important;
+    }
+    .close-btn{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); color:var(--txt); border-radius:12px; padding:6px 10px; cursor:pointer; min-height:36px; z-index:2;}
+
     .modal-out{animation:modalZoomOut .14s ease-in both}
     @keyframes modalZoomIn{from{transform:translate(-50%,0) scale(.96);opacity:.9}to{transform:translate(-50%,0) scale(1);opacity:1}}
     @keyframes modalZoomOut{from{transform:translate(-50%,0) scale(1);opacity:1}to{transform:translate(-50%,0) scale(.96);opacity:.9}}
-    .close-btn{position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); color:var(--txt); border-radius:12px; padding:6px 10px; cursor:pointer; min-height:36px}
 
     @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
     body::after{
@@ -460,12 +472,17 @@
     const contactCard=document.getElementById('contact');
     const linksCard=document.getElementById('links');
 
-    // ===== Modal-Mechanik: Sektion verschieben (nicht klonen) =====
+    // ===== Modal-Mechanik: Sektion verschieben + Platzhalter hält Layout =====
     function makeModalFrom(section){
-      // Platzhalter an alter Position
-      const placeholder = document.createElement('div');
-      placeholder.style.display = 'none';
-      section.parentNode.insertBefore(placeholder, section);
+      // Platzhalter mit gleicher Höhe/Margins an alter Position
+      const ph = document.createElement('div');
+      const cs = getComputedStyle(section);
+      ph.style.display = 'block';
+      ph.style.height  = section.getBoundingClientRect().height + 'px';
+      ph.style.margin  = cs.margin;
+      ph.style.width   = '100%';
+      ph.style.visibility = 'hidden'; // nimmt Platz ein, bleibt unsichtbar
+      section.parentNode.insertBefore(ph, section);
 
       // Modal-Container
       const modal = document.createElement('div');
@@ -476,28 +493,30 @@
       // Close-Button
       const x = document.createElement('button');
       x.className='close-btn'; x.type='button'; x.textContent='✕';
-      x.addEventListener('click', ()=> closeModal(modal, section, placeholder));
+      x.addEventListener('click', ()=> closeModal(modal, section, ph));
       modal.appendChild(x);
 
-      // Sektion ins Modal verschieben
+      // Sektion ins Modal verschieben (kein Klon)
       modal.appendChild(section);
       document.body.appendChild(modal);
 
-      // Scroll sperren + Blur an
+      // Scroll sperren + Blur
       const sw = window.innerWidth - document.documentElement.clientWidth;
       if(sw>0){ document.documentElement.style.paddingRight = sw+'px'; }
       document.documentElement.style.overflow='hidden';
       backdrop.classList.add('visible');
 
-      // ESC / Klick auf Backdrop
-      const onBackdrop = ()=> closeModal(modal, section, placeholder);
+      // Backdrop / ESC schließen
+      const onBackdrop = ()=> closeModal(modal, section, ph);
       backdrop.addEventListener('click', onBackdrop, {once:true});
-      const onEsc = e => { if(e.key==='Escape') closeModal(modal, section, placeholder); };
+      const onEsc = e => { if(e.key==='Escape') closeModal(modal, section, ph); };
       window.addEventListener('keydown', onEsc, {once:true});
 
-      // Cleanup-Refs
       modal._cleanup = () => window.removeEventListener('keydown', onEsc);
-      modal._placeholder = placeholder;
+      modal._placeholder = ph;
+
+      // Fokus aufs ✕, damit kein Ring auf dem Container landet
+      setTimeout(()=>{ x.focus(); }, 0);
 
       return modal;
     }
