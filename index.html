@@ -35,41 +35,42 @@
       --lh-tight: 1.05;
       --lh-default: 1.6;
     }
- .light{
-  --bg:#f6f8fb; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
-  --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
-  --shadow:0 18px 48px rgba(2,6,23,.08), 0 1px 0 rgba(2,6,23,.04) inset;
-  --capsule-bg: rgba(2,6,23,.04);
-  --hero-glow: radial-gradient(900px 480px at 88% -18%, rgba(56,182,255,.16), transparent 65%);
-}
-    .light body{
-  background:
-    radial-gradient(1200px 800px at 15% 25%, rgba(56,182,255,.08), transparent 65%),
-    radial-gradient(1200px 800px at 85% 75%, rgba(56,182,255,.06), transparent 68%),
-    linear-gradient(180deg, #f0f6ff 0%, #e4ecfa 100%);
-  background-attachment: fixed;
-}
 
+    /* ---------- LIGHT THEME VARS (KORREKT GESCHLOSSEN) ---------- */
+    .light{
+      --bg:#f6f8fb; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
+      --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
+      --shadow:0 18px 48px rgba(2,6,23,.08), 0 1px 0 rgba(2,6,23,.04) inset;
+      --capsule-bg: rgba(2,6,23,.04);
+      --hero-glow: radial-gradient(900px 480px at 88% -18%, rgba(56,182,255,.16), transparent 65%);
     }
-    
-    /* leichte Überlagerung für Frost-Effekt im Light Mode */
-    body:not(.light)::before{
-  content:"";
-  position:fixed;
-  inset:-20px;
-  pointer-events:none;
-  z-index:-1;
-  background:
-    radial-gradient(900px 620px at -8% 28%, rgba(56,182,255,.12), transparent 72%),
-    radial-gradient(1000px 700px at 108% 72%, rgba(56,182,255,.10), transparent 74%);
-  backdrop-filter: saturate(120%) blur(6px);
-}
-.light .nav-wrap{
-  background: color-mix(in oklab, white 78%, transparent);
-  border-bottom-color: color-mix(in oklab, black 8%, transparent);
-  backdrop-filter: blur(10px);
-}
 
+    /* ---------- LIGHT BODY: heller Verlauf + sanfte blaue Radials ---------- */
+    .light body{
+      background:
+        radial-gradient(1200px 800px at 15% 25%, rgba(56,182,255,.08), transparent 65%),
+        radial-gradient(1200px 800px at 85% 75%, rgba(56,182,255,.06), transparent 68%),
+        linear-gradient(180deg, #f0f6ff 0%, #e4ecfa 100%);
+      background-attachment: fixed;
+    }
+
+    /* leichte Überlagerung für Frost-Effekt im Light Mode */
+    .light body::before{
+      content:"";
+      position:fixed;
+      inset:-20px;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(900px 620px at -8% 28%, rgba(56,182,255,.12), transparent 72%),
+        radial-gradient(1000px 700px at 108% 72%, rgba(56,182,255,.10), transparent 74%);
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+
+    .light .nav-wrap{
+      background: color-mix(in oklab, white 78%, transparent);
+      border-bottom-color: color-mix(in oklab, black 8%, transparent);
+      backdrop-filter: blur(10px);
     }
     .light .pill, .light #themeToggle, .light .btn.ghost{ color: var(--txt) !important; }
     .light .pill{ border-color: color-mix(in oklab, black 12%, transparent); background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.55)); }
@@ -258,8 +259,8 @@
 
     @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
 
-    /* Frosted-Glass/Vignette unter dem Noise (NEU) */
-    body::before{
+    /* Frosted-Glass/Vignette unter dem Noise — DARK ONLY */
+    body:not(.light)::before{
       content:"";
       position:fixed;
       inset:-20px;
@@ -276,8 +277,9 @@
       content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .04 .06 .04 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
       opacity:.35; mix-blend-mode:soft-light;
-      .light body::after{ opacity:.18; mix-blend-mode:normal;
     }
+    /* Noise im Light-Mode dezenter */
+    .light body::after{ opacity:.18; mix-blend-mode:normal; }
 
     /* @saes_school glow link */
     .saes{font-weight:600; position:relative; text-decoration:underline; text-underline-offset:2px; transition: text-shadow .15s ease, transform .15s ease, box-shadow .15s ease; border-radius:8px; padding:2px 4px}
@@ -602,8 +604,8 @@
         t.style.opacity='0'; t.style.transition='opacity .15s ease';
         document.body.appendChild(t);
       }
-      t.textContent = msg;
       requestAnimationFrame(()=> t.style.opacity='1');
+      t.textContent = msg;
       setTimeout(()=> t.style.opacity='0', 2200);
     }
 
