@@ -388,11 +388,11 @@
         Quick intro call to discuss your project. Online via Google Meet.
       </p>
 
-      <!-- Inline-Einbettung – ERSETZE DIESE URL mit deiner echten Scheduling-URL -->
+      <!-- Inline-Einbettung – feste Scheduling-URL -->
       <div class="booking-embed" style="border:1px solid var(--line); border-radius:16px; overflow:hidden;">
         <iframe
           id="gcalInline"
-          src="YOUR_SCHEDULING_URL_HERE"  <!-- <<< HIER DEINE URL einsetzen -->
+          src="https://calendar.app.google/a42ygzzyfAQxMtMs7"
           style="width:100%; height:700px; border:0;"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -490,13 +490,10 @@
         svcEditT:"Editing",svcEditD:"Video editing, precise, cohesive and tailored to your style.",
         svcShortT:"Formats",svcShortD:"Short-form content & long videos, individually edited.",
         svcOpsT:"Management",svcOpsD:"Account management, scheduling, and execution.",
-
-        /* >>> NEU: Booking i18n <<< */
         bookingTitle:"Book a call",
         bookingSubtitle:"Quick intro call to discuss your project. Online via Google Meet.",
         bookingPopup:"Open booking pop-up",
         bookingOpenNewTab:"Open in new tab ↗",
-
         contactTitle:"Contact",replyLine:"Reply within 48h.",
         phName:"Your name",phEmail:"your@email.com",phMsg:"What do you need?",
         sendBtn:"Send message",
@@ -520,13 +517,10 @@
         svcEditT:"Schnitt",svcEditD:"Videoschnitt, präzise, stimmig und auf euren Stil abgestimmt.",
         svcShortT:"Formate",svcShortD:"Short-Form-Content & lange Videos, individuell geschnitten.",
         svcOpsT:"Management",svcOpsD:"Account-Management, Planung und Umsetzung.",
-
-        /* >>> NEU: Booking i18n <<< */
         bookingTitle:"Termin buchen",
         bookingSubtitle:"Kurzes Kennenlernen, um dein Projekt zu besprechen. Online über Google Meet.",
         bookingPopup:"Termin-Pop-up öffnen",
         bookingOpenNewTab:"In neuem Tab öffnen ↗",
-
         contactTitle:"Kontakt",replyLine:"Antwort innerhalb von 48 Stunden.",
         phName:"Dein Name",phEmail:"dein@mail.com",phMsg:"Worum geht’s?",
         sendBtn:"Nachricht senden",
@@ -744,9 +738,7 @@
     /* ===============================
        GOOGLE BOOKING: URL + Buttons
        =============================== */
-
-    // <<< ERSETZE DIESE URL MIT DEINER EIGENEN Scheduling-URL (aus Google Calendar "Terminbuchungsseite teilen") >>>
-    const SCHED_URL = "YOUR_SCHEDULING_URL_HERE";
+    const SCHED_URL = "https://calendar.app.google/a42ygzzyfAQxMtMs7";
 
     // Link-Button auf die richtige URL setzen
     const openBookingLink = document.getElementById('openBookingLink');
