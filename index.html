@@ -9,6 +9,11 @@
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
   <title>Paul Richter – Video Editor & Videographer</title>
   <meta name="description" content="Cinematic video and short-form content for brands, events, and private clients. Based in Munich." />
+
+  <!-- Google Calendar Scheduling Button assets (für Pop-up-Button) -->
+  <link rel="stylesheet" href="https://calendar.google.com/calendar/scheduling-button-script.css">
+  <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+
   <style>
     html{scrollbar-gutter:stable both-edges}
     :root{
@@ -54,7 +59,6 @@
       background-attachment: fixed;
     }
 
-    /* leichte Überlagerung für Frost-Effekt im Light Mode */
     .light body::before{
       content:"";
       position:fixed;
@@ -240,7 +244,6 @@
       box-shadow:0 30px 90px rgba(0,0,0,.5); padding:22px;
       animation:modalZoomIn .18s cubic-bezier(.2,.8,.2,1) both;
     }
-    /* im Modal: die verschobene Card nicht doppelt rahmen */
     .modalized > .card{ background:transparent; border:0; box-shadow:none; padding:0; }
 
     .modal-out{animation:modalZoomOut .14s ease-in both}
@@ -250,16 +253,12 @@
       position:absolute; top:10px; right:10px;
       border:1px solid var(--line); background:var(--elev); color:var(--txt);
       border-radius:12px; padding:8px 12px; cursor:pointer; min-height:36px;
-      z-index:101; /* immer über allem */
+      z-index:101;
     }
-    /* Größere Klickfläche */
-    .close-btn::after{
-      content:""; position:absolute; inset:-8px; border-radius:14px;
-    }
+    .close-btn::after{ content:""; position:absolute; inset:-8px; border-radius:14px; }
 
     @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
 
-    /* Frosted-Glass/Vignette unter dem Noise — DARK ONLY */
     body:not(.light)::before{
       content:"";
       position:fixed;
@@ -278,10 +277,8 @@
       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .04 .06 .04 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
       opacity:.35; mix-blend-mode:soft-light;
     }
-    /* Noise im Light-Mode dezenter */
     .light body::after{ opacity:.18; mix-blend-mode:normal; }
 
-    /* @saes_school glow link */
     .saes{font-weight:600; position:relative; text-decoration:underline; text-underline-offset:2px; transition: text-shadow .15s ease, transform .15s ease, box-shadow .15s ease; border-radius:8px; padding:2px 4px}
     .saes:hover,.saes:focus-visible{ text-shadow:0 0 6px color-mix(in oklab, var(--brand) 65%, transparent),0 0 18px color-mix(in oklab, var(--brand) 35%, transparent); transform: translateY(-1px); outline:none; box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 25%, transparent) inset }
     .light .saes:hover,.light .saes:focus-visible{ text-shadow:0 0 7px color-mix(in oklab, var(--brand) 55%, transparent),0 0 18px color-mix(in oklab, var(--brand) 28%, transparent); box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 18%, transparent) inset }
@@ -384,6 +381,37 @@
       </div>
     </section>
 
+    <!-- >>> NEUER BEREICH: Termin buchen (VOR "Contact") <<< -->
+    <section class="card" id="booking" style="margin-top:24px;">
+      <h2 class="section-title" data-i18n="bookingTitle">Book a call</h2>
+      <p class="muted" data-i18n="bookingSubtitle">
+        Quick intro call to discuss your project. Online via Google Meet.
+      </p>
+
+      <!-- Inline-Einbettung – ERSETZE DIESE URL mit deiner echten Scheduling-URL -->
+      <div class="booking-embed" style="border:1px solid var(--line); border-radius:16px; overflow:hidden;">
+        <iframe
+          id="gcalInline"
+          src="YOUR_SCHEDULING_URL_HERE"  <!-- <<< HIER DEINE URL einsetzen -->
+          style="width:100%; height:700px; border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Schedule a meeting">
+        </iframe>
+      </div>
+
+      <!-- Offizieller Google-Pop-up-Button Mount -->
+      <div id="gcalButtonMount" style="margin-top:12px;"></div>
+
+      <!-- Eigener Button im Seitendesign -->
+      <div style="margin-top:12px; display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn" id="openBookingPopup" data-i18n="bookingPopup">Open booking pop-up</button>
+        <a class="btn ghost" id="openBookingLink" target="_blank" rel="noreferrer" data-i18n="bookingOpenNewTab">
+          Open in new tab ↗
+        </a>
+      </div>
+    </section>
+
     <section class="card" id="contact" style="margin-top:24px;">
       <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
       <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
@@ -462,6 +490,13 @@
         svcEditT:"Editing",svcEditD:"Video editing, precise, cohesive and tailored to your style.",
         svcShortT:"Formats",svcShortD:"Short-form content & long videos, individually edited.",
         svcOpsT:"Management",svcOpsD:"Account management, scheduling, and execution.",
+
+        /* >>> NEU: Booking i18n <<< */
+        bookingTitle:"Book a call",
+        bookingSubtitle:"Quick intro call to discuss your project. Online via Google Meet.",
+        bookingPopup:"Open booking pop-up",
+        bookingOpenNewTab:"Open in new tab ↗",
+
         contactTitle:"Contact",replyLine:"Reply within 48h.",
         phName:"Your name",phEmail:"your@email.com",phMsg:"What do you need?",
         sendBtn:"Send message",
@@ -485,6 +520,13 @@
         svcEditT:"Schnitt",svcEditD:"Videoschnitt, präzise, stimmig und auf euren Stil abgestimmt.",
         svcShortT:"Formate",svcShortD:"Short-Form-Content & lange Videos, individuell geschnitten.",
         svcOpsT:"Management",svcOpsD:"Account-Management, Planung und Umsetzung.",
+
+        /* >>> NEU: Booking i18n <<< */
+        bookingTitle:"Termin buchen",
+        bookingSubtitle:"Kurzes Kennenlernen, um dein Projekt zu besprechen. Online über Google Meet.",
+        bookingPopup:"Termin-Pop-up öffnen",
+        bookingOpenNewTab:"In neuem Tab öffnen ↗",
+
         contactTitle:"Kontakt",replyLine:"Antwort innerhalb von 48 Stunden.",
         phName:"Dein Name",phEmail:"dein@mail.com",phMsg:"Worum geht’s?",
         sendBtn:"Nachricht senden",
@@ -517,9 +559,8 @@
     const contactCard=document.getElementById('contact');
     const linksCard=document.getElementById('links');
 
-    // ===== Modal-Mechanik: Sektion verschieben (nicht klonen) + stabiler Scroll-Lock auf <html> =====
+    // ===== Modal-Mechanik
     function makeModalFrom(section){
-      // Platzhalter mit gleicher Höhe/Margins → kein Nachrutschen
       const ph = document.createElement('div');
       const rect = section.getBoundingClientRect();
       const cs = getComputedStyle(section);
@@ -530,23 +571,19 @@
       ph.style.visibility = 'hidden';
       section.parentNode.insertBefore(ph, section);
 
-      // Modal-Container
       const modal = document.createElement('div');
       modal.className = 'modalized';
       modal.setAttribute('role','dialog');
       modal.setAttribute('aria-modal','true');
 
-      // Close-Button (größere Klickfläche)
       const x=document.createElement('button');
       x.className='close-btn'; x.type='button'; x.setAttribute('aria-label','Close'); x.textContent='✕';
       x.addEventListener('click', ()=>closeModal(modal, section, ph));
       modal.appendChild(x);
 
-      // Sektion ins Modal verschieben
       modal.appendChild(section);
       document.body.appendChild(modal);
 
-      // Root-Scroller sperren (kein Links/Rechts-Wackler)
       const rootEl = document.documentElement;
       const sw = window.innerWidth - rootEl.clientWidth;
       rootEl.style.overflow = 'hidden';
@@ -568,12 +605,10 @@
       if(!modal) return;
       modal.classList.add('modal-out'); backdrop.classList.remove('visible');
       modal.addEventListener('animationend', ()=>{
-        // Sektion zurück
         placeholder.parentNode.insertBefore(section, placeholder);
         placeholder.remove();
         modal.remove();
 
-        // Root-Scroller zurücksetzen
         const rootEl = document.documentElement;
         rootEl.style.overflow = '';
         rootEl.style.paddingRight = '';
@@ -609,7 +644,6 @@
       setTimeout(()=> t.style.opacity='0', 2200);
     }
 
-    // === Validierung (erst nach Submit; danach feldweise live) ===
     const $ = sel => document.querySelector(sel);
     function errorText(id){
       const lang = document.documentElement.lang || 'en';
@@ -659,8 +693,7 @@
             form.reset();
             ['need','name','email','message'].forEach(id=>{
               const el=document.getElementById(id);
-              const map={need:'#needErr',name:'#nameErr',email:'#emailErr',message:'#msgErr'};
-              setErr(el,false,map[id]);
+              const map={need:'#needErr',name:'#nameErr',email:'#emailErr',message:'#msgErr'}; setErr(el,false,map[id]);
             });
             const lang = document.documentElement.lang || 'en';
             successBox.style.display='block';
@@ -706,6 +739,50 @@
       }, { root: null, rootMargin: '0px 0px -40% 0px', threshold: 0.01 });
 
       io.observe(contact); io.observe(footer);
+    })();
+
+    /* ===============================
+       GOOGLE BOOKING: URL + Buttons
+       =============================== */
+
+    // <<< ERSETZE DIESE URL MIT DEINER EIGENEN Scheduling-URL (aus Google Calendar "Terminbuchungsseite teilen") >>>
+    const SCHED_URL = "YOUR_SCHEDULING_URL_HERE";
+
+    // Link-Button auf die richtige URL setzen
+    const openBookingLink = document.getElementById('openBookingLink');
+    if (openBookingLink) openBookingLink.href = SCHED_URL;
+
+    // Offiziellen Google-Button in #gcalButtonMount rendern
+    window.addEventListener('load', function() {
+      try{
+        if (window.calendar && calendar.schedulingButton && document.getElementById('gcalButtonMount')) {
+          calendar.schedulingButton.load({
+            url: SCHED_URL,
+            color: '#38b6ff',
+            label: document.documentElement.lang === 'de' ? 'Termin buchen' : 'Book a call'
+          }, { target: document.getElementById('gcalButtonMount') });
+        }
+      } catch(e) {}
+    });
+
+    // Eigener Button → Pop-up öffnen (Fallback: neuer Tab)
+    const openPopup = document.getElementById('openBookingPopup');
+    if (openPopup) {
+      openPopup.addEventListener('click', function(){
+        if (window.calendar && calendar.schedulingButton) {
+          try { calendar.schedulingButton.open({ url: SCHED_URL }); return; }
+          catch(e) {}
+        }
+        window.open(SCHED_URL, '_blank', 'noopener,noreferrer');
+      });
+    }
+
+    // Kleine Responsive-Anpassung der Iframe-Höhe
+    (function(){
+      const iframe = document.getElementById('gcalInline');
+      if(!iframe) return;
+      const setH = () => { iframe.style.height = (window.innerWidth < 560 ? 740 : 700) + 'px'; };
+      setH(); window.addEventListener('resize', setH);
     })();
   </script>
 </body>
