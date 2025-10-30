@@ -9,28 +9,18 @@
   <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
   <title>Paul Richter – Video Editor & Videographer</title>
   <meta name="description" content="Cinematic video and short-form content for brands, events, and private clients. Based in Munich." />
-
-  <!-- Google Calendar Scheduling Button assets (für Pop-up-Button) -->
-  <link rel="stylesheet" href="https://calendar.google.com/calendar/scheduling-button-script.css">
-  <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-
   <style>
     html{scrollbar-gutter:stable both-edges}
     :root{
       --bg:#0a0a0c; --elev:#0f1115; --txt:#eef1f5; --muted:#98a2b3;
       --line:rgba(148,163,184,.16); --brand:#38b6ff; --ring:rgba(56,182,255,.55);
       --radius:22px; --shadow:0 24px 70px rgba(0,0,0,.40);
-
-      /* << weicher, farbiger Background (ersetzt) >> */
       --surface-grad:
         radial-gradient(1600px 900px at 15% 20%, rgba(56,182,255,.10), transparent 62%),
         radial-gradient(1600px 900px at 85% 80%, rgba(56,182,255,.09), transparent 64%),
         radial-gradient(1200px 700px at 50% -12%, rgba(56,182,255,.06), transparent 72%),
         radial-gradient(1400px 800px at 50% 120%, rgba(56,182,255,.05), transparent 70%);
-
-      --hero-glow:
-        radial-gradient(1100px 520px at 80% -18%, rgba(56,182,255,.13), transparent 68%);
-
+      --hero-glow: radial-gradient(1100px 520px at 80% -18%, rgba(56,182,255,.13), transparent 68%);
       --capsule-bg: rgba(255,255,255,.055);
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -40,8 +30,6 @@
       --lh-tight: 1.05;
       --lh-default: 1.6;
     }
-
-    /* ---------- LIGHT THEME VARS (KORREKT GESCHLOSSEN) ---------- */
     .light{
       --bg:#f6f8fb; --elev:#ffffff; --txt:#0b1020; --muted:#5b6573;
       --line:rgba(15,23,42,.12); --brand:#38b6ff; --ring:rgba(56,182,255,.35);
@@ -49,8 +37,6 @@
       --capsule-bg: rgba(2,6,23,.04);
       --hero-glow: radial-gradient(900px 480px at 88% -18%, rgba(56,182,255,.16), transparent 65%);
     }
-
-    /* ---------- LIGHT BODY: heller Verlauf + sanfte blaue Radials ---------- */
     .light body{
       background:
         radial-gradient(1200px 800px at 15% 25%, rgba(56,182,255,.08), transparent 65%),
@@ -58,24 +44,14 @@
         linear-gradient(180deg, #f0f6ff 0%, #e4ecfa 100%);
       background-attachment: fixed;
     }
-
     .light body::before{
-      content:"";
-      position:fixed;
-      inset:-20px;
-      pointer-events:none;
-      z-index:-1;
+      content:""; position:fixed; inset:-20px; pointer-events:none; z-index:-1;
       background:
         radial-gradient(900px 620px at -8% 28%, rgba(56,182,255,.12), transparent 72%),
         radial-gradient(1000px 700px at 108% 72%, rgba(56,182,255,.10), transparent 74%);
       backdrop-filter: saturate(120%) blur(6px);
     }
-
-    .light .nav-wrap{
-      background: color-mix(in oklab, white 78%, transparent);
-      border-bottom-color: color-mix(in oklab, black 8%, transparent);
-      backdrop-filter: blur(10px);
-    }
+    .light .nav-wrap{ background: color-mix(in oklab, white 78%, transparent); border-bottom-color: color-mix(in oklab, black 8%, transparent); backdrop-filter: blur(10px); }
     .light .pill, .light #themeToggle, .light .btn.ghost{ color: var(--txt) !important; }
     .light .pill{ border-color: color-mix(in oklab, black 12%, transparent); background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.55)); }
     .light .card{ background: var(--elev); border-color: color-mix(in oklab, black 12%, transparent); box-shadow: var(--shadow); }
@@ -111,13 +87,7 @@
     .logo{font-weight:650; letter-spacing:.2px; white-space:nowrap}
     .group{display:flex; gap:10px; align-items:center; flex-wrap:nowrap; min-width:0}
 
-    .pill{
-      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
-      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease; cursor:pointer; color:var(--txt);
-      min-height:44px;
-    }
+    .pill{ display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0)); transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease; cursor:pointer; color:var(--txt); min-height:44px; }
     .pill:hover{transform:translateY(-1px); border-color:var(--ring)}
     .pill.primary{color:#fff; border-color:transparent; background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black))}
     .lang-toggle{display:flex; border-radius:999px; overflow:hidden; border:1px solid var(--line); flex:0 0 auto}
@@ -135,14 +105,7 @@
     .kicker{color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.32px}
     .muted{color:var(--muted)}
     .cta{display:flex; gap:12px; margin-top:16px; flex-wrap:wrap}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 16px; border-radius:14px; border:1px solid var(--line);
-      background:var(--elev);
-      box-shadow:0 1px 0 rgba(255,255,255,.04) inset, var(--shadow);
-      transition:transform .15s ease, border-color .15s ease, filter .1s ease, box-shadow .15s ease; color:var(--txt);
-      min-height:44px;
-    }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 16px; border-radius:14px; border:1px solid var(--line); background:var(--elev); box-shadow:0 1px 0 rgba(255,255,255,.04) inset, var(--shadow); transition:transform .15s ease, border-color .15s ease, filter .1s ease, box-shadow .15s ease; color:var(--txt); min-height:44px; }
     .btn:hover{transform:translateY(-1px); border-color:var(--ring)}
     .btn:active{transform:translateY(0); filter:brightness(.98)}
     .btn.primary{background:linear-gradient(180deg, var(--brand), color-mix(in oklab, var(--brand) 88%, black)); color:#fff; border-color:transparent}
@@ -197,14 +160,8 @@
       min-height:120px;
     }
     .feature:hover{ border-color: color-mix(in oklab, var(--brand) 55%, var(--line)); box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 22%, transparent) inset; transform:translateY(-1px); }
-    .feature h3{
-      margin:0 0 8px; font-size:16px;
-      background: color-mix(in oklab,var(--brand) 14%, var(--elev));
-      border:1px solid color-mix(in oklab,var(--brand) 28%, var(--line));
-      display:inline-block; padding:6px 10px; border-radius:10px;
-    }
+    .feature h3{ margin:0 0 8px; font-size:16px; background: color-mix(in oklab,var(--brand) 14%, var(--elev)); border:1px solid color-mix(in oklab,var(--brand) 28%, var(--line)); display:inline-block; padding:6px 10px; border-radius:10px; }
 
-    /* === Form === */
     form{display:grid; gap:12px; margin-top:8px}
     input,textarea,select{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--txt)}
     input:focus,textarea:focus,select:focus{outline:none; box-shadow:0 0 0 6px color-mix(in oklab,var(--brand) 35%, transparent)}
@@ -215,21 +172,13 @@
     [aria-invalid="true"]{border-color:rgba(255,107,107,.6)}
     .success-block{background: color-mix(in oklab, var(--brand) 8%, var(--elev)); border:1px solid color-mix(in oklab, var(--brand) 28%, var(--line)); border-radius:16px; padding:16px; margin-top:12px}
 
-    /* Select – Dark/Light, Pfeil & Popup-Farben */
-    select{
-      -webkit-appearance: none; appearance: none;
-      background-color: var(--elev); color: var(--txt);
-      border: 1px solid var(--line); border-radius: 12px;
-      padding: 12px 40px 12px 14px; line-height: 1.2; min-height: 44px;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-      background-repeat:no-repeat; background-position:right 12px center; background-size:18px 18px; color-scheme: dark light;
-    }
-    .light select{ background-color:#ffffff; }
-    select:required:invalid{ color: var(--muted); }
-    select option[value=""]{ color: var(--muted); }
-    select option{ color: var(--txt); background-color: var(--elev); }
-    .light select option{ color:#0b1020; background-color:#fff; }
-    select::-ms-expand{ display:none; }
+    select{-webkit-appearance:none;appearance:none;background-color:var(--elev);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px 40px 12px 14px;line-height:1.2;min-height:44px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 12px center;background-size:18px 18px;color-scheme: dark light;}
+    .light select{background:#fff}
+    select:required:invalid{color:var(--muted)}
+    select option[value=""]{color:var(--muted)}
+    select option{color:var(--txt);background-color:var(--elev)}
+    .light select option{color:#0b1020;background-color:#fff}
+    select::-ms-expand{display:none}
 
     footer{ color:var(--muted); font-size:14px; text-align:center; padding:28px 0 }
 
@@ -245,33 +194,22 @@
       animation:modalZoomIn .18s cubic-bezier(.2,.8,.2,1) both;
     }
     .modalized > .card{ background:transparent; border:0; box-shadow:none; padding:0; }
-
     .modal-out{animation:modalZoomOut .14s ease-in both}
     @keyframes modalZoomIn{from{transform:translate(-50%,0) scale(.96);opacity:.9}to{transform:translate(-50%,0) scale(1);opacity:1}}
     @keyframes modalZoomOut{from{transform:translate(-50%,0) scale(1);opacity:1}to{transform:translate(-50%,0) scale(.96);opacity:.9}}
-    .close-btn{
-      position:absolute; top:10px; right:10px;
-      border:1px solid var(--line); background:var(--elev); color:var(--txt);
-      border-radius:12px; padding:8px 12px; cursor:pointer; min-height:36px;
-      z-index:101;
-    }
+    .close-btn{ position:absolute; top:10px; right:10px; border:1px solid var(--line); background:var(--elev); color:var(--txt); border-radius:12px; padding:8px 12px; cursor:pointer; min-height:36px; z-index:101; }
     .close-btn::after{ content:""; position:absolute; inset:-8px; border-radius:14px; }
 
     @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
 
     body:not(.light)::before{
-      content:"";
-      position:fixed;
-      inset:-20px;
-      pointer-events:none;
-      z-index:-1;
+      content:""; position:fixed; inset:-20px; pointer-events:none; z-index:-1;
       background:
         radial-gradient(900px 600px at -10% 25%, rgba(56,182,255,.14), transparent 72%),
         radial-gradient(1000px 700px at 110% 75%, rgba(56,182,255,.14), transparent 74%),
         linear-gradient(180deg, rgba(8,12,16,0.00) 0%, rgba(8,12,16,0.35) 38%, rgba(8,12,16,0.52) 62%, rgba(8,12,16,0.00) 100%);
       backdrop-filter: saturate(120%) blur(6px);
     }
-
     body::after{
       content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .04 .06 .04 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
@@ -381,32 +319,15 @@
       </div>
     </section>
 
-    <!-- >>> NEUER BEREICH: Termin buchen (VOR "Contact") <<< -->
+    <!-- >>> NEUER BEREICH: Termin buchen (ohne Embed, öffnet in neuem Tab) <<< -->
     <section class="card" id="booking" style="margin-top:24px;">
       <h2 class="section-title" data-i18n="bookingTitle">Book a call</h2>
       <p class="muted" data-i18n="bookingSubtitle">
         Quick intro call to discuss your project. Online via Google Meet.
       </p>
 
-      <!-- Inline-Einbettung – feste Scheduling-URL -->
-      <div class="booking-embed" style="border:1px solid var(--line); border-radius:16px; overflow:hidden;">
-        <iframe
-          id="gcalInline"
-          src="https://calendar.app.google/a42ygzzyfAQxMtMs7"
-          style="width:100%; height:700px; border:0;"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Schedule a meeting">
-        </iframe>
-      </div>
-
-      <!-- Offizieller Google-Pop-up-Button Mount -->
-      <div id="gcalButtonMount" style="margin-top:12px;"></div>
-
-      <!-- Eigener Button im Seitendesign -->
-      <div style="margin-top:12px; display:flex; gap:12px; flex-wrap:wrap;">
-        <button class="btn" id="openBookingPopup" data-i18n="bookingPopup">Open booking pop-up</button>
-        <a class="btn ghost" id="openBookingLink" target="_blank" rel="noreferrer" data-i18n="bookingOpenNewTab">
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn primary" id="openBookingLink" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0GKzLkhN8EkXOmhpeDM_kc_Q2T9IEfZwm1KjTSMrR9_LcEDaX7vXX7p0kMRtyGevTdt9qdm7sT?gv=true" target="_blank" rel="noreferrer" data-i18n="bookingOpenNewTab">
           Open in new tab ↗
         </a>
       </div>
@@ -416,7 +337,6 @@
       <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
       <p class="muted" data-i18n="replyLine">Reply within 48h.</p>
 
-      <!-- FormSubmit token -->
       <form id="contactForm" action="https://formsubmit.co/519546999335d55342a75243961835b7" method="POST" novalidate>
         <div class="field">
           <label for="need" data-i18n="needLabel">What do you need?</label>
@@ -492,7 +412,6 @@
         svcOpsT:"Management",svcOpsD:"Account management, scheduling, and execution.",
         bookingTitle:"Book a call",
         bookingSubtitle:"Quick intro call to discuss your project. Online via Google Meet.",
-        bookingPopup:"Open booking pop-up",
         bookingOpenNewTab:"Open in new tab ↗",
         contactTitle:"Contact",replyLine:"Reply within 48h.",
         phName:"Your name",phEmail:"your@email.com",phMsg:"What do you need?",
@@ -519,7 +438,6 @@
         svcOpsT:"Management",svcOpsD:"Account-Management, Planung und Umsetzung.",
         bookingTitle:"Termin buchen",
         bookingSubtitle:"Kurzes Kennenlernen, um dein Projekt zu besprechen. Online über Google Meet.",
-        bookingPopup:"Termin-Pop-up öffnen",
         bookingOpenNewTab:"In neuem Tab öffnen ↗",
         contactTitle:"Kontakt",replyLine:"Antwort innerhalb von 48 Stunden.",
         phName:"Dein Name",phEmail:"dein@mail.com",phMsg:"Worum geht’s?",
@@ -553,35 +471,25 @@
     const contactCard=document.getElementById('contact');
     const linksCard=document.getElementById('links');
 
-    // ===== Modal-Mechanik
     function makeModalFrom(section){
       const ph = document.createElement('div');
       const rect = section.getBoundingClientRect();
       const cs = getComputedStyle(section);
-      ph.style.display='block';
-      ph.style.height = rect.height + 'px';
-      ph.style.margin  = cs.margin;
-      ph.style.width   = '100%';
-      ph.style.visibility = 'hidden';
+      ph.style.display='block'; ph.style.height = rect.height + 'px'; ph.style.margin  = cs.margin; ph.style.width   = '100%'; ph.style.visibility = 'hidden';
       section.parentNode.insertBefore(ph, section);
 
       const modal = document.createElement('div');
-      modal.className = 'modalized';
-      modal.setAttribute('role','dialog');
-      modal.setAttribute('aria-modal','true');
+      modal.className = 'modalized'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true');
 
       const x=document.createElement('button');
       x.className='close-btn'; x.type='button'; x.setAttribute('aria-label','Close'); x.textContent='✕';
       x.addEventListener('click', ()=>closeModal(modal, section, ph));
       modal.appendChild(x);
 
-      modal.appendChild(section);
-      document.body.appendChild(modal);
+      modal.appendChild(section); document.body.appendChild(modal);
 
-      const rootEl = document.documentElement;
-      const sw = window.innerWidth - rootEl.clientWidth;
-      rootEl.style.overflow = 'hidden';
-      if (sw > 0) rootEl.style.paddingRight = sw + 'px';
+      const rootEl = document.documentElement; const sw = window.innerWidth - rootEl.clientWidth;
+      rootEl.style.overflow = 'hidden'; if (sw > 0) rootEl.style.paddingRight = sw + 'px';
 
       backdrop.classList.add('visible');
 
@@ -600,13 +508,8 @@
       modal.classList.add('modal-out'); backdrop.classList.remove('visible');
       modal.addEventListener('animationend', ()=>{
         placeholder.parentNode.insertBefore(section, placeholder);
-        placeholder.remove();
-        modal.remove();
-
-        const rootEl = document.documentElement;
-        rootEl.style.overflow = '';
-        rootEl.style.paddingRight = '';
-
+        placeholder.remove(); modal.remove();
+        const rootEl = document.documentElement; rootEl.style.overflow = ''; rootEl.style.paddingRight = '';
         modal._cleanup && modal._cleanup();
       }, {once:true});
     }
@@ -616,15 +519,13 @@
     document.getElementById('openContactMobile').addEventListener('click', ()=>makeModalFrom(contactCard));
     document.getElementById('openLinks').addEventListener('click', ()=>makeModalFrom(linksCard));
 
-    // ===== Form + Toast =====
     const form = document.getElementById('contactForm');
     const successBox = document.getElementById('formSuccess');
 
     function toast(msg){
       let t = document.getElementById('toast');
       if(!t){
-        t = document.createElement('div');
-        t.id = 'toast';
+        t = document.createElement('div'); t.id = 'toast';
         t.style.position='fixed'; t.style.left='50%'; t.style.bottom='24px';
         t.style.transform='translateX(-50%)'; t.style.background='rgba(15,17,21,.9)';
         t.style.color='#fff'; t.style.border='1px solid rgba(148,163,184,.2)';
@@ -677,10 +578,7 @@
         hasSubmittedOnce=true;
         const allGood = validateAll(true);
         if(!allGood){ toast(errorText('_banner')); return; }
-
-        const btn = form.querySelector('button[type="submit"]');
-        btn.disabled = true;
-
+        const btn = form.querySelector('button[type="submit"]'); btn.disabled = true;
         try{
           const res = await fetch(form.action, { method:'POST', headers:{'Accept':'application/json'}, body:new FormData(form) });
           if(res.ok){
@@ -714,7 +612,6 @@
       });
     }
 
-    // Sticky CTA bleibt wie gehabt
     (function(){
       const sticky = document.querySelector('.sticky-cta');
       const contact = document.getElementById('contact');
@@ -733,48 +630,6 @@
       }, { root: null, rootMargin: '0px 0px -40% 0px', threshold: 0.01 });
 
       io.observe(contact); io.observe(footer);
-    })();
-
-    /* ===============================
-       GOOGLE BOOKING: URL + Buttons
-       =============================== */
-    const SCHED_URL = "https://calendar.app.google/a42ygzzyfAQxMtMs7";
-
-    // Link-Button auf die richtige URL setzen
-    const openBookingLink = document.getElementById('openBookingLink');
-    if (openBookingLink) openBookingLink.href = SCHED_URL;
-
-    // Offiziellen Google-Button in #gcalButtonMount rendern
-    window.addEventListener('load', function() {
-      try{
-        if (window.calendar && calendar.schedulingButton && document.getElementById('gcalButtonMount')) {
-          calendar.schedulingButton.load({
-            url: SCHED_URL,
-            color: '#38b6ff',
-            label: document.documentElement.lang === 'de' ? 'Termin buchen' : 'Book a call'
-          }, { target: document.getElementById('gcalButtonMount') });
-        }
-      } catch(e) {}
-    });
-
-    // Eigener Button → Pop-up öffnen (Fallback: neuer Tab)
-    const openPopup = document.getElementById('openBookingPopup');
-    if (openPopup) {
-      openPopup.addEventListener('click', function(){
-        if (window.calendar && calendar.schedulingButton) {
-          try { calendar.schedulingButton.open({ url: SCHED_URL }); return; }
-          catch(e) {}
-        }
-        window.open(SCHED_URL, '_blank', 'noopener,noreferrer');
-      });
-    }
-
-    // Kleine Responsive-Anpassung der Iframe-Höhe
-    (function(){
-      const iframe = document.getElementById('gcalInline');
-      if(!iframe) return;
-      const setH = () => { iframe.style.height = (window.innerWidth < 560 ? 740 : 700) + 'px'; };
-      setH(); window.addEventListener('resize', setH);
     })();
   </script>
 </body>
