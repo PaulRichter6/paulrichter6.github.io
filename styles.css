@@ -413,32 +413,12 @@ h2 em {
   transition: filter .55s ease;
 }
 
-.portrait-light {
-  position: absolute;
-  z-index: 4;
-  inset: -15% -35%;
-  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.72) 48%, transparent 61%);
-  clip-path: inset(0 22%);
-  mix-blend-mode: screen;
-  opacity: calc(.88 - (var(--hero-progress) * .55));
-  pointer-events: none;
-  transform: translateX(calc((var(--hero-progress) - .55) * 170%));
-  transition: opacity .55s ease, filter .55s ease;
-}
-
 body.dark .portrait-person img {
   filter: none;
 }
 
 body.dark .portrait-person {
   filter: drop-shadow(0 38px 25px rgba(13, 20, 33, .2));
-}
-
-body.dark .portrait-light {
-  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.72) 48%, transparent 61%);
-  filter: none;
-  mix-blend-mode: screen;
-  opacity: calc(.88 - (var(--hero-progress) * .55));
 }
 
 .portrait-shadow {
@@ -2510,7 +2490,6 @@ body.dark .film-back {
 /* 2026 refinement: portrait, service motion, partners and film path */
 :root {
   --feature-radius: 14px;
-  --hero-light: 0;
   --tape-tail-y: 0px;
 }
 
@@ -2532,27 +2511,6 @@ body.dark .film-back {
 .portrait-person img {
   transform: scale(1.1);
   transform-origin: center bottom;
-}
-
-.portrait-light {
-  inset: 0;
-  background: linear-gradient(
-    102deg,
-    transparent 34%,
-    rgba(184, 215, 255, .12) 41%,
-    rgba(255, 255, 255, .94) 49%,
-    rgba(116, 167, 255, .24) 56%,
-    transparent 66%
-  );
-  clip-path: none;
-  filter: blur(1px);
-  -webkit-mask: url("assets/paul-portrait-cutout.png?v=20260729") center bottom / contain no-repeat;
-  mask: url("assets/paul-portrait-cutout.png?v=20260729") center bottom / contain no-repeat;
-  mix-blend-mode: screen;
-  opacity: var(--hero-light);
-  transform: translateX(calc(-125% + (var(--hero-progress) * 470%))) scale(1.1);
-  transform-origin: center bottom;
-  will-change: opacity, transform;
 }
 
 .process-strip,
@@ -3010,8 +2968,7 @@ body.dark .film-back {
     height: 63%;
   }
 
-  .portrait-person img,
-  .portrait-light {
+  .portrait-person img {
     transform: scale(1.08);
   }
 

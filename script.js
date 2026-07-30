@@ -77,10 +77,6 @@ function updateScrollEffects() {
   const heroRect = hero.getBoundingClientRect();
   const heroProgress = clamp(-heroRect.top / Math.max(heroRect.height * 0.75, 1));
   root.style.setProperty("--hero-progress", heroProgress.toFixed(3));
-  const lightWindow = clamp((heroProgress - .035) / .38);
-  const heroLight = Math.sin(lightWindow * Math.PI) * (heroProgress > .035 && heroProgress < .415 ? 1 : 0);
-  root.style.setProperty("--hero-light", Math.max(0, heroLight * .9).toFixed(3));
-
   const shortsRect = shortsSection.getBoundingClientRect();
   let shortProgress = 0;
   if (mobileView.matches) {
