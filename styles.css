@@ -2732,8 +2732,9 @@ body.dark .film-back {
 
 .photo-mark {
   position: relative;
-  width: 20px;
-  height: 20px;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
   border: 2px solid currentColor;
   border-radius: 6px;
 }
@@ -2742,8 +2743,9 @@ body.dark .film-back {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 7px;
-  height: 7px;
+  box-sizing: border-box;
+  width: 9px;
+  height: 9px;
   border: 2px solid currentColor;
   border-radius: 50%;
   content: "";
