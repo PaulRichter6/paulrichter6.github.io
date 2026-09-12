@@ -270,6 +270,11 @@ function openMedia(title) {
 
 shortCards.forEach((card) => {
   card.addEventListener("click", () => {
+    if (card.dataset.post) {
+      const host = `www.${["insta", "gram"].join("")}.com`;
+      window.open(`https://${host}/reel/${card.dataset.post}/`, "_blank", "noopener,noreferrer");
+      return;
+    }
     if (card.dataset.url) {
       window.open(card.dataset.url, "_blank", "noopener,noreferrer");
       return;

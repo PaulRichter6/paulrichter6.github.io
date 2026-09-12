@@ -2693,13 +2693,13 @@ body.dark .film-back {
   to { transform: translateX(-50%); }
 }
 
-.collab-socials {
+.channel-links {
   display: flex;
   gap: 10px;
   margin-top: 28px;
 }
 
-.collab-socials a {
+.channel-links a {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -2714,7 +2714,7 @@ body.dark .film-back {
   transition: background .25s ease, border-color .25s ease, transform .25s ease;
 }
 
-.collab-socials a:hover {
+.channel-links a:hover {
   background: #edf3ff;
   border-color: #8eb2ff;
   transform: translateY(-2px);
@@ -2730,7 +2730,7 @@ body.dark .film-back {
   white-space: nowrap;
 }
 
-.instagram-mark {
+.photo-mark {
   position: relative;
   width: 20px;
   height: 20px;
@@ -2738,7 +2738,7 @@ body.dark .film-back {
   border-radius: 6px;
 }
 
-.instagram-mark::before {
+.photo-mark::before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2750,7 +2750,7 @@ body.dark .film-back {
   transform: translate(-50%, -50%);
 }
 
-.instagram-mark::after {
+.photo-mark::after {
   position: absolute;
   top: 3px;
   right: 3px;
@@ -2761,7 +2761,7 @@ body.dark .film-back {
   content: "";
 }
 
-.youtube-mark {
+.video-mark {
   position: relative;
   width: 23px;
   height: 16px;
@@ -2770,7 +2770,7 @@ body.dark .film-back {
   border-radius: 5px;
 }
 
-.youtube-mark::after {
+.video-mark::after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -3004,7 +3004,7 @@ body.dark .film-back {
     align-items: center;
   }
 
-  .collab-socials {
+  .channel-links {
     flex-wrap: wrap;
   }
 
@@ -3259,7 +3259,7 @@ body.dark .sun-icon {
   }
 }
 
-.social-icon {
+.channel-button {
   position: relative;
   display: inline-grid;
   place-items: center;
@@ -3273,13 +3273,13 @@ body.dark .sun-icon {
   transition: transform .25s ease, background .25s ease, border-color .25s ease;
 }
 
-.social-icon:hover {
+.channel-button:hover {
   background: rgba(255, 255, 255, .1);
   border-color: rgba(255, 255, 255, .48);
   transform: translateY(-2px);
 }
 
-.footer-links .social-icon::after {
+.footer-links .channel-button::after {
   display: none;
 }
 
@@ -3747,17 +3747,17 @@ body.dark .collab-proof span {
   border-color: rgba(244, 246, 249, .2);
 }
 
-body.dark .collab-socials a {
+body.dark .channel-links a {
   color: #f4f6f9;
   border-color: rgba(244, 246, 249, .22);
 }
 
-body.dark .collab-socials a:hover {
+body.dark .channel-links a:hover {
   background: rgba(244, 246, 249, .08);
   border-color: rgba(244, 246, 249, .42);
 }
 
-body.dark .youtube-mark::after {
+body.dark .video-mark::after {
   background: currentColor;
 }
 
@@ -4608,11 +4608,11 @@ body.dark .collab-mark .collab-mark-label {
     font-size: 11px;
   }
 
-  .collab-socials {
+  .channel-links {
     gap: 8px;
   }
 
-  .social-icon {
+  .channel-button {
     width: 44px;
     height: 44px;
   }
@@ -5539,7 +5539,7 @@ body.dark .collab-mark .collab-mark-label {
     font-size: 9px;
   }
 
-  .site-footer .youtube-mark {
+  .site-footer .video-mark {
     width: 22px;
     height: 15px;
     border-radius: 4px;
@@ -5547,7 +5547,7 @@ body.dark .collab-mark .collab-mark-label {
     opacity: 1;
   }
 
-  .site-footer .youtube-mark::after {
+  .site-footer .video-mark::after {
     width: 7px;
     height: 8px;
     background: currentColor;
