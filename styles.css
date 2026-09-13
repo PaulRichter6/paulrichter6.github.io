@@ -2731,58 +2731,15 @@ body.dark .film-back {
 }
 
 .photo-mark {
-  position: relative;
-  box-sizing: border-box;
   width: 22px;
   height: 22px;
-  border: 2px solid currentColor;
-  border-radius: 6px;
-}
-
-.photo-mark::before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  box-sizing: border-box;
-  width: 9px;
-  height: 9px;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  content: "";
-  transform: translate(-50%, -50%);
-}
-
-.photo-mark::after {
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 3px;
-  height: 3px;
-  background: currentColor;
-  border-radius: 50%;
-  content: "";
+  background: url("assets/channel-photo-black.png") center / contain no-repeat;
 }
 
 .video-mark {
-  position: relative;
   width: 23px;
-  height: 16px;
-  background: transparent;
-  border: 2px solid currentColor;
-  border-radius: 5px;
-}
-
-.video-mark::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 7px;
-  height: 8px;
-  background: currentColor;
-  border: 0;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-  content: "";
-  transform: translate(-38%, -50%);
+  height: 17px;
+  background: url("assets/channel-video-black.png") center / contain no-repeat;
 }
 
 .film-front {
@@ -3759,8 +3716,12 @@ body.dark .channel-links a:hover {
   border-color: rgba(244, 246, 249, .42);
 }
 
-body.dark .video-mark::after {
-  background: currentColor;
+body.dark .photo-mark {
+  background-image: url("assets/channel-photo-white.png");
+}
+
+body.dark .video-mark {
+  background-image: url("assets/channel-video-white.png");
 }
 
 body.dark .collab-mark::after {
@@ -5544,19 +5505,15 @@ body.dark .collab-mark .collab-mark-label {
   .site-footer .video-mark {
     width: 22px;
     height: 15px;
-    border-radius: 4px;
-    filter: none;
-    opacity: 1;
   }
+}
 
-  .site-footer .video-mark::after {
-    width: 7px;
-    height: 8px;
-    background: currentColor;
-    border: 0;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    transform: translate(-38%, -50%);
-  }
+.site-footer .photo-mark {
+  background-image: url("assets/channel-photo-white.png");
+}
+
+.site-footer .video-mark {
+  background-image: url("assets/channel-video-white.png");
 }
 
 @media (max-width: 430px) {
